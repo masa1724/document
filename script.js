@@ -1,4 +1,3 @@
-<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="title" content="${h_file_name}"/></head><body><pre style="background-color: F4F4F4;">
 function malert ( msg ) {
   alert(msg);
 }
@@ -14,4 +13,3 @@ function scrollToTop (scroll, interval) {
   },interval);
 }
 
-</pre></body></html>
