@@ -1,8 +1,25 @@
-<!DOCTYPE html><html lang="ja"><head> 
-<meta charset="utf-8"> 
-<meta name="title" content="${dist_dir_path}/${h_file_name}"/> 
-</head><body> 
-<pre style="background-color: #F4F4F4;padding 8px;">
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="title" content="base.html"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="description" content="ディスクリプション"/>
+  <meta name="keywords" content="キーワード"/>
+
+  <!-- Common -->
+  <link rel="stylesheet" type="text/css" href="https://masa1724.github.io/document/public_css/reset.css" media="all"/>
+  <link rel="stylesheet" type="text/css" href="https://masa1724.github.io/document/public_css/common.css" media="all"/>
+  <!--PC-->
+  <link rel="stylesheet" type="text/css" href="https://masa1724.github.io/document/public_css/pc.css" media="screen and (min-device-width:481px)"/>
+  <!--スマホ-->
+  <link rel="stylesheet" type="text/css" href="https://masa1724.github.io/document/public_css/iphone.css" media="only screen and (max-device-width:480px)"/>
+
+  <script type="text/javascript" src="https://masa1724.github.io/document/public_js/script.js"></script>
+</head>
+<body>
+<pre style="background-color: #F4F4F4;padding 8px;">'
+<!-- %{include_area}% -->
 set encoding=utf8
 set fileencodings=utf-8,euc-jp,iso-2022-jp,ucs-2le,ucs-2,euc-jp,cp932
 set fileformats=unix,dos,mac
@@ -56,4 +73,6 @@ alias cdhttpd="cd /etc/httpd/conf/httpd.conf"
 alias cdphp="cd /etc/php.d"
 alias vihttpd="sudo vim /etc/httpd/con"
 alias viphp="sudo vim /etc/php.ini"
-</pre></body></html>
+</pre>
+</body>
+</html>

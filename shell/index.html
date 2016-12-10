@@ -2,30 +2,20 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8">
-  <meta name="title" content="タイトル"/>
+  <meta name="title" content="%{title}%"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <meta name="description" content="ディスクリプション"/>
   <meta name="keywords" content="キーワード"/>
 
-  <!-- Twitter、mixi等のSNSでシェアされた場合に使用 -->
-  <meta property="og:type" content="article"/>
-  <meta property="og:title" content="<meta name='title'>と同じ"/>
-  <meta property="og:description" content="<meta name='description'>と同じ"/>
-  <meta property="og:image" content="画像" />
-  <meta property="og:image:width" content="640" />
-  <meta property="og:image:height" content="468" />
-  <meta property="og:url" content="当ページのURL" />
-  <meta property="og:site_name" content="サイト名"/>
-
   <!-- Common -->
-  <link rel="stylesheet" type="text/css" href="https://masa1724.github.io/document/reset.css" media="all"/>
-  <link rel="stylesheet" type="text/css" href="https://masa1724.github.io/document/common.css" media="all"/>
+  <link rel="stylesheet" type="text/css" href="https://masa1724.github.io/document/public_css/reset.css" media="all"/>
+  <link rel="stylesheet" type="text/css" href="https://masa1724.github.io/document/public_css/common.css" media="all"/>
   <!--PC-->
-  <link rel="stylesheet" type="text/css" href="https://masa1724.github.io/document/pc.css" media="screen and (min-device-width:481px)"/>
+  <link rel="stylesheet" type="text/css" href="https://masa1724.github.io/document/public_css/pc.css" media="screen and (min-device-width:481px)"/>
   <!--スマホ-->
-  <link rel="stylesheet" type="text/css" href="https://masa1724.github.io/document/iphone.css" media="only screen and (max-device-width:480px)"/>
+  <link rel="stylesheet" type="text/css" href="https://masa1724.github.io/document/public_css/iphone.css" media="only screen and (max-device-width:480px)"/>
 
-  <script type="text/javascript" src="https://masa1724.github.io/document/script.js"></script>
+  <script type="text/javascript" src="https://masa1724.github.io/document/public_js/script.js"></script>
 </head>
 <body>
 <div id="wrapper" class="wrapper">
@@ -43,11 +33,12 @@
       </div><!--.title-->
 
       <div class="text">
-</ul>
-<li><a href='https://masa1724.github.io/document/shell/tips.html'   title='shell/tips.html'  >tips.html</a></li>
-<li><a href='https://masa1724.github.io/document/shell/screen.html'   title='shell/screen.html'  >screen.html</a></li>
-<li><a href='https://masa1724.github.io/document/shell/ls.html'   title='shell/ls.html'  >ls.html</a></li>
-<ul>
+        <ul>
+        <!-- %{include_area}% -->
+<li><a href='https://masa1724.github.io/document/shell/tips.html'                        title='shell/tips.html'>                     tips.html</a></li>
+<li><a href='https://masa1724.github.io/document/shell/screen.html'                        title='shell/screen.html'>                     screen.html</a></li>
+<li><a href='https://masa1724.github.io/document/shell/ls.html'                        title='shell/ls.html'>                     ls.html</a></li>
+      </ul>
       </div>
     </div><!-- .main -->
 

@@ -2,30 +2,20 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8">
-  <meta name="title" content="タイトル"/>
+  <meta name="title" content="%{title}%"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <meta name="description" content="ディスクリプション"/>
   <meta name="keywords" content="キーワード"/>
 
-  <!-- Twitter、mixi等のSNSでシェアされた場合に使用 -->
-  <meta property="og:type" content="article"/>
-  <meta property="og:title" content="<meta name='title'>と同じ"/>
-  <meta property="og:description" content="<meta name='description'>と同じ"/>
-  <meta property="og:image" content="画像" />
-  <meta property="og:image:width" content="640" />
-  <meta property="og:image:height" content="468" />
-  <meta property="og:url" content="当ページのURL" />
-  <meta property="og:site_name" content="サイト名"/>
-
   <!-- Common -->
-  <link rel="stylesheet" type="text/css" href="https://masa1724.github.io/document/reset.css" media="all"/>
-  <link rel="stylesheet" type="text/css" href="https://masa1724.github.io/document/common.css" media="all"/>
+  <link rel="stylesheet" type="text/css" href="https://masa1724.github.io/document/public_css/reset.css" media="all"/>
+  <link rel="stylesheet" type="text/css" href="https://masa1724.github.io/document/public_css/common.css" media="all"/>
   <!--PC-->
-  <link rel="stylesheet" type="text/css" href="https://masa1724.github.io/document/pc.css" media="screen and (min-device-width:481px)"/>
+  <link rel="stylesheet" type="text/css" href="https://masa1724.github.io/document/public_css/pc.css" media="screen and (min-device-width:481px)"/>
   <!--スマホ-->
-  <link rel="stylesheet" type="text/css" href="https://masa1724.github.io/document/iphone.css" media="only screen and (max-device-width:480px)"/>
+  <link rel="stylesheet" type="text/css" href="https://masa1724.github.io/document/public_css/iphone.css" media="only screen and (max-device-width:480px)"/>
 
-  <script type="text/javascript" src="https://masa1724.github.io/document/script.js"></script>
+  <script type="text/javascript" src="https://masa1724.github.io/document/public_js/script.js"></script>
 </head>
 <body>
 <div id="wrapper" class="wrapper">
@@ -43,31 +33,32 @@
       </div><!--.title-->
 
       <div class="text">
-</ul>
-<li><a href='https://masa1724.github.io/document/atom' title='atom'>atom</a></li>
-<li><a href='https://masa1724.github.io/document/c' title='c'>c</a></li>
-<li><a href='https://masa1724.github.io/document/chocolatey' title='chocolatey'>chocolatey</a></li>
-<li><a href='https://masa1724.github.io/document/conemu' title='conemu'>conemu</a></li>
-<li><a href='https://masa1724.github.io/document/css' title='css'>css</a></li>
-<li><a href='https://masa1724.github.io/document/eclipse' title='eclipse'>eclipse</a></li>
-<li><a href='https://masa1724.github.io/document/excel' title='excel'>excel</a></li>
-<li><a href='https://masa1724.github.io/document/git' title='git'>git</a></li>
-<li><a href='https://masa1724.github.io/document/java' title='java'>java</a></li>
-<li><a href='https://masa1724.github.io/document/javascript' title='javascript'>javascript</a></li>
-<li><a href='https://masa1724.github.io/document/linux' title='linux'>linux</a></li>
-<li><a href='https://masa1724.github.io/document/movies' title='movies'>movies</a></li>
-<li><a href='https://masa1724.github.io/document/mysql' title='mysql'>mysql</a></li>
-<li><a href='https://masa1724.github.io/document/php' title='php'>php</a></li>
-<li><a href='https://masa1724.github.io/document/ruby' title='ruby'>ruby</a></li>
-<li><a href='https://masa1724.github.io/document/samba' title='samba'>samba</a></li>
-<li><a href='https://masa1724.github.io/document/server' title='server'>server</a></li>
-<li><a href='https://masa1724.github.io/document/shell' title='shell'>shell</a></li>
-<li><a href='https://masa1724.github.io/document/sql' title='sql'>sql</a></li>
-<li><a href='https://masa1724.github.io/document/sublimetext3' title='sublimetext3'>sublimetext3</a></li>
-<li><a href='https://masa1724.github.io/document/vagrant' title='vagrant'>vagrant</a></li>
-<li><a href='https://masa1724.github.io/document/windows' title='windows'>windows</a></li>
-<li><a href='https://masa1724.github.io/document/どうでもいいこと' title='どうでもいいこと'>どうでもいいこと</a></li>
-<ul>
+        <ul>
+        <!-- %{include_area}% -->
+<li><a href='https://masa1724.github.io/document/atom'                    title='atom'>                  atom</a></li>
+<li><a href='https://masa1724.github.io/document/c'                    title='c'>                  c</a></li>
+<li><a href='https://masa1724.github.io/document/chocolatey'                    title='chocolatey'>                  chocolatey</a></li>
+<li><a href='https://masa1724.github.io/document/conemu'                    title='conemu'>                  conemu</a></li>
+<li><a href='https://masa1724.github.io/document/css'                    title='css'>                  css</a></li>
+<li><a href='https://masa1724.github.io/document/eclipse'                    title='eclipse'>                  eclipse</a></li>
+<li><a href='https://masa1724.github.io/document/excel'                    title='excel'>                  excel</a></li>
+<li><a href='https://masa1724.github.io/document/git'                    title='git'>                  git</a></li>
+<li><a href='https://masa1724.github.io/document/java'                    title='java'>                  java</a></li>
+<li><a href='https://masa1724.github.io/document/javascript'                    title='javascript'>                  javascript</a></li>
+<li><a href='https://masa1724.github.io/document/linux'                    title='linux'>                  linux</a></li>
+<li><a href='https://masa1724.github.io/document/movies'                    title='movies'>                  movies</a></li>
+<li><a href='https://masa1724.github.io/document/mysql'                    title='mysql'>                  mysql</a></li>
+<li><a href='https://masa1724.github.io/document/php'                    title='php'>                  php</a></li>
+<li><a href='https://masa1724.github.io/document/ruby'                    title='ruby'>                  ruby</a></li>
+<li><a href='https://masa1724.github.io/document/samba'                    title='samba'>                  samba</a></li>
+<li><a href='https://masa1724.github.io/document/server'                    title='server'>                  server</a></li>
+<li><a href='https://masa1724.github.io/document/shell'                    title='shell'>                  shell</a></li>
+<li><a href='https://masa1724.github.io/document/sql'                    title='sql'>                  sql</a></li>
+<li><a href='https://masa1724.github.io/document/sublimetext3'                    title='sublimetext3'>                  sublimetext3</a></li>
+<li><a href='https://masa1724.github.io/document/vagrant'                    title='vagrant'>                  vagrant</a></li>
+<li><a href='https://masa1724.github.io/document/windows'                    title='windows'>                  windows</a></li>
+<li><a href='https://masa1724.github.io/document/どうでもいいこと'                    title='どうでもいいこと'>                  どうでもいいこと</a></li>
+      </ul>
       </div>
     </div><!-- .main -->
 
