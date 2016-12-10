@@ -1,0 +1,28 @@
+<h1 id="ユーザー作成">ユーザー作成</h1>
+<p>adduser sgym2835vps passwd sgym2835vps usermod -G wheel sgym2835vps</p>
+<h2 id="visudo">visudo</h2>
+<h1 id="コメントアウト解除">コメントアウト解除</h1>
+<h2 id="wheel-allall-all">%wheel ALL=(ALL) ALL</h2>
+<h1 id="秘密鍵コピー">秘密鍵コピー</h1>
+<p>cp -r /root/.ssh /home/sgym2835vps/ chown sgym2835vps /home/sgym2835vps/.ssh chown sgym2835vps /home/sgym2835vps/.ssh/authorized_keys</p>
+<h1 id="ssh基本設定">ssh基本設定</h1>
+<h2 id="vim-etcsshsshd_config">vim /etc/ssh/sshd_config</h2>
+<h1 id="パスワード認証禁止">パスワード認証禁止</h1>
+<p>PasswordAuthentication no # チャレンジレスポンス認証禁止 ChallengeResponseAuthentication no # パスワードないユーザでログイン禁止 PermitEmptyPasswords no # rootログイン禁止 PermitRootLogin no</p>
+<h1 id="sshポートの変更">SSHポートの変更</h1>
+<p>Port 10613</p>
+<h1 id="sshを許可するユーザホワイトリスト">SSHを許可するユーザ(ホワイトリスト)</h1>
+<p>AllowUsers hogeuser git # SSHを拒否するユーザ(ブラックリスト) # DenyUsers web_ap</p>
+<h1 id="ssh接続を許可するグループ">SSH接続を許可するグループ</h1>
+<h1 id="allowgroups-hogegroup">AllowGroups hogegroup</h1>
+<h1 id="ssh接続を拒否するグループ">SSH接続を拒否するグループ</h1>
+<h1 id="denygroups-fugagroup">DenyGroups fugagroup</h1>
+<h1 id="プロトコル2にする">プロトコル2にする</h1>
+<h2 id="protocol-2">Protocol 2</h2>
+<p>systemctl restart sshd</p>
+<h1 id="firewallのport開ける">firewallのport開ける</h1>
+<p>firewall-cmd --permanent --add-port=10613/tcp firewall-cmd --reload</p>
+<h1 id="日本環境設定">日本環境設定</h1>
+<p>localectl set-locale LANG=ja_JP.UTF-8 source /etc/locale.conf localectl status</p>
+<p>timedatectl set-timezone Asia/Tokyo timedatectl</p>
+<p>sudo yum -y update sudo yum -y upgrade</p>

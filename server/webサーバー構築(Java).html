@@ -1,0 +1,76 @@
+<h3 id="httpd">httpd</h3>
+<p>sudo yum list httpd sudo yum -y install httpd</p>
+<h1 id="jdk">JDK</h1>
+<p>https://github.com/masa1724/document/blob/master/java/JDK-settings.adoc</p>
+<h1 id="mysqlmariadb">MySQL(MariaDB)</h1>
+<p>https://github.com/masa1724/document/blob/master/MySQL/MySQL-settings.ado</p>
+<h3 id="tomcat">Tomcat</h3>
+<pre><code>TOMCAT_VERSION=&quot;8.5.8&quot;
+TOMCAT_URL=&quot;http://ftp.riken.jp/net/apache/tomcat/tomcat-$(echo ${TOMCAT_VERSION} | cut -c 1)/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz&quot;
+echo ${TOMCAT_URL}
+sudo wget ${TOMCAT_URL}
+sudo tar -xzvf ./apache-tomcat-${TOMCAT_VERSION}.tar.gz
+sudo mv ./apache-tomcat-${TOMCAT_VERSION} /opt/tomcat
+sudo mv ./apache-tomcat-${TOMCAT_VERSION}.tar.gz /usr/local/src/</code></pre>
+<h1 id="tomcat用ユーザ作成">tomcat用ユーザ作成</h1>
+<p>sudo useradd -s /sbin/nologin tomcat sudo chown -R tomcat:tomcat /opt/tomcat</p>
+<h1 id="ユーザ一覧確認">ユーザ一覧確認</h1>
+<p>cat /etc/passwd</p>
+<h1 id="tomcat-java設定">tomcat, java設定</h1>
+<h2 id="sudo-vim-etcprofile">sudo vim /etc/profile</h2>
+<p>export JAVA_HOME=/usr/java/jdk1.8.0_91 export PATH=<span class="math inline"><em>P</em><em>A</em><em>T</em><em>H</em>:</span>JAVA_HOME/bin export CLASSPATH=.:<span class="math inline"><em>J</em><em>A</em><em>V</em><em>A</em><sub><em>H</em></sub><em>O</em><em>M</em><em>E</em>/<em>j</em><em>r</em><em>e</em>/<em>l</em><em>i</em><em>b</em>:</span>JAVA_HOME/lib:$JAVA_HOME/lib/tools.jar export CATALINA_HOME=/opt/tomcat ------------------------------------------------------------------------------ . /etc/profile</p>
+<h1 id="tomcatのsystemdファイル作成">tomcatのsystemdファイル作成</h1>
+<h2 id="sudo-vim-usrlibsystemdsystemtomcat.service">sudo vim /usr/lib/systemd/system/tomcat.service</h2>
+<p>[Unit] Description=Apache Tomcat 8 After=network.target</p>
+<p>[Service] Type=oneshot ExecStart=/opt/tomcat/bin/startup.sh ExecStop=/opt/tomcat/bin/shutdown.sh ExecReload=/opt/tomcat/bin/shutdown.sh ; /opt/tomcat/bin/startup.sh RemainAfterExit=yes:</p>
+<p>[Install] WantedBy=multi-user.target --------------------------------------------------------------------</p>
+<h1 id="httpd-tomcat-mariadb-起動自動起動設定確認">httpd, tomcat, mariadb 起動・自動起動設定・確認</h1>
+<p>sudo systemctl start httpd sudo systemctl start tomcat sudo systemctl start mariadb</p>
+<p>sudo systemctl enable httpd sudo systemctl enable tomcat sudo systemctl enable mariadb</p>
+<p>sudo systemctl is-enabled httpd sudo systemctl is-enabled tomcat sudo systemctl is-enabled mariadb</p>
+<h1 id="ファイアーウォールを動かした状態でtomcat-のアクセスを可能にするpermanentは鯖再起動後も有効にする">ファイアーウォールを動かした状態でtomcat のアクセスを可能にする(permanentは鯖再起動後も有効にする)</h1>
+<p>firewall-cmd --list-all firewall-cmd --permanent --add-service=http #firewall-cmd --permanent --remove-service=http cat /etc/firewalld/zones/public.xml systemctl restart firewalld firewall-cmd --list-all</p>
+<h2 id="sudo-vim-opttomcatconfserver.xml">sudo vim /opt/tomcat/conf/server.xml</h2>
+<h1 id="下記記述があるか確認">下記記述があるか確認</h1>
+<p><Connector port="8009" protocol="AJP/1.3" redirectPort="8443" /></p>
+<h1 id="apache-tomcat経由のアクセスにするため8080番ポートを閉じる">Apache → Tomcat経由のアクセスにするため、8080番ポートを閉じる</h1>
+<!--
+  <Connector port="8080" protocol="HTTP/1.1"
+  connectionTimeout="20000"
+  redirectPort="8443" />
+-->
+<hr />
+<h1 id="apacheと連携に必要なモジュールがあるか確認">apacheと連携に必要なモジュールがあるか確認</h1>
+<h1 id="websocketと連携に必要なモジュールがあるか確認">WebSocketと連携に必要なモジュールがあるか確認</h1>
+<h2 id="rpm--ql-httpd-grep-mod_proxy.">rpm -ql httpd | grep mod_proxy.</h2>
+<p>mod_proxy.so mod_proxy_ajp.so mod_proxy_wstunnel.so ----------------------</p>
+<h1 id="コメントアウトされてたら外す">コメントアウトされてたら外す</h1>
+<h2 id="vim-etchttpdconf.modules.d00-proxy.conf">vim /etc/httpd/conf.modules.d/00-proxy.conf</h2>
+<p>LoadModule proxy_module modules/mod_proxy.so LoadModule proxy_ajp_module modules/mod_proxy_ajp.so LoadModule proxy_wstunnel_module modules/mod_proxy_wstunnel.so -----------------------------------------------------------------------</p>
+<h1 id="apachetomcatの連携設定">apache↔tomcatの連携設定</h1>
+<p>sudo mkdir /etc/httpd/conf/extra # http://133.130.106.123/で呼び出されたときは、ajp://133.130.106.123:8009/に移しますという意味 cat &lt;&lt; EOS &gt; /etc/httpd/conf/extra/httpd-proxy.conf &lt;Location / &gt; ProxyPass ajp://192.168.33.10:8009/ </Location> EOS cat /etc/httpd/conf/extra/httpd-proxy.conf</p>
+<h1 id="httpd.conf-に-httpd-proxy.confを読み込ませる">httpd.conf に httpd-proxy.confを読み込ませる</h1>
+<p>echo &quot;Include /etc/httpd/conf/extra/httpd-proxy.conf&quot; &gt;&gt; /etc/httpd/conf/httpd.conf</p>
+<h1 id="権限を渡す">権限を渡す</h1>
+<p>chown apache:apache /etc/httpd/conf/extra/httpd-proxy.conf</p>
+<h1 id="websocketに関する記述追加">WebSocketに関する記述追加</h1>
+<p>sed -e &quot;1i &lt;Location /examples/websocket/ &gt;&quot; -i /etc/httpd/conf/extra/httpd-proxy.conf sed -e &quot;2i ProxyPass ws://192.168.33.10:8080/examples/websocket/&quot; -i /etc/httpd/conf/extra/httpd-proxy.conf sed -e &quot;3i ProxyPassReverse ws://192.168.33.10:8080/examples/websocket/&quot; -i /etc/httpd/conf/extra/httpd-proxy.conf sed -e &quot;4i </Location>&quot; -i /etc/httpd/conf/extra/httpd-proxy.conf cat /etc/httpd/conf/extra/httpd-proxy.conf</p>
+<h1 id="httpd-1">httpd</h1>
+<p><em>/etc/httpd/conf/httpd.conf</em></p>
+<pre><code>; .htaccessの許可
+&lt;Directory &quot;/var/www/html&quot;&gt;
+    AllowOverride All
+&lt;/Directory&gt;
+
+; htmlで指定するから不要
+AddDefaultCharset none</code></pre>
+<p><em>/etc/httpd/conf.d/autoindex.conf</em></p>
+<pre><code>; iconsディレクトリのファイル一覧を非表示
+&lt;Directory &quot;/usr/share/httpd/icons&quot;&gt;
+    Options MultiViews
+&lt;/Directory&gt;</code></pre>
+<p>/etc/httpd/conf.modules.d/*.conf</p>
+<pre><code>まだなし</code></pre>
+<h1 id="tomcathttpd再起動">tomcat,httpd再起動</h1>
+<p>sudo systemctl restart tomcat sudo systemctl restart httpd</p>
+<p>```</p>

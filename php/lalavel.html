@@ -1,0 +1,60 @@
+<h1 id="laravel">Laravel</h1>
+<p>vim .env</p>
+<pre><code>DB_CONNECTION=mysql
+DB_HOST=localhost
+DB_PORT=3306
+DB_DATABASE=app01DB
+DB_USERNAME=db01owner
+DB_PASSWORD=Kokouya723$</code></pre>
+<p>【 migrationコマンド 】 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― # postsテーブル作成 (artisanファイルは Laravelで作成したprojectのルートにある) php artisan make:migration create_posts_table --create=posts</p>
+<h1 id="table-posts作成">table posts作成</h1>
+<p>php artisan migrate</p>
+<p>エラ－回避) <sub><sub>~</sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub>~</sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub>~~ [PDOException] could not find driver</p>
+<h1 id="php-mysqlndをつっこむ">php-mysqlndをつっこむ</h1>
+<p>sudo yum --enablerepo=remi-php70,epel install -y php-mysqlnd <sub><sub>~</sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub>~</sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub>~~</p>
+<h1 id="table確認">table確認</h1>
+<p>mysql -u root use app01DB; desc posts;</p>
+<p>php artisan make:model Post;</p>
+<p><strong>既存テーブルに変更を加える</strong> php artisan make:migration add_column_summary_to_posts_table --table=posts;</p>
+<h2 id="vim-databasemigrations2016_05_07_102509_add_column_summary_to_posts_table.php">vim database/migrations/2016_05_07_102509_add_column_summary_to_posts_table.php</h2>
+<p>13 public function up() 14 { 15 Schema::table('posts', function (Blueprint $table) { 16 $table-&gt;string('title'); 17 $tanle-&gt;text('body'); 18 }); 19 } 20 21 /** 22 * Reverse the migrations. 23 <em> 24 </em> <span class="citation">@return</span> void 25 */ 26 public function down() 27 { 28 Schema::table('posts', function (Blueprint $table) { 29 $table-&gt;dropColumn('title'); 30 $table-&gt;dropColumn('body'); 31 }); 32 } --------------------</p>
+<p>php artisan migrate</p>
+<p><strong>適用されているmigrate確認</strong> php artisan migrate:status</p>
+<p><strong>1個前の変更を戻す</strong> php artisan migrate:rollback</p>
+<p>エラ－回避) <sub><sub>~</sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub>~</sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub>~~ [Symfony] Fatal error: Class 'AddColumnSummaryToPostsTable' not found</p>
+<h1 id="これを叩くと直る理由はわからん">これを叩くと直る(理由はわからん)</h1>
+<p>sudo php /usr/local/bin/composer dump-autoload <sub><sub>~</sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub>~</sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub>~~ ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――</p>
+<p>【tinker コマンド】 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― # 対話的にコマンドを実行する php artisan tinker</p>
+<h1 id="インスタンス生成しpostsテーブルへinsert">インスタンス生成し、postsテーブルへinsert</h1>
+<p>$post = new App(); $post-&gt;title = 'title 1'; $post-&gt;body = 'body 1'; $post-&gt;save();</p>
+<h1 id="createメソッドを使いpostsテーブルへinsert">createメソッドを使い、postsテーブルへinsert</h1>
+<p>App::create(['title'=&gt;'title 2', 'body'=&gt;'body 2']);</p>
+<p>エラー回避) <sub><sub><sub><sub><sub>~</sub></sub></sub></sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub>~</sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub>~</sub>~~ Illuminatewith message 'title'</p>
+<h1 id="apppost.phpに以下を設定する必要ある">app/Post.phpに以下を設定する必要ある。</h1>
+<p>protected $fillable = ['title', 'body']; <sub><sub><sub><sub><sub>~</sub></sub></sub></sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub><sub>~</sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub></sub>~</sub>~~</p>
+<h1 id="postモデルの値を全て取得">Postモデルの値を全て取得</h1>
+<p>App::all()-&gt;toArray();</p>
+<h1 id="条件とソート順を指定">条件とソート順を指定</h1>
+<p>App::where('id', '&gt;', 1)-&gt;orderBy('created_at', 'desc')-&gt;get()-&gt;toArray();</p>
+<h1 id="レコード目のみ抽出sqlのlimit">1レコード目のみ抽出(sqlのlimit)</h1>
+<p>App::where('id', '&gt;', 1)-&gt;take(1)-&gt;get()-&gt;toArray();</p>
+<h1 id="id-3-のレコードを取得">id = 3 のレコードを取得</h1>
+<p>$post = App::find(3);</p>
+<h1 id="更新">更新</h1>
+<p>App::find(1)-&gt;update(['title'=&gt;'title 3 updated again']);</p>
+<h1 id="レコードの削除">レコードの削除</h1>
+<p>$post-&gt;delete(); ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――</p>
+<p>sudo vim app/Http/routes.php</p>
+<p>ルーティングは下に一番下にあるやつを実行する Route::get('/', function() {});</p>
+<p>URLのパラメータを取得 Route::get('/{name}', function($name) { return $name; });</p>
+<p>index.blade.php</p>
+<p>Route から Controller 呼び出し Route::get('/', 'PostsController@index');</p>
+<p>Viewへの値渡し。 ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― Controller return view('posts.index', ['posts', $posts]); または return view('posts.index')-&gt;with('posts', $posts);</p>
+・View <span class="citation">@foreach</span>($posts as <span class="math inline">$post)  &lt;p style=&quot;font-style: bold;&quot;&gt;{{$</span>post-&gt;title}}
+</p>
+<p><span class="citation">@endforeach</span></p>
+<p>※{{}}で囲むとエスケープされる</p>
+<p style="font-style: bold;">
+{!! nl2br(e($post-&gt;body)) !!}
+</p>
+<p>{!! !!} エスケープしないで表示 e() エスケープ nl2br() 改行をbrへ変換 ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ―</p>

@@ -1,0 +1,62 @@
+<h2 id="composer-インストール">☆☆Composer インストール☆☆</h2>
+<pre><code># composerのインストーラーを取得し、php で実行
+sudo curl -sS https://getcomposer.org/installer | php
+
+# composerコマンドを通す
+sudo mv composer.phar /usr/local/bin/composer
+
+# composerコマンドが通っていることを確認
+which composer
+
+# update
+#composer update
+#composer self-update</code></pre>
+<p>. ## ☆☆Laravel インストール☆☆</p>
+<pre><code># laravelのインストーラー取得
+composer global require &quot;laravel/installer&quot;
+
+# laravelのパスを通す
+sudo vim /etc/profile
+‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+export PATH=$PATH:$HOME/.composer/vendor/bin
+‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+. /etc/profile
+
+# pear 及び pear依存モジュール
+sudo yum install --enablerepo=remi,remi-php70 php-pear php-devel
+
+# pearのバージョン確認(1.10.0以降であること)
+pear -V
+
+# pecl依存モジュール
+sudo yum -y install zlib-devel gcc
+
+# zip拡張インストール
+sudo pecl install zip
+
+# zip関数を使用できるようにする
+sudo vim /etc/php.ini
+‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+extension=zip.so
+‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+
+# インストール先ディレクトリ作成し、移動
+cd /var/www/html/
+
+laravel new app01root
+
+# project blog を作成
+sudo chmod 777 /var/www/html
+composer create-project laravel/laravel app01root --prefer-dist</code></pre>
+<h2 id="基本設定">☆☆基本設定☆☆</h2>
+<pre><code>vim config/app.php
+‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+&#39;timezone&#39; =&gt; &#39;Asia/Tokyo&#39;,
+&#39;locale&#39; =&gt; &#39;ja&#39;,
+‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐</code></pre>
+<h2 id="基本知識">☆☆基本知識☆☆</h2>
+<p><strong>前提</strong> カレントディレクトリ： /var/www/html/appRoot</p>
+<p>・Model関連 app/</p>
+<p>・View関連 resource/views</p>
+<p>・Controller関連 app/Http/Controllers</p>
+<p>・Database関連 database/</p>
