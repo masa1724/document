@@ -94,6 +94,13 @@
 .link-list li:hover {background-color: red;}
 .link-list a {display: block;}
 
+pre {
+  text-align:left;
+  style="background-color: #F4F4F4;
+  padding 10px;
+  width:100%;
+}
+
 .btn1-size{
   width:140px; height:50px;
   font: 20px;
