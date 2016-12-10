@@ -18,8 +18,19 @@
   <script type="text/javascript" src="https://masa1724.github.io/document/public_js/script.js"></script>
 </head>
 <body>
-<pre style="background-color: #F4F4F4;padding 8px;">'
-<!-- %{include_area}% -->
+<div id="wrapper" class="wrapper">
+<header id="header" role="banner" class="header">
+  <h3>header!</h3>
+</header>
+
+<main id="main" role="main" class="main">
+  <div class="main-container">
+    <div class="content">
+      <div class="content-title">
+        <span class="content-title-text">???????</span>
+      </div><!--.content-title-->
+      <pre style="background-color: #F4F4F4;padding 8px;">'
+        <!-- %{include_area}% -->
 # msys2 (i686:32bit, x86_64:64bit)
 https://sourceforge.net/projects/msys2/?source=typ_redirect
 
@@ -65,6 +76,13 @@ pacman -Scc
 
 # 基本パッケージインストール
 pacman -S vim gcc git gcc-libs openssh
-</pre>
+      </pre>
+    </div><!-- .content -->
+  </div><!-- .main-container -->
+</main>
+  <footer id="footer" role="contentinfo" class="footer">
+    <h3>footer</h3>
+  </footer>
+</div><!-- .wrapper -->
 </body>
 </html>
