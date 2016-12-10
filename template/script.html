@@ -1,0 +1,17 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="title" content="タイトル"/></head><body><pre style="background-color:F4F4F4;">
+function malert ( msg ) {
+  alert(msg);
+}
+
+function scrollToTop (scroll, interval) {
+  var timer = setInterval(function(){
+    var y = window.pageYOffset;
+    if ( y == 0 ) {
+      clearInterval(timer);
+    } else {
+      window.scrollBy(0, scroll);
+    }
+  },interval);
+}
+
+</pre></body></html>
