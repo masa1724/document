@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>ls コマンド</title>
+<title>Samba設定</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -486,87 +486,167 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article">
 <div id="header">
-<h1>ls コマンド</h1>
+<h1>Samba設定</h1>
+<div id="toc" class="toc">
+<div id="toctitle"></div>
+<ul class="sectlevel2">
+<li><a href="#_インストール_基本設定">1. インストール,基本設定</a></li>
+<li><a href="#_firewall設定">2. firewall設定</a></li>
+<li><a href="#_selinuxの設定">3. SELinuxの設定</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
+<div class="sect2">
+<h3 id="_インストール_基本設定">1. インストール,基本設定</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="sh">Q. 複数行の文字列をファイルに追記<span class="tok-o">(</span>これでechoを並べなく済む<span class="tok-o">)</span>
-cat <span class="tok-s">&lt;&lt; EOS &gt;&gt; $HOME/.bashrc</span>
-<span class="tok-s">alias la=&quot;ls -a&quot;</span>
-<span class="tok-s">alias ll=&quot;ls -l&quot;</span>
-<span class="tok-s">alias ltr=&quot;ls -ltr&quot;</span>
-<span class="tok-s">EOS</span>
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># sambaインストール</span>
+sudo dnf install samba
 
-Q. カレントディレクトリのls結果をフルパスにする
-・ディレクトリのみ抽出
-ls -1dF <span class="tok-nv">$PWD</span>/* <span class="tok-p">|</span> grep */
-・ファイルのみ抽出
-ls -1dF <span class="tok-nv">$PWD</span>/* <span class="tok-p">|</span> grep -v */
+<span class="tok-c"># 共有フォルダ作成</span>
+mkdir ~/share
 
+<span class="tok-c"># windows側でもアクセスできるよう所有者、グループを無しにする</span>
+chown nobody:nobody ~/share
 
-Q.ls結果をparseする
-<span class="tok-nv">IFS</span><span class="tok-o">=</span><span class="tok-s1">$&#39;\n&#39;</span>
+<span class="tok-c"># 設定ファイルの編集</span>
+sudo cp -p /etc/samba/smb.conf<span class="tok-o">{</span>,.bk<span class="tok-o">}</span>
+sudo vim /etc/samba/smb.conf</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">/etc/samba/smb.conf</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-o">[</span>global<span class="tok-o">]</span>
+        unix <span class="tok-nv">charset</span> <span class="tok-o">=</span> UTF-8
+        dos <span class="tok-nv">charset</span> <span class="tok-o">=</span> CP932
 
-<span class="tok-c"># [tail -n +2] について： 先頭行に変な出力が出る為、それを捨てる</span>
-<span class="tok-nv">ls_result</span><span class="tok-o">=(</span><span class="tok-k">$(</span>ls -l --time-style<span class="tok-o">=</span><span class="tok-s2">&quot;long-iso&quot;</span> <span class="tok-k">${</span><span class="tok-nv">TARGET_DIR</span><span class="tok-k">}</span> <span class="tok-p">|</span> tail -n +2<span class="tok-k">)</span><span class="tok-o">)</span>
-<span class="tok-k">for</span> result in <span class="tok-s2">&quot;${ls_results[@]}&quot;</span><span class="tok-p">;</span> <span class="tok-k">do</span>
+        guest <span class="tok-nv">account</span> <span class="tok-o">=</span> sgym2835
+        <span class="tok-c"># windowsのワークグループと同一にする</span>
+       	<span class="tok-nv">workgroup</span> <span class="tok-o">=</span> WORKGROUP
+      	<span class="tok-nv">security</span> <span class="tok-o">=</span> user
+        <span class="tok-c">#smb ports = 139</span>
 
-  <span class="tok-nb">declare</span> -A INFO
-  <span class="tok-nv">ls_info</span><span class="tok-o">=(</span> <span class="tok-se">\</span>
-    <span class="tok-o">[</span><span class="tok-s2">&quot;filetype&quot;</span><span class="tok-o">]=</span><span class="tok-k">$(</span><span class="tok-nb">echo</span> <span class="tok-k">${</span><span class="tok-nv">result</span><span class="tok-k">}</span> <span class="tok-p">|</span> awk <span class="tok-s1">&#39;{print $1}&#39;</span> <span class="tok-p">|</span> cut -c 1<span class="tok-k">)</span> <span class="tok-se">\</span>
-    <span class="tok-o">[</span><span class="tok-s2">&quot;permission&quot;</span><span class="tok-o">]=</span><span class="tok-k">$(</span><span class="tok-nb">echo</span> <span class="tok-k">${</span><span class="tok-nv">result</span><span class="tok-k">}</span> <span class="tok-p">|</span> awk <span class="tok-s1">&#39;{print $1}&#39;</span> <span class="tok-p">|</span> cut -c 2-10<span class="tok-k">)</span> <span class="tok-se">\</span>
-    <span class="tok-o">[</span><span class="tok-s2">&quot;dir_count&quot;</span><span class="tok-o">]=</span><span class="tok-k">$(</span><span class="tok-nb">echo</span> <span class="tok-k">${</span><span class="tok-nv">result</span><span class="tok-k">}</span> <span class="tok-p">|</span> awk <span class="tok-s1">&#39;{print $2}&#39;</span><span class="tok-k">)</span> <span class="tok-se">\</span>
-    <span class="tok-o">[</span><span class="tok-s2">&quot;user&quot;</span><span class="tok-o">]=</span><span class="tok-k">$(</span><span class="tok-nb">echo</span> <span class="tok-k">${</span><span class="tok-nv">result</span><span class="tok-k">}</span> <span class="tok-p">|</span> awk <span class="tok-s1">&#39;{print $3}&#39;</span><span class="tok-k">)</span> <span class="tok-se">\</span>
-    <span class="tok-o">[</span><span class="tok-s2">&quot;group&quot;</span><span class="tok-o">]=</span><span class="tok-k">$(</span><span class="tok-nb">echo</span> <span class="tok-k">${</span><span class="tok-nv">result</span><span class="tok-k">}</span> <span class="tok-p">|</span> awk <span class="tok-s1">&#39;{print $4}&#39;</span><span class="tok-k">)</span> <span class="tok-se">\</span>
-    <span class="tok-o">[</span><span class="tok-s2">&quot;filesize&quot;</span><span class="tok-o">]=</span><span class="tok-k">$(</span><span class="tok-nb">echo</span> <span class="tok-k">${</span><span class="tok-nv">result</span><span class="tok-k">}</span> <span class="tok-p">|</span> awk <span class="tok-s1">&#39;{print $5}&#39;</span><span class="tok-k">)</span> <span class="tok-se">\</span>
-    <span class="tok-o">[</span><span class="tok-s2">&quot;timestamp&quot;</span><span class="tok-o">]=</span><span class="tok-k">$(</span><span class="tok-nb">echo</span> <span class="tok-k">${</span><span class="tok-nv">result</span><span class="tok-k">}</span> <span class="tok-p">|</span> awk <span class="tok-s1">&#39;{print $6,$7}&#39;</span><span class="tok-k">)</span> <span class="tok-se">\</span>
-    <span class="tok-o">[</span><span class="tok-s2">&quot;filename&quot;</span><span class="tok-o">]=</span><span class="tok-k">$(</span><span class="tok-nb">echo</span> <span class="tok-k">${</span><span class="tok-nv">result</span><span class="tok-k">}</span> <span class="tok-p">|</span> awk <span class="tok-s1">&#39;{for(i=8;i&lt;NF;i++){printf(&quot;%s&quot;,$i)}print $NF}&#39;</span><span class="tok-k">)</span>
-  <span class="tok-o">)</span>
+	      <span class="tok-c">#passdb backend = tdbsam</span>
 
-<span class="tok-k">done</span>
+        <span class="tok-c">#LAN内のアクセスのみ許可</span>
+        <span class="tok-c"># 嵌りどこなので注意(192.168.10.だったり、最後の.がぬけてたり)</span>
+        hosts <span class="tok-nv">allow</span> <span class="tok-o">=</span> 192.168.0. 127.
 
-<span class="tok-c"># エラー標準出力捨てる</span>
-<span class="tok-k">${</span><span class="tok-nv">comamnd</span><span class="tok-k">}</span> 1&gt;/dev/null 2&gt;/dev/null
+      	<span class="tok-nv">printing</span> <span class="tok-o">=</span> cups
+      	printcap <span class="tok-nv">name</span> <span class="tok-o">=</span> cups
+      	load <span class="tok-nv">printers</span> <span class="tok-o">=</span> yes
+      	cups <span class="tok-nv">options</span> <span class="tok-o">=</span> raw
+        dns <span class="tok-nv">proxy</span> <span class="tok-o">=</span> no
+        netbios <span class="tok-nv">name</span> <span class="tok-o">=</span> fedora
+        server <span class="tok-nv">string</span> <span class="tok-o">=</span> Samba Server Version %v
+        map to <span class="tok-nv">guest</span> <span class="tok-o">=</span> bad user
 
-<span class="tok-c">############# よく使いそうなやつ</span>
-<span class="tok-c"># ディレクトリパスとファイル名連結(ディレクトリパスの末尾を気にしなくてよい)</span>
-make_path<span class="tok-o">()</span> <span class="tok-o">{[</span> <span class="tok-k">$(</span><span class="tok-nb">echo</span> <span class="tok-s2">&quot;$1&quot;</span> <span class="tok-p">|</span> tail -c2<span class="tok-k">)</span> <span class="tok-o">=</span> <span class="tok-s2">&quot;/&quot;</span> <span class="tok-o">]</span> <span class="tok-o">&amp;&amp;</span> <span class="tok-nb">echo</span> <span class="tok-s2">&quot;$1$2&quot;</span> <span class="tok-o">||</span> <span class="tok-nb">echo</span> <span class="tok-s2">&quot;$1/$2&quot;</span>
-<span class="tok-o">}</span>
+<span class="tok-o">[</span>homes<span class="tok-o">]</span>
+	<span class="tok-nv">comment</span> <span class="tok-o">=</span> Home Directories
+	valid <span class="tok-nv">users</span> <span class="tok-o">=</span> %S, %D%w%S
+	<span class="tok-nv">browseable</span> <span class="tok-o">=</span> No
+	<span class="tok-nb">read </span><span class="tok-nv">only</span> <span class="tok-o">=</span> No
+	inherit <span class="tok-nv">acls</span> <span class="tok-o">=</span> Yes
+        path %H/share
+<span class="tok-o">[</span>printers<span class="tok-o">]</span>
+	<span class="tok-nv">comment</span> <span class="tok-o">=</span> All Printers
+	<span class="tok-nv">path</span> <span class="tok-o">=</span> /var/tmp
+	<span class="tok-nv">printable</span> <span class="tok-o">=</span> Yes
+	create <span class="tok-nv">mask</span> <span class="tok-o">=</span> 0600
+	<span class="tok-nv">browseable</span> <span class="tok-o">=</span> No
 
-<span class="tok-c"># 前後スペーストリム</span>
-trim<span class="tok-o">()</span> <span class="tok-o">{</span> <span class="tok-nv">s</span><span class="tok-o">=</span><span class="tok-k">$(</span><span class="tok-nb">echo</span> <span class="tok-s2">&quot;$1&quot;</span> <span class="tok-p">|</span> sed <span class="tok-s1">&#39;s/^ *//&#39;</span> <span class="tok-p">|</span> sed <span class="tok-s1">&#39;s/ *$//&#39;</span><span class="tok-k">)</span>
-        <span class="tok-nv">s</span><span class="tok-o">=</span><span class="tok-k">$(</span><span class="tok-nb">echo</span> <span class="tok-s2">&quot;${s}&quot;</span> <span class="tok-p">|</span> sed <span class="tok-s1">&#39;s/^　*//&#39;</span> <span class="tok-p">|</span> sed <span class="tok-s1">&#39;s/　*$//&#39;</span><span class="tok-k">)</span> <span class="tok-p">;</span> <span class="tok-nb">echo</span> <span class="tok-s2">&quot;${s}&quot;</span>
-<span class="tok-o">}</span>
-<span class="tok-c">#############</span>
+<span class="tok-o">[</span>print<span class="tok-nv">$]</span>
+	<span class="tok-nv">comment</span> <span class="tok-o">=</span> Printer Drivers
+	<span class="tok-nv">path</span> <span class="tok-o">=</span> /var/lib/samba/drivers
+	write <span class="tok-nv">list</span> <span class="tok-o">=</span> root
+	create <span class="tok-nv">mask</span> <span class="tok-o">=</span> 0664
+	directory <span class="tok-nv">mask</span> <span class="tok-o">=</span> 0775
 
-<span class="tok-k">for</span> item in <span class="tok-k">${</span><span class="tok-nv">ARRAY</span><span class="tok-p">[@]</span><span class="tok-k">}</span><span class="tok-p">;</span> <span class="tok-k">do</span>
-    <span class="tok-nb">echo</span> <span class="tok-nv">$item</span>
-<span class="tok-k">done</span>
+<span class="tok-o">[</span>share<span class="tok-o">]</span>
+<span class="tok-nv">path</span> <span class="tok-o">=</span> /home/sgym2835/share
+<span class="tok-nb">read </span><span class="tok-nv">only</span> <span class="tok-o">=</span> No
+guest <span class="tok-nv">ok</span> <span class="tok-o">=</span> yes
+guest <span class="tok-nv">only</span> <span class="tok-o">=</span> yes
+force <span class="tok-nv">user</span> <span class="tok-o">=</span> sgym2835
+create <span class="tok-nv">mode</span> <span class="tok-o">=</span> 0777
+directory <span class="tok-nv">mode</span> <span class="tok-o">=</span> 0777
+<span class="tok-nv">writable</span> <span class="tok-o">=</span> yes
+<span class="tok-nv">public</span> <span class="tok-o">=</span> yes</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># sambaの起動</span>
+systemctl start smb
+systemctl start nmb
 
+<span class="tok-c"># 自動起動設定</span>
+systemctl <span class="tok-nb">enable </span>smb
+systemctl <span class="tok-nb">enable </span>nmb</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_firewall設定">2. firewall設定</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># firewallの起動確認</span>
+firewall-cmd --state
 
-<span class="tok-c"># ファイル内の文字列を置換し、上書きする</span>
-sed -i -e <span class="tok-s2">&quot;s/${before}/${after}/g&quot;</span> <span class="tok-k">${</span><span class="tok-nv">filename</span><span class="tok-k">}</span>
+<span class="tok-c"># sambaが利用可能なサービスに含まれているか</span>
+firewall-cmd --get-services <span class="tok-p">|</span> grep <span class="tok-s2">&quot;samba&quot;</span>
 
+<span class="tok-c"># sambaが有効か</span>
+firewall-cmd --list-services
 
-<span class="tok-c"># ダウンロード</span>
-scp ~/.ssh/id_rsa.pub hoge_user@hogehoge.hoge.com:~/
-<span class="tok-c"># アップロード</span>
-scp ~/.ssh/id_rsa.pub hoge_user@hogehoge.hoge.com:~/.ssh/id_rsa.pub
+<span class="tok-c"># samba有効にする</span>
+firewall-cmd --add-service<span class="tok-o">=</span>samba
+firewall-cmd --add-service<span class="tok-o">=</span>samba --permanent
 
+<span class="tok-c"># ポートを開ける</span>
+firewall-cmd --add-port<span class="tok-o">=</span>137/udp
+firewall-cmd --add-port<span class="tok-o">=</span>137/udp --permanent
+firewall-cmd --add-port<span class="tok-o">=</span>138/udp
+firewall-cmd --add-port<span class="tok-o">=</span>138/udp --permanent
+firewall-cmd --add-port<span class="tok-o">=</span>139/tcp
+firewall-cmd --add-port<span class="tok-o">=</span>139/tcp --permanent
+firewall-cmd --add-port<span class="tok-o">=</span>445/tcp
+firewall-cmd --add-port<span class="tok-o">=</span>445/tcp --permanent
 
-<span class="tok-k">while</span> <span class="tok-nv">IFS</span><span class="tok-o">=</span><span class="tok-s1">&#39;&#39;</span> <span class="tok-nb">read</span> -r p<span class="tok-p">;</span> <span class="tok-k">do</span>
-    print <span class="tok-s2">&quot;%s\n&quot;</span> <span class="tok-s2">&quot;$p&quot;</span>
-<span class="tok-k">done</span> &lt; <span class="tok-s2">&quot;$1&quot;</span>
+<span class="tok-c"># 追加されている事を確認し、リロード</span>
+firewall-cmd --list-ports
+firewall-cmd --reload
 
-<span class="tok-k">while</span> <span class="tok-nb">true</span><span class="tok-p">;</span> <span class="tok-k">do</span>
-    <span class="tok-nb">read</span> -p <span class="tok-s2">&quot;Do you wish to install this program?&quot;</span> yn
-    <span class="tok-k">case</span> <span class="tok-nv">$yn</span> in
-        <span class="tok-o">[</span>Yy<span class="tok-o">]</span>* <span class="tok-o">)</span> make install<span class="tok-p">;</span> <span class="tok-nb">break</span><span class="tok-p">;;</span>
-        <span class="tok-o">[</span>Nn<span class="tok-o">]</span>* <span class="tok-o">)</span> <span class="tok-nb">exit</span><span class="tok-p">;;</span>
-        * <span class="tok-o">)</span> <span class="tok-nb">echo</span> <span class="tok-s2">&quot;Please answer yes or no.&quot;</span><span class="tok-p">;;</span>
-    <span class="tok-k">esac</span>
-<span class="tok-k">done</span></code></pre>
+<span class="tok-c"># 更新確認</span>
+firewall-cmd --list-services</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_selinuxの設定">3. SELinuxの設定</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># SELinuxの起動確認</span>
+getenforce
+
+<span class="tok-c"># 停止?(Permissive)の場合、起動させる</span>
+setenforce 1
+
+<span class="tok-c"># Sambaの共有フォルダの設定確認</span>
+getsebool samba_enable_home_dirs
+
+<span class="tok-c"># off の場合、許可させる</span>
+setsebool -P samba_enable_home_dirs 1
+
+<span class="tok-c"># 更新後の確認(onになっていること)</span>
+getsebool samba_enable_home_dirs</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">serviceファイル</div>
+<p>/usr/lib/systemd/system/smb.service</p>
 </div>
 </div>
 </div>

@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>ls コマンド</title>
+<title>MySQL(MariaDB) メモ</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -486,93 +486,80 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article">
 <div id="header">
-<h1>ls コマンド</h1>
+<h1>MySQL(MariaDB) メモ</h1>
+<div id="toc" class="toc">
+<div id="toctitle"></div>
+<ul class="sectlevel2">
+<li><a href="#_googlemapのインクルード">GoogleMapのインクルード</a></li>
+<li><a href="#_2点間を線でつなぐ">2点間を線でつなぐ</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
+<div class="sect2">
+<h3 id="_googlemapのインクルード">GoogleMapのインクルード</h3>
+<hr>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="sh">Q. 複数行の文字列をファイルに追記<span class="tok-o">(</span>これでechoを並べなく済む<span class="tok-o">)</span>
-cat <span class="tok-s">&lt;&lt; EOS &gt;&gt; $HOME/.bashrc</span>
-<span class="tok-s">alias la=&quot;ls -a&quot;</span>
-<span class="tok-s">alias ll=&quot;ls -l&quot;</span>
-<span class="tok-s">alias ltr=&quot;ls -ltr&quot;</span>
-<span class="tok-s">EOS</span>
+<pre class="pygments highlight"><code data-lang="html"><span class="tok-nt">&lt;script </span><span class="tok-na">src=</span><span class="tok-s">&quot;http://maps.google.com/maps/api/js?libraries=geometry&amp;sensor=false&quot;</span><span class="tok-nt">&gt;&lt;/script&gt;</span>
 
-Q. カレントディレクトリのls結果をフルパスにする
-・ディレクトリのみ抽出
-ls -1dF <span class="tok-nv">$PWD</span>/* <span class="tok-p">|</span> grep */
-・ファイルのみ抽出
-ls -1dF <span class="tok-nv">$PWD</span>/* <span class="tok-p">|</span> grep -v */
+<span class="tok-nt">&lt;div</span> <span class="tok-na">id=</span><span class="tok-s">&quot;map&quot;</span><span class="tok-nt">&gt;&lt;/div&gt;</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2点間を線でつなぐ">2点間を線でつなぐ</h3>
+<hr>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="javascript"><span class="tok-c1">// ポイントA,Bの生成</span>
+<span class="tok-kd">var</span> <span class="tok-nx">pointA</span> <span class="tok-o">=</span> <span class="tok-k">new</span> <span class="tok-nx">google</span><span class="tok-p">.</span><span class="tok-nx">maps</span><span class="tok-p">.</span><span class="tok-nx">LatLng</span><span class="tok-p">(</span><span class="tok-mf">35.71008673036525</span><span class="tok-p">,</span> <span class="tok-mf">139.81070961838535</span><span class="tok-p">);</span>
+<span class="tok-kd">var</span> <span class="tok-nx">pointB</span> <span class="tok-o">=</span> <span class="tok-k">new</span> <span class="tok-nx">google</span><span class="tok-p">.</span><span class="tok-nx">maps</span><span class="tok-p">.</span><span class="tok-nx">LatLng</span><span class="tok-p">(</span><span class="tok-mf">35.65856488401862</span><span class="tok-p">,</span> <span class="tok-mf">139.74554266815952</span><span class="tok-p">);</span>
 
+<span class="tok-cm">/* GoogleMapの描画</span>
+<span class="tok-cm">mapTypeId： Mapの種類(地図、航空写真、地形などが選択可能)</span>
+<span class="tok-cm">center   ： 起動時のMapの中心(以下の場合だとポイントA,Bの中間)</span>
+<span class="tok-cm">zoom     ： 起動時のズーム比率</span>
+<span class="tok-cm">streetViewControl ： ストリートビューの可否を設定</span>
+<span class="tok-cm">*/</span>
+<span class="tok-kd">var</span> <span class="tok-nx">mapElem</span> <span class="tok-o">=</span> <span class="tok-nb">document</span><span class="tok-p">.</span><span class="tok-nx">getElementById</span><span class="tok-p">(</span><span class="tok-s2">&quot;map&quot;</span><span class="tok-p">);</span>
+<span class="tok-kd">var</span> <span class="tok-nx">gMap</span> <span class="tok-o">=</span> <span class="tok-k">new</span> <span class="tok-nx">google</span><span class="tok-p">.</span><span class="tok-nx">maps</span><span class="tok-p">.</span><span class="tok-nx">Map</span><span class="tok-p">(</span><span class="tok-nx">mapElem</span><span class="tok-p">,</span> <span class="tok-p">{</span>
+    <span class="tok-nx">mapTypeId</span><span class="tok-o">:</span> <span class="tok-nx">google</span><span class="tok-p">.</span><span class="tok-nx">maps</span><span class="tok-p">.</span><span class="tok-nx">MapTypeId</span><span class="tok-p">.</span><span class="tok-nx">ROADMAP</span><span class="tok-p">,</span>
+    <span class="tok-nx">center</span><span class="tok-o">:</span> <span class="tok-k">new</span> <span class="tok-nx">google</span><span class="tok-p">.</span><span class="tok-nx">maps</span><span class="tok-p">.</span><span class="tok-nx">LatLng</span><span class="tok-p">(</span> <span class="tok-p">(</span><span class="tok-nx">pointA</span><span class="tok-p">.</span><span class="tok-nx">lat</span><span class="tok-p">()</span><span class="tok-o">+</span><span class="tok-nx">pointB</span><span class="tok-p">.</span><span class="tok-nx">lat</span><span class="tok-p">())</span><span class="tok-o">/</span><span class="tok-mi">2</span><span class="tok-p">,</span> <span class="tok-p">(</span><span class="tok-nx">pointA</span><span class="tok-p">.</span><span class="tok-nx">lng</span><span class="tok-p">()</span><span class="tok-o">+</span><span class="tok-nx">pointB</span><span class="tok-p">.</span><span class="tok-nx">lng</span><span class="tok-p">())</span><span class="tok-o">/</span><span class="tok-mi">2</span> <span class="tok-p">),</span>
+    <span class="tok-nx">zoom</span><span class="tok-o">:</span> <span class="tok-mi">12</span><span class="tok-p">,</span>
+    <span class="tok-nx">streetViewControl</span><span class="tok-o">:</span> <span class="tok-kc">false</span><span class="tok-p">,</span>
+<span class="tok-p">});</span>
 
-Q.ls結果をparseする
-<span class="tok-nv">IFS</span><span class="tok-o">=</span><span class="tok-s1">$&#39;\n&#39;</span>
+<span class="tok-cm">/* マーカーAの描画</span>
+<span class="tok-cm">icon      : 表示するアイコン</span>
+<span class="tok-cm">position  : アイコンの表示位置(google.maps.LatLngにて生成した値を指定)</span>
+<span class="tok-cm">map       : mapエレメント</span>
+<span class="tok-cm">draggable : マーカーの移動の可否</span>
+<span class="tok-cm">*/</span>
+<span class="tok-kd">var</span> <span class="tok-nx">markerA</span> <span class="tok-o">=</span>  <span class="tok-k">new</span> <span class="tok-nx">google</span><span class="tok-p">.</span><span class="tok-nx">maps</span><span class="tok-p">.</span><span class="tok-nx">Marker</span><span class="tok-p">({</span>
+    <span class="tok-nx">icon</span><span class="tok-o">:</span> <span class="tok-s2">&quot;//www.google.com/mapfiles/markerA.png&quot;</span><span class="tok-p">,</span>
+    <span class="tok-nx">position</span><span class="tok-o">:</span> <span class="tok-nx">pointA</span><span class="tok-p">,</span>
+    <span class="tok-nx">map</span><span class="tok-o">:</span> <span class="tok-nx">gMap</span><span class="tok-p">,</span>
+    <span class="tok-nx">draggable</span><span class="tok-o">:</span> <span class="tok-kc">true</span>
+<span class="tok-p">});</span>
 
-<span class="tok-c"># [tail -n +2] について： 先頭行に変な出力が出る為、それを捨てる</span>
-<span class="tok-nv">ls_result</span><span class="tok-o">=(</span><span class="tok-k">$(</span>ls -l --time-style<span class="tok-o">=</span><span class="tok-s2">&quot;long-iso&quot;</span> <span class="tok-k">${</span><span class="tok-nv">TARGET_DIR</span><span class="tok-k">}</span> <span class="tok-p">|</span> tail -n +2<span class="tok-k">)</span><span class="tok-o">)</span>
-<span class="tok-k">for</span> result in <span class="tok-s2">&quot;${ls_results[@]}&quot;</span><span class="tok-p">;</span> <span class="tok-k">do</span>
-
-  <span class="tok-nb">declare</span> -A INFO
-  <span class="tok-nv">ls_info</span><span class="tok-o">=(</span> <span class="tok-se">\</span>
-    <span class="tok-o">[</span><span class="tok-s2">&quot;filetype&quot;</span><span class="tok-o">]=</span><span class="tok-k">$(</span><span class="tok-nb">echo</span> <span class="tok-k">${</span><span class="tok-nv">result</span><span class="tok-k">}</span> <span class="tok-p">|</span> awk <span class="tok-s1">&#39;{print $1}&#39;</span> <span class="tok-p">|</span> cut -c 1<span class="tok-k">)</span> <span class="tok-se">\</span>
-    <span class="tok-o">[</span><span class="tok-s2">&quot;permission&quot;</span><span class="tok-o">]=</span><span class="tok-k">$(</span><span class="tok-nb">echo</span> <span class="tok-k">${</span><span class="tok-nv">result</span><span class="tok-k">}</span> <span class="tok-p">|</span> awk <span class="tok-s1">&#39;{print $1}&#39;</span> <span class="tok-p">|</span> cut -c 2-10<span class="tok-k">)</span> <span class="tok-se">\</span>
-    <span class="tok-o">[</span><span class="tok-s2">&quot;dir_count&quot;</span><span class="tok-o">]=</span><span class="tok-k">$(</span><span class="tok-nb">echo</span> <span class="tok-k">${</span><span class="tok-nv">result</span><span class="tok-k">}</span> <span class="tok-p">|</span> awk <span class="tok-s1">&#39;{print $2}&#39;</span><span class="tok-k">)</span> <span class="tok-se">\</span>
-    <span class="tok-o">[</span><span class="tok-s2">&quot;user&quot;</span><span class="tok-o">]=</span><span class="tok-k">$(</span><span class="tok-nb">echo</span> <span class="tok-k">${</span><span class="tok-nv">result</span><span class="tok-k">}</span> <span class="tok-p">|</span> awk <span class="tok-s1">&#39;{print $3}&#39;</span><span class="tok-k">)</span> <span class="tok-se">\</span>
-    <span class="tok-o">[</span><span class="tok-s2">&quot;group&quot;</span><span class="tok-o">]=</span><span class="tok-k">$(</span><span class="tok-nb">echo</span> <span class="tok-k">${</span><span class="tok-nv">result</span><span class="tok-k">}</span> <span class="tok-p">|</span> awk <span class="tok-s1">&#39;{print $4}&#39;</span><span class="tok-k">)</span> <span class="tok-se">\</span>
-    <span class="tok-o">[</span><span class="tok-s2">&quot;filesize&quot;</span><span class="tok-o">]=</span><span class="tok-k">$(</span><span class="tok-nb">echo</span> <span class="tok-k">${</span><span class="tok-nv">result</span><span class="tok-k">}</span> <span class="tok-p">|</span> awk <span class="tok-s1">&#39;{print $5}&#39;</span><span class="tok-k">)</span> <span class="tok-se">\</span>
-    <span class="tok-o">[</span><span class="tok-s2">&quot;timestamp&quot;</span><span class="tok-o">]=</span><span class="tok-k">$(</span><span class="tok-nb">echo</span> <span class="tok-k">${</span><span class="tok-nv">result</span><span class="tok-k">}</span> <span class="tok-p">|</span> awk <span class="tok-s1">&#39;{print $6,$7}&#39;</span><span class="tok-k">)</span> <span class="tok-se">\</span>
-    <span class="tok-o">[</span><span class="tok-s2">&quot;filename&quot;</span><span class="tok-o">]=</span><span class="tok-k">$(</span><span class="tok-nb">echo</span> <span class="tok-k">${</span><span class="tok-nv">result</span><span class="tok-k">}</span> <span class="tok-p">|</span> awk <span class="tok-s1">&#39;{for(i=8;i&lt;NF;i++){printf(&quot;%s&quot;,$i)}print $NF}&#39;</span><span class="tok-k">)</span>
-  <span class="tok-o">)</span>
-
-<span class="tok-k">done</span>
-
-<span class="tok-c"># エラー標準出力捨てる</span>
-<span class="tok-k">${</span><span class="tok-nv">comamnd</span><span class="tok-k">}</span> 1&gt;/dev/null 2&gt;/dev/null
-
-<span class="tok-c">############# よく使いそうなやつ</span>
-<span class="tok-c"># ディレクトリパスとファイル名連結(ディレクトリパスの末尾を気にしなくてよい)</span>
-make_path<span class="tok-o">()</span> <span class="tok-o">{[</span> <span class="tok-k">$(</span><span class="tok-nb">echo</span> <span class="tok-s2">&quot;$1&quot;</span> <span class="tok-p">|</span> tail -c2<span class="tok-k">)</span> <span class="tok-o">=</span> <span class="tok-s2">&quot;/&quot;</span> <span class="tok-o">]</span> <span class="tok-o">&amp;&amp;</span> <span class="tok-nb">echo</span> <span class="tok-s2">&quot;$1$2&quot;</span> <span class="tok-o">||</span> <span class="tok-nb">echo</span> <span class="tok-s2">&quot;$1/$2&quot;</span>
-<span class="tok-o">}</span>
-
-<span class="tok-c"># 前後スペーストリム</span>
-trim<span class="tok-o">()</span> <span class="tok-o">{</span> <span class="tok-nv">s</span><span class="tok-o">=</span><span class="tok-k">$(</span><span class="tok-nb">echo</span> <span class="tok-s2">&quot;$1&quot;</span> <span class="tok-p">|</span> sed <span class="tok-s1">&#39;s/^ *//&#39;</span> <span class="tok-p">|</span> sed <span class="tok-s1">&#39;s/ *$//&#39;</span><span class="tok-k">)</span>
-        <span class="tok-nv">s</span><span class="tok-o">=</span><span class="tok-k">$(</span><span class="tok-nb">echo</span> <span class="tok-s2">&quot;${s}&quot;</span> <span class="tok-p">|</span> sed <span class="tok-s1">&#39;s/^　*//&#39;</span> <span class="tok-p">|</span> sed <span class="tok-s1">&#39;s/　*$//&#39;</span><span class="tok-k">)</span> <span class="tok-p">;</span> <span class="tok-nb">echo</span> <span class="tok-s2">&quot;${s}&quot;</span>
-<span class="tok-o">}</span>
-<span class="tok-c">#############</span>
-
-<span class="tok-k">for</span> item in <span class="tok-k">${</span><span class="tok-nv">ARRAY</span><span class="tok-p">[@]</span><span class="tok-k">}</span><span class="tok-p">;</span> <span class="tok-k">do</span>
-    <span class="tok-nb">echo</span> <span class="tok-nv">$item</span>
-<span class="tok-k">done</span>
-
-
-<span class="tok-c"># ファイル内の文字列を置換し、上書きする</span>
-sed -i -e <span class="tok-s2">&quot;s/${before}/${after}/g&quot;</span> <span class="tok-k">${</span><span class="tok-nv">filename</span><span class="tok-k">}</span>
-
-
-<span class="tok-c"># ダウンロード</span>
-scp ~/.ssh/id_rsa.pub hoge_user@hogehoge.hoge.com:~/
-<span class="tok-c"># アップロード</span>
-scp ~/.ssh/id_rsa.pub hoge_user@hogehoge.hoge.com:~/.ssh/id_rsa.pub
-
-
-<span class="tok-k">while</span> <span class="tok-nv">IFS</span><span class="tok-o">=</span><span class="tok-s1">&#39;&#39;</span> <span class="tok-nb">read</span> -r p<span class="tok-p">;</span> <span class="tok-k">do</span>
-    print <span class="tok-s2">&quot;%s\n&quot;</span> <span class="tok-s2">&quot;$p&quot;</span>
-<span class="tok-k">done</span> &lt; <span class="tok-s2">&quot;$1&quot;</span>
-
-<span class="tok-k">while</span> <span class="tok-nb">true</span><span class="tok-p">;</span> <span class="tok-k">do</span>
-    <span class="tok-nb">read</span> -p <span class="tok-s2">&quot;Do you wish to install this program?&quot;</span> yn
-    <span class="tok-k">case</span> <span class="tok-nv">$yn</span> in
-        <span class="tok-o">[</span>Yy<span class="tok-o">]</span>* <span class="tok-o">)</span> make install<span class="tok-p">;</span> <span class="tok-nb">break</span><span class="tok-p">;;</span>
-        <span class="tok-o">[</span>Nn<span class="tok-o">]</span>* <span class="tok-o">)</span> <span class="tok-nb">exit</span><span class="tok-p">;;</span>
-        * <span class="tok-o">)</span> <span class="tok-nb">echo</span> <span class="tok-s2">&quot;Please answer yes or no.&quot;</span><span class="tok-p">;;</span>
-    <span class="tok-k">esac</span>
-<span class="tok-k">done</span></code></pre>
+<span class="tok-c1">// マーカーBの描画</span>
+<span class="tok-kd">var</span> <span class="tok-nx">markerB</span> <span class="tok-o">=</span>  <span class="tok-k">new</span> <span class="tok-nx">google</span><span class="tok-p">.</span><span class="tok-nx">maps</span><span class="tok-p">.</span><span class="tok-nx">Marker</span><span class="tok-p">({</span>
+    <span class="tok-nx">icon</span><span class="tok-o">:</span> <span class="tok-s2">&quot;//www.google.com/mapfiles/markerB.png&quot;</span><span class="tok-p">,</span>
+    <span class="tok-nx">position</span><span class="tok-o">:</span> <span class="tok-nx">pointB</span><span class="tok-p">,</span>
+    <span class="tok-nx">map</span><span class="tok-o">:</span> <span class="tok-nx">gMap</span><span class="tok-p">,</span>
+    <span class="tok-nx">draggable</span><span class="tok-o">:</span> <span class="tok-kc">true</span>
+<span class="tok-p">});</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>参考：  <a href="http://jsdo.it/ksk1015/txhs" class="bare">http://jsdo.it/ksk1015/txhs</a></p>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-10 23:13:27 JST
+Last updated 2016-12-10 23:45:09 JST
 </div>
 </div>
 </body>
