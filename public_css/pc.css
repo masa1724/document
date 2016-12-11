@@ -46,14 +46,15 @@
   float: left;
 }
 
-.content-title{
+.current-path{
   width:80%;
   margin-bottom: 30px;
-  border:1px solid #EBEBEB;
+  border:2px solid #F1F1F1;
+  box-shadow: inset 4px 4px 4px #999;
 }
 
-.content-title-text{
-  font-size: 30px;
+.current-path-text{
+  font-size: 20px;
 }
 
 
