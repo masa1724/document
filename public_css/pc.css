@@ -84,14 +84,13 @@
     box-shadow: 5px 6px 7px #ccc;
     background-color:#FDF8EF;
     padding:4px 11px;
+    padding: 3 4 1 6;
 }
 
 .link-list a {
   display: block;
-  padding:5px 10px;
+  padding: 2 5 2 5;
 }
-
-
 
 
 pre {

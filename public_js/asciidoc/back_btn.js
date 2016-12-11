@@ -3,8 +3,8 @@ function createBackButton() {
   btnElem.type="button";
   btnElem.innerHTML="戻る";
   btnElem.style.position="fixed";
-  btnElem.style.width=60;
-  btnElem.style.height=40;
+  btnElem.style.width=70;
+  btnElem.style.height=50;
   btnElem.style.backgroundColor="#666C98";
   btnElem.style.color="white";
 
