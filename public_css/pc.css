@@ -73,16 +73,19 @@
     box-shadow: 5px 6px 7px #ccc;
 }
 
+.link-list a {
+  display: block;
+  padding:5px 10px;
+}
+
 .link-list li:hover {
   text-decoration:underline;
-  background-color: #ff0000;
 }
 
 .link-list li:active {
   text-decoration:underline;
   background-color: #ff0000;
 }
-
 
 pre {
   text-align:left;

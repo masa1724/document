@@ -95,11 +95,9 @@ a:visited {
 }
 
  a:hover {
-  color:#ff0000;
   text-decoration:underline;
 }
 
  a:active {
-  color:#ff0000;
   text-decoration:underline;
 }
