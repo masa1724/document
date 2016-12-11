@@ -64,7 +64,14 @@
 
 .current-path-text a:hover {
   text-decoration: none;
+  color:#ff0000;
 }
+
+.current-path-text a:active {
+  text-decoration: none;
+  color:#ff0000;
+}
+
 
 
 /*** 2.1.2 サイドメニュー **************************************************************
