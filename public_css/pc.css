@@ -83,6 +83,9 @@
 .link-list li:hover {
     box-shadow: 5px 6px 7px #ccc;
     background-color:#FDF8EF;
+}
+
+.link-list a:hover {
     padding: 3px 4px 1px 6px;
 }
 
