@@ -58,11 +58,6 @@
   padding: 15px 0;
 }
 
-.current-path-text a:link { color: #0000ff; }　/*リンクの色*/
-.current-path-text a:visited { color: #0000ff; }　/*訪問済みリンクの色*/
-.current-path-text a:hover { color: #ff0000; }　/*マウスオン時のリンクの色*/
-.current-path-text a:active { color: #ff0000; }　/*クリックしている時のリンクの色*/
-
 
 /*** 2.1.2 サイドメニュー **************************************************************
 .side-menu-container{
