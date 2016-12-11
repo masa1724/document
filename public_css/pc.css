@@ -29,13 +29,13 @@
 
 /** 2.1 メイン包含 **/
 .main-container{
+  width:70%;
   display: inline-block;
 }
 
 /*** 2.1.1 コンテンツ ***/
 .content{
-  min-width:60%;
-  max-width:1200px;
+  width:100%;
   background-color: #FCFCFC;
   border:1px solid #EBEBEB;
   float: left;
