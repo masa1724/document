@@ -58,6 +58,7 @@
   padding: 15px 0;
 }
 
+/*** .link-list **************************************************************/
 .link-list{
   text-align:left;
 
@@ -70,6 +71,9 @@
 .link-list li {
     background-color: #FBFAF5;
     border-bottom:1px solid #84b2e0;
+}
+
+.link-list li:hover {
     box-shadow: 5px 6px 7px #ccc;
 }
 
@@ -77,6 +81,9 @@
   display: block;
   padding:5px 10px;
 }
+
+
+
 
 pre {
   text-align:left;
