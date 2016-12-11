@@ -58,32 +58,6 @@
   padding: 15px 0;
 }
 
-.current-path-text a {
-  color:#2700D0;
-  text-decoration: none;
-}
-
-.current-path-text a:link {
-  color:#2700D0;
-  text-decoration: none;
-}
-
-.link-list li:visited {
-  color:#2700D0;
-  text-decoration: none;
-}
-
-.current-path-text a:hover {
-  color:#ff0000;
-  text-decoration:underline;
-}
-
-.current-path-text a:active {
-  color:#ff0000;
-  text-decoration:underline;
-}
-
-
 .link-list{
   text-align:left;
 
@@ -99,29 +73,10 @@
     box-shadow: 5px 6px 7px #ccc;
 }
 
-.link-list a {
-  display: block;
-}
-
-.link-list a {
-  text-decoration: none;
-  padding:5px 10px;
-}
-
-.link-list a:link {
-  color:#2700D0;
-  text-decoration: none;
-}
-
-.link-list li:visited {
-  color:#2700D0;
-  text-decoration: none;
-}
-
 .link-list li:hover {
   text-decoration:underline;
+  background-color: #ff0000;
 }
-
 
 .link-list li:active {
   text-decoration:underline;
