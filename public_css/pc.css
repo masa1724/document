@@ -64,18 +64,71 @@
 
 .current-path-text a:link {
   text-decoration: none;
+  color:#2700D0;
 }
 
 .current-path-text a:hover {
   text-decoration: none;
-  color:#ff0000;
+  border-bottom:1px #2700D0;
 }
 
 .current-path-text a:active {
   text-decoration: none;
   color:#ff0000;
+  border-bottom:1px #ff0000;
 }
 
+
+
+
+.link-list{
+  text-align:left;
+
+  margin-top: 5px;
+  margin-bottom: 5px;
+  list-style-type:none;
+  box-shadow: 1px 2px 3px #ccc;
+}
+
+.link-list li {
+    background-color: #FBFAF5;
+    border-bottom:1px solid #84b2e0;
+    box-shadow: 5px 6px 7px #ccc;
+}
+
+
+.link-list a {
+  display: block;
+}
+
+.link-list a {
+  text-decoration: none;
+  padding:5px 10px;
+}
+
+.link-list a:link {
+  text-decoration: none;
+  color:#2700D0;
+}
+
+.link-list li:hover {
+  border-bottom:1px #2700D0;
+}
+
+.link-list li:active {
+  text-decoration: none;
+  background-color: #ff0000;
+  border-bottom:1px #ff0000;
+}
+
+
+pre {
+  text-align:left;
+  style="background-color: #F4F4F4;
+  padding 10px;
+  width:100%;
+  box-shadow: 1px 2px 3px #ccc;
+}
 
 
 /*** 2.1.2 サイドメニュー **************************************************************
@@ -105,55 +158,6 @@
 .side-menu-item:hover {background-color: red;}
 .side-menu-item a {display: block;}
 */
-
-.link-list{
-  text-align:left;
-
-  margin-top: 5px;
-  margin-bottom: 5px;
-  list-style-type:none;
-  box-shadow: 1px 2px 3px #ccc;
-}
-
-.link-list li {
-    background-color: #FBFAF5;
-    border-bottom:1px solid #84b2e0;
-    box-shadow: 3px 4px 5px #ccc;
-}
-
-.link-list li:hover {
-  background-color: red;
-}
-
-.link-list a {
-  display: block;
-}
-
-.link-list a {
-  text-decoration: none;
-  padding:5px 10px;
-}
-
-.link-list a:link {
-  text-decoration: none;
-}
-
-.link-list a:hover {
-  text-decoration: none;
-}
-
-.link-list a:active {
-  text-decoration: none;
-}
-
-
-pre {
-  text-align:left;
-  style="background-color: #F4F4F4;
-  padding 10px;
-  width:100%;
-  box-shadow: 1px 2px 3px #ccc;
-}
 
 .btn1-size{
   width:140px; height:50px;
