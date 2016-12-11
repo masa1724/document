@@ -78,15 +78,6 @@
   padding:5px 10px;
 }
 
-.link-list li:hover {
-  text-decoration:underline;
-}
-
-.link-list li:active {
-  text-decoration:underline;
-  background-color: #ff0000;
-}
-
 pre {
   text-align:left;
   style="background-color: #F4F4F4;
