@@ -34,6 +34,7 @@
 
 /*** 2.1.1 コンテンツ ***/
 .content{
+  min-width:300px;
   max-width:1000px;
   background-color: #FCFCFC;
   border:1px solid #EBEBEB;
