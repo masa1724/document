@@ -78,6 +78,7 @@
     border-radius: 5px;        /* CSS3草案 */
     -webkit-border-radius: 5px;    /* Safari,Google Chrome用 */
     -moz-border-radius: 5px;   /* Firefox用 */
+    padding: 2 5 2 5;
 }
 
 .link-list li:hover {
@@ -89,7 +90,6 @@
 
 .link-list a {
   display: block;
-  padding: 2 5 2 5;
 }
 
 
