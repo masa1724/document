@@ -53,9 +53,17 @@
   box-shadow: inset 4px 4px 4px #999;
 }
 
-.current-path-text{
+.current-path-text {
   font-size: 30px;
   padding: 15px 0;
+}
+
+.current-path-text a {
+  text-decoration: none;
+}
+
+.current-path-text a:hover {
+  text-decoration: none;
 }
 
 
