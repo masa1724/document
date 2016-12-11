@@ -19,17 +19,10 @@
   color:rgba(255,255,255,.8);
   line-height:1.44;
   clear: both;
-  position: relative;
 }
 
-.footer{
+.last-update-time{
   display:block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
 }
 
 /** 2 メイン  *************************************************************************/
