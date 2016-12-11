@@ -13,13 +13,14 @@
 /*** 3 フッター  ************************************************************************/
 .footer{
   width:100%; height:100px;
-  background-color: #333333;
+  background-color: rgba(0,0,0,.8);
   border:1px solid #EBEBEB;
 
   clear: both;
 }
 .footer{
-  color:#CCCCD2;
+  color:rgba(255,255,255,.8);
+  line-height:1.44;
 }
 
 /** 2 メイン  *************************************************************************/
