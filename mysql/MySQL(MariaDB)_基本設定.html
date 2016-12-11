@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>クラウドストレージ ツール</title>
+<title>MySQL(MariaDB) 基本設定</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -486,86 +486,225 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article">
 <div id="header">
-<h1>クラウドストレージ ツール</h1>
+<h1>MySQL(MariaDB) 基本設定</h1>
 <div id="toc" class="toc">
 <div id="toctitle"></div>
 <ul class="sectlevel2">
-<li><a href="#_google_drive_ocamlfuse">1. google-drive-ocamlfuse</a></li>
-<li><a href="#_rclone">2. rclone</a></li>
+<li><a href="#_インストール">1. インストール</a></li>
+<li><a href="#_データベースの作成_変更_削除">2. データベースの作成・変更・削除</a></li>
+<li><a href="#_テーブルの作成_変更_削除">3. テーブルの作成・変更・削除</a></li>
+<li><a href="#_ユーザ作成_権限設定">4. ユーザ作成・権限設定</a></li>
+<li><a href="#_設定ファイル">5. 設定ファイル</a></li>
+<li><a href="#_その他">6. その他</a></li>
+<li><a href="#_mysqlのサービス公開">7. MySQLのサービス公開</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect2">
-<h3 id="_google_drive_ocamlfuse">1. google-drive-ocamlfuse</h3>
-<div class="paragraph">
-<p>windowsのGoogleDriveクライアントと同じ感じで
-常にファイル更新を監視し、クラウドと同期してくれる。
-ただ、監視続けているため、コンソール上での操作が遅くなる
-(主に同期先フォルダと同じフォルダ内)</p>
-</div>
+<h3 id="_インストール">1. インストール</h3>
+<hr>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># リポジトリ有効化</span>
-sudo dnf copr <span class="tok-nb">enable </span>sergiomb/google-drive-ocamlfuse
-<span class="tok-c"># GoogleDriveインストール</span>
-sudo dnf install google-drive-ocamlfuse
-<span class="tok-c"># GoogleDrive用のディレクトリ作成</span>
-mkdir ~/GoogleDrive
-<span class="tok-c"># GoogleDrive起動(.bashrc等に書く)</span>
-google-drive-ocamlfuse ~/GoogleDrive
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># yumリポジトリファイル作成(https://mariadb.com/kb/ja/yum/)</span>
+<span class="tok-nv">$ </span>sudo vim /etc/yum.repos.d/MariaDB.repo
 
-ps -aux <span class="tok-s2">&quot;*google*&quot;</span></code></pre>
+------------------------------------------------------
+<span class="tok-o">[</span>mariadb<span class="tok-o">]</span>
+<span class="tok-nv">name</span> <span class="tok-o">=</span> MariaDB
+<span class="tok-nv">baseurl</span> <span class="tok-o">=</span> http://yum.mariadb.org/10.1/centos7-amd64
+<span class="tok-nv">gpgkey</span><span class="tok-o">=</span>https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+<span class="tok-nv">gpgcheck</span><span class="tok-o">=</span>1
+------------------------------------------------------
+
+<span class="tok-c"># メタデータ更新</span>
+<span class="tok-nv">$ </span>sudo yum clean metadata
+
+<span class="tok-c"># MariaDBインストール</span>
+<span class="tok-nv">$ </span>sudo yum -y install MariaDB-server MariaDB-client
+
+<span class="tok-c"># MySQLへログイン</span>
+<span class="tok-nv">$ </span>mysql -u root -p
+
+<span class="tok-c"># MySQL インストール</span>
+wget http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
+sudo yum --nogpgcheck localinstall mysql-community-release-el7-5.noarch.rpm
+sudo yum --enablerepo<span class="tok-o">=</span>mysql56-community install mysql-community-server
+sudo mv ./mysql-community-release-el7-5.noarch.rpm /usr/local/src/</code></pre>
+</div>
+</div>
+<div class="imageblock" style="text-align: left">
+<div class="content">
+<img src="img_MySQL/cp1.jpg" alt="cp1">
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rclone">2. rclone</h3>
-<div class="paragraph">
-<p>google-drive-ocamlfuseと異なり、監視はしない。
-好きなタイミングで同期等が行えるがコマンド打つのが多少めんどくさい。
-syncオプションを使えば変更したファイルのみ同期できるのが便利。</p>
+<h3 id="_データベースの作成_変更_削除">2. データベースの作成・変更・削除</h3>
+<hr>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sql"><span class="tok-c1">-- データベース作成(文字コード指定)</span>
+<span class="tok-k">create</span> <span class="tok-k">database</span> <span class="tok-n">db_name</span> <span class="tok-k">default</span> <span class="tok-nb">character</span> <span class="tok-k">set</span> <span class="tok-n">utf8</span><span class="tok-p">;</span>
+
+<span class="tok-c1">-- 使用可能な文字コード確認</span>
+<span class="tok-k">show</span> <span class="tok-k">global</span> <span class="tok-n">variables</span> <span class="tok-k">like</span> <span class="tok-s1">&#39;%char%&#39;</span><span class="tok-p">;</span>
+
+<span class="tok-c1">-- データベース一覧表示</span>
+<span class="tok-k">show</span> <span class="tok-n">databases</span><span class="tok-p">;</span>
+
+<span class="tok-c1">-- データベースの切替</span>
+<span class="tok-n">use</span> <span class="tok-n">hoge</span><span class="tok-p">;</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_テーブルの作成_変更_削除">3. テーブルの作成・変更・削除</h3>
+<hr>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sql"><span class="tok-c1">-- データベース作成(文字コード指定)</span>
+<span class="tok-k">create</span> <span class="tok-k">table</span> <span class="tok-n">user_info</span><span class="tok-p">(</span>
+  <span class="tok-n">id</span> <span class="tok-nb">int</span><span class="tok-p">,</span>
+  <span class="tok-n">name</span> <span class="tok-nb">varchar</span><span class="tok-p">(</span><span class="tok-mi">50</span><span class="tok-p">)</span>
+<span class="tok-p">);</span>
+
+<span class="tok-k">insert</span> <span class="tok-k">into</span> <span class="tok-n">test</span> <span class="tok-k">values</span><span class="tok-p">(</span><span class="tok-mi">9999</span><span class="tok-p">,</span><span class="tok-s1">&#39;sgym&#39;</span><span class="tok-p">);</span>
+
+<span class="tok-c1">-- テーブル一覧表示</span>
+<span class="tok-k">show</span> <span class="tok-n">tables</span><span class="tok-p">;</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ユーザ作成_権限設定">4. ユーザ作成・権限設定</h3>
+<hr>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sql"><span class="tok-c1">-- ユーザ確認</span>
+<span class="tok-k">select</span> <span class="tok-k">user</span><span class="tok-p">,</span><span class="tok-k">host</span><span class="tok-p">,</span><span class="tok-n">password</span> <span class="tok-k">from</span> <span class="tok-n">mysql</span><span class="tok-p">.</span><span class="tok-k">user</span><span class="tok-p">;</span>
+
+<span class="tok-c1">-- ユーザ作成</span>
+<span class="tok-k">CREATE</span> <span class="tok-k">USER</span> <span class="tok-s1">&#39;mysql-owner&#39;</span><span class="tok-o">@</span><span class="tok-s1">&#39;192.168.0.102&#39;</span> <span class="tok-n">IDENTIFIED</span> <span class="tok-k">BY</span> <span class="tok-s1">&#39;password&#39;</span><span class="tok-p">;</span>
+<span class="tok-c1">-- ホストは指定しない場合</span>
+<span class="tok-k">CREATE</span> <span class="tok-k">USER</span> <span class="tok-s1">&#39;mysql-owner&#39;</span><span class="tok-o">@</span><span class="tok-s1">&#39;%&#39;</span> <span class="tok-n">IDENTIFIED</span> <span class="tok-k">BY</span> <span class="tok-s1">&#39;password&#39;</span><span class="tok-p">;</span>
+
+<span class="tok-c1">-- データベースに対する全権限を付加</span>
+<span class="tok-k">grant</span> <span class="tok-k">all</span> <span class="tok-k">on</span> <span class="tok-o">`</span><span class="tok-n">db_name</span><span class="tok-o">`</span><span class="tok-p">.</span><span class="tok-o">*</span> <span class="tok-k">to</span> <span class="tok-s1">&#39;mysql-owner&#39;</span><span class="tok-o">@</span><span class="tok-s1">&#39;%&#39;</span><span class="tok-p">;</span>
+
+<span class="tok-c1">-- 特定テーブルへに対する権限付加</span>
+<span class="tok-k">GRANT</span> <span class="tok-k">ALL</span> <span class="tok-k">PRIVILEGES</span> <span class="tok-k">ON</span> <span class="tok-o">`</span><span class="tok-n">db_name</span><span class="tok-o">`</span><span class="tok-p">.</span><span class="tok-k">table_name</span> <span class="tok-k">TO</span> <span class="tok-s1">&#39;mysql-owner&#39;</span><span class="tok-o">@</span><span class="tok-s1">&#39;%&#39;</span><span class="tok-p">;</span>
+
+<span class="tok-c1">-- クエリ別のアクセス許可(SELECT,UPDATE,INSERT,DELETE)</span>
+<span class="tok-k">GRANT</span> <span class="tok-k">SELECT</span><span class="tok-p">,</span><span class="tok-k">UPDATE</span><span class="tok-p">,</span><span class="tok-k">INSERT</span><span class="tok-p">,</span><span class="tok-k">DELETE</span> <span class="tok-k">ON</span> <span class="tok-o">`</span><span class="tok-n">db_name</span><span class="tok-o">`</span><span class="tok-p">.</span><span class="tok-k">table_name</span> <span class="tok-k">TO</span> <span class="tok-s1">&#39;mysql-owner&#39;</span><span class="tok-o">@</span><span class="tok-s1">&#39;%&#39;</span><span class="tok-p">;</span>
+
+<span class="tok-c1">-- 権限確認</span>
+<span class="tok-k">SHOW</span> <span class="tok-n">GRANTS</span> <span class="tok-k">for</span> <span class="tok-s1">&#39;mysql-owner&#39;</span><span class="tok-o">@</span><span class="tok-s1">&#39;%&#39;</span><span class="tok-p">;</span>
+
+<span class="tok-c1">-- ユーザ削除(削除した際、ユーザに設定されている権限情報も削除される)</span>
+<span class="tok-k">DROP</span> <span class="tok-k">USER</span> <span class="tok-s1">&#39;mysql-owner&#39;</span><span class="tok-o">@</span><span class="tok-s1">&#39;%&#39;</span><span class="tok-p">;</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_設定ファイル">5. 設定ファイル</h3>
+<hr>
+<table class="tableblock frame-topbot grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">種類</th>
+<th class="tableblock halign-center valign-top">ファイルパス</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">クライアント側設定ファイル</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>/etc/my.cnf.d/client.conf</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">サーバ側設定ファイル</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>/etc/my.cnf.d/server.conf</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">/etc/my.cnf.d/client.conf</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># クライアントの文字コード設定</span>
+<span class="tok-nv">$ </span>sudo cp -p /etc/my.cnf.d/client.conf<span class="tok-o">{</span>,.bk<span class="tok-o">}</span>
+<span class="tok-nv">$ </span>sudo vim /etc/my.cnf.d/client.conf</code></pre>
+</div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="sh">http://rclone.org/install/
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-o">[</span>client<span class="tok-o">]</span>
+default-character-set<span class="tok-o">=</span>utf8</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">/etc/my.cnf.d/server.conf</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># サーバーの文字コード設定</span>
+<span class="tok-nv">$ </span>sudo cp -p /etc/my.cnf.d/server.conf<span class="tok-o">{</span>,.bk<span class="tok-o">}</span>
+<span class="tok-nv">$ </span>sudo vim /etc/my.cnf.d/server.conf</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-o">[</span>mysqld<span class="tok-o">]</span>
+character-set-server<span class="tok-o">=</span>utf8</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>変更後は再起動すること</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-nv">$ </span>sudo systemctl restart mariadb</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_その他">6. その他</h3>
+<hr>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># バックアップ</span>
+<span class="tok-c"># 特定のデータベースを指定してファイルに吐き出す</span>
+mysqldump -u root -p <span class="tok-k">${</span><span class="tok-nv">db_name</span><span class="tok-k">}</span> &gt; dump.sql
 
-<span class="tok-c">#ダウンロード</span>
-curl -O http://downloads.rclone.org/rclone-current-linux-amd64.zip
-unzip rclone-current-linux-amd64.zip
-<span class="tok-nb">cd </span>rclone-*-linux-amd64
+<span class="tok-c"># リストア</span>
+<span class="tok-c"># リストア先のデータベースとリストア対象のファイルを指定する</span>
+mysql -u root -p <span class="tok-k">${</span><span class="tok-nv">db_name</span><span class="tok-k">}</span> &lt; dump.sql</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_mysqlのサービス公開">7. MySQLのサービス公開</h3>
+<hr>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-nv">$ </span>sudo systemctl start mariadb
+<span class="tok-nv">$ </span>sudo systemctl <span class="tok-nb">enable </span>mariadb
+<span class="tok-nv">$ </span>sudo systemctl is-enabled mariadb
 
-sudo cp rclone /usr/sbin/
-sudo chown root:root /usr/sbin/rclone
-sudo chmod <span class="tok-m">755</span> /usr/sbin/rclone
-
-rclone config
-http://rclone.org/docs/
-
-<span class="tok-c"># rcloneの設定</span>
-e/n/d/s/q&gt; n
-name&gt; GoogleDrive
-6
-Enterを入力
-
-<span class="tok-c"># クラウド上に対するls</span>
-rclone ls GoogleDrive:
-
-<span class="tok-c"># 全ファイルのダウンロード</span>
-rclone sync GoogleDrive: ~/GoogleDrive
-
-<span class="tok-c"># アップロード</span>
-rclone copy foobar.txt GoogleDrive:example_dir
-
-<span class="tok-c"># 同期</span>
-rclone sync ~/GoogleDrive GoogleDrive:</code></pre>
+<span class="tok-c"># MySQLのサービス公開</span>
+<span class="tok-nv">$ </span>sudo firewall-cmd --list-all
+<span class="tok-nv">$ </span>sudo firewall-cmd --permanent --add-service<span class="tok-o">=</span>mysql
+<span class="tok-nv">$ </span>sudo firewall-cmd --permanent --add-port<span class="tok-o">=</span>3306/tcp
+<span class="tok-nv">$ </span>sudo firewall-cmd --reload
+<span class="tok-nv">$ </span>sudo firewall-cmd --list-all</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-10 23:13:27 JST
+Last updated 2016-12-11 08:29:42 JST
 </div>
 </div>
 </body>

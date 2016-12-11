@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>Linux インストール時にやること</title>
+<title>git設定</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -486,60 +486,99 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article">
 <div id="header">
-<h1>Linux インストール時にやること</h1>
+<h1>git設定</h1>
+<div id="toc" class="toc">
+<div id="toctitle"></div>
+<ul class="sectlevel2">
+<li><a href="#_インストール">インストール</a></li>
+<li><a href="#_基本設定">基本設定</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
+<div class="sect2">
+<h3 id="_インストール">インストール</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># インストール</span>
-dnf install 〜
-<span class="tok-c"># アンインストール</span>
-dnf remove 〜
-<span class="tok-c"># アップデート</span>
-dnf update
-<span class="tok-c"># パッケージの検索</span>
-dnf search 〜
-<span class="tok-c"># インストール済みパッケージの表示</span>
-dnf list installed
-<span class="tok-c"># 利用可能パッケージの表示</span>
-dnf list available
-<span class="tok-c"># パッケージの情報表示</span>
-dnf info 〜
-<span class="tok-c"># インストール済みパッケージに含まれるファイルの表示</span>
-rpm -ql 〜
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># バージョン確認</span>
+sudo dnf search git
 
-sudo dnf update
-sudo dnf -y install ibus-mozc
-sudo dnf install xsel
-<span class="tok-c"># cat .cvimrc | xsel -b クリップボードにコピー</span>
+<span class="tok-c"># インストール</span>
+sudo dnf install -y git</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_基本設定">基本設定</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># ユーザ情報</span>
+git config --global user.name <span class="tok-k">${</span><span class="tok-nv">GIT</span><span class="tok-p">[</span><span class="tok-s1">&#39;user.name&#39;</span><span class="tok-p">]</span><span class="tok-k">}</span>
+git config --global user.email <span class="tok-k">${</span><span class="tok-nv">GIT</span><span class="tok-p">[</span><span class="tok-s1">&#39;user.email&#39;</span><span class="tok-p">]</span><span class="tok-k">}</span>
 
-<span class="tok-c"># ディレクトリ名を英語か</span>
-<span class="tok-nv">LANG</span><span class="tok-o">=</span>C xdg-user-dirs-gtk-update
+<span class="tok-c"># コミット時のコメント入力等で使用するエディタ</span>
+git config --global core.editor <span class="tok-s2">&quot;/usr/bin/vim&quot;</span>
 
-<span class="tok-c"># Chromeのflashインストール</span>
-rpm -ivh https://sourceforge.net/projects/postinstaller/files/fedora/releases/24/x86_64/updates/chromium-pepper-flash-23.0.0.162-1.fc24.x86_64.rpm/download
+<span class="tok-c"># 標準出力の色付け</span>
+git config --global color.ui <span class="tok-nb">true</span>
 
-<span class="tok-c"># google-drive-ocamlfuse</span>
-<span class="tok-c"># rclone</span>
-https://github.com/masa1724/document/blob/master/Linux/cloud-storage.adoc
+<span class="tok-c"># 自動改行変換 無効化</span>
+git config --global core.autoCRLF <span class="tok-nb">false</span>
 
-<span class="tok-c"># JDK</span>
-https://github.com/masa1724/document/blob/master/java/JDK-settings.adoc
+<span class="tok-c"># 認証情報のキャッシュ</span>
+<span class="tok-c"># 初回にHTTPSで認証を行った後、認証情報をキャッシュで保持する。</span>
+<span class="tok-c"># 以降、キャッシュが有効な間はパスワード入力不要。</span>
+git config --global credential.helper <span class="tok-s1">&#39;cache --timeout=3600&#39;</span>
 
-<span class="tok-c"># Eclipse</span>
-https://github.com/masa1724/document/blob/master/Eclipse/Eclipse-settings.adoc
+<span class="tok-c"># 設定情報確認</span>
+git config --list
 
-<span class="tok-c"># git (Kororaはデフォルトでインストール済み v2.7.4）</span>
-https://github.com/masa1724/document/blob/master/git/git-settings.adoc
+<span class="tok-c"># 設定を削除</span>
+<span class="tok-c"># git config --global --unset color.ui</span>
+<span class="tok-c"># 特定のリポジトリへのみ設定</span>
+<span class="tok-c"># git config -l -f .git/config color.ui true</span></code></pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre> ↓HTTPSのほうが楽だからもうやらん
+=== SSH設定</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-nb">cd</span> <span class="tok-nv">$HOME</span>/.ssh
 
-<span class="tok-c"># Ruby</span>
-https://github.com/masa1724/document/blob/master/Ruby/ruby-settings.adoc</code></pre>
+<span class="tok-c"># SSHキー生成</span>
+sudo ssh-keygen -t rsa -f <span class="tok-s2">&quot;korora_git_rsa&quot;</span>
+
+<span class="tok-c"># いったん権限を変える</span>
+sudo chmod <span class="tok-m">777</span> <span class="tok-s2">&quot;korora_git_rsa&quot;</span>
+
+<span class="tok-c"># SSHAgent起動</span>
+<span class="tok-nb">eval</span> <span class="tok-s2">&quot;$(ssh-agent)&quot;</span>
+
+<span class="tok-c"># SSHkキーを登録</span>
+ssh-add <span class="tok-s2">&quot;korora_git_rsa&quot;</span>
+
+<span class="tok-c"># 所有者のみ読込、書込出来るようにする</span>
+sudo chmod <span class="tok-m">600</span> <span class="tok-s2">&quot;korora_git_rsa&quot;</span>
+
+<span class="tok-c"># 公開鍵の内容をクリップボードにコピー</span>
+sudo cat <span class="tok-s2">&quot;korora_git_rsa.pub&quot;</span> <span class="tok-p">|</span> xsel --clipboard --input
+
+<span class="tok-c"># Settingの画面を開く</span>
+<span class="tok-c"># [New SSH Key]ボタンを押下</span>
+<span class="tok-c"># Title : 鍵を渡す</span>
+<span class="tok-c"># Key : コピペした内容</span>
+google-chrome-stable --new-window https://github.com/settings/ssh</code></pre>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-10 23:13:27 JST
+Last updated 2016-12-11 08:44:05 JST
 </div>
 </div>
 </body>

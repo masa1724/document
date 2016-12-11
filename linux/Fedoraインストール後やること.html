@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>使用許諾を表示させなくする</title>
+<title>Fedoraインストール後やること</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -486,34 +486,60 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article">
 <div id="header">
-<h1>使用許諾を表示させなくする</h1>
+<h1>Fedoraインストール後やること</h1>
 </div>
 <div id="content">
-<div class="sidebarblock">
+<div class="listingblock">
 <div class="content">
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>左下のWindowsマークを押下</p>
-</li>
-<li>
-<p>「excel」と入力</p>
-</li>
-<li>
-<p>一覧のExcelを右クリックし、管理者として実行</p>
-</li>
-<li>
-<p>使用許諾にて、同意するを選択
-→ 以降表示されないことを確認</p>
-</li>
-</ol>
-</div>
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># インストール</span>
+dnf install 〜
+<span class="tok-c"># アンインストール</span>
+dnf remove 〜
+<span class="tok-c"># アップデート</span>
+dnf update
+<span class="tok-c"># パッケージの検索</span>
+dnf search 〜
+<span class="tok-c"># インストール済みパッケージの表示</span>
+dnf list installed
+<span class="tok-c"># 利用可能パッケージの表示</span>
+dnf list available
+<span class="tok-c"># パッケージの情報表示</span>
+dnf info 〜
+<span class="tok-c"># インストール済みパッケージに含まれるファイルの表示</span>
+rpm -ql 〜
+
+sudo dnf update
+sudo dnf -y install ibus-mozc
+sudo dnf install xsel
+<span class="tok-c"># cat .cvimrc | xsel -b クリップボードにコピー</span>
+
+<span class="tok-c"># ディレクトリ名を英語か</span>
+<span class="tok-nv">LANG</span><span class="tok-o">=</span>C xdg-user-dirs-gtk-update
+
+<span class="tok-c"># Chromeのflashインストール</span>
+rpm -ivh https://sourceforge.net/projects/postinstaller/files/fedora/releases/24/x86_64/updates/chromium-pepper-flash-23.0.0.162-1.fc24.x86_64.rpm/download
+
+<span class="tok-c"># google-drive-ocamlfuse</span>
+<span class="tok-c"># rclone</span>
+https://github.com/masa1724/document/blob/master/Linux/cloud-storage.adoc
+
+<span class="tok-c"># JDK</span>
+https://github.com/masa1724/document/blob/master/java/JDK-settings.adoc
+
+<span class="tok-c"># Eclipse</span>
+https://github.com/masa1724/document/blob/master/Eclipse/Eclipse-settings.adoc
+
+<span class="tok-c"># git (Kororaはデフォルトでインストール済み v2.7.4）</span>
+https://github.com/masa1724/document/blob/master/git/git-settings.adoc
+
+<span class="tok-c"># Ruby</span>
+https://github.com/masa1724/document/blob/master/Ruby/ruby-settings.adoc</code></pre>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-11 09:40:03 JST
+Last updated 2016-12-11 08:32:05 JST
 </div>
 </div>
 </body>

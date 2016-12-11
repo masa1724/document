@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>使用許諾を表示させなくする</title>
+<title>java-silver間違ったとこメモ</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -486,34 +486,65 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article">
 <div id="header">
-<h1>使用許諾を表示させなくする</h1>
+<h1>java-silver間違ったとこメモ</h1>
+<div id="toc" class="toc">
+<div id="toctitle"></div>
+<ul class="sectlevel2">
+<li><a href="#_第3章">第3章</a></li>
+<li><a href="#_第4章">第4章</a></li>
+<li><a href="#_第5章">第5章</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
+<div id="preamble">
+<div class="sectionbody">
 <div class="sidebarblock">
 <div class="content">
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>左下のWindowsマークを押下</p>
-</li>
-<li>
-<p>「excel」と入力</p>
-</li>
-<li>
-<p>一覧のExcelを右クリックし、管理者として実行</p>
-</li>
-<li>
-<p>使用許諾にて、同意するを選択
-→ 以降表示されないことを確認</p>
-</li>
-</ol>
+<div class="paragraph">
+<p>間違ったとこをメモする</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_第3章">第3章</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh">switch に使える型　浮動小数点型はだめ。Integer等のラッパークラスは可能
+Stringは不変の為、再代入しなければ変数の値は変わらない　例<span class="tok-o">)</span> String <span class="tok-nv">str</span> <span class="tok-o">=</span> <span class="tok-s2">&quot;abcde&quot;</span><span class="tok-p">;</span> str.replace<span class="tok-o">(</span><span class="tok-s2">&quot;d&quot;</span>,<span class="tok-s2">&quot;*&quot;</span><span class="tok-o">)</span><span class="tok-p">;</span>  // str:abcde
+StringBuilder insert,deleteの位置指定  sb.delete<span class="tok-o">(</span>2,5<span class="tok-o">)</span><span class="tok-p">;</span> 3文字目から4文字目まで消される // 第2引数は消す文字範囲の末尾＋１</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_第4章">第4章</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh">配列初期化時の要素数指定は右辺で行う
+カウンタ変数がループ内と外で宣言された場合気を付ける。<span class="tok-o">(</span>ループ外だと変数は初期化されない<span class="tok-o">)</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_第5章">第5章</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh">・修飾子の指定によって変わる
+static   初期化必須　または
+final    コンストラクタで初期化できる
+↑二つ無し  どっちもできる
+
+・Stringオブジェクトに再代入すると参照が無くなりガーベッジコレクションの対象になる
+String <span class="tok-nv">s</span> <span class="tok-o">=</span> <span class="tok-s2">&quot;&quot;</span><span class="tok-p">;</span> <span class="tok-nv">s</span> <span class="tok-o">=</span> new String<span class="tok-o">()</span><span class="tok-p">;</span> // このタイミングで sのオブジェクトの参照元が切替わる</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-11 09:40:03 JST
+Last updated 2016-12-11 09:39:05 JST
 </div>
 </div>
 </body>

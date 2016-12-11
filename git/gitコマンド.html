@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>Git設定</title>
+<title>gitコマンド</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -486,114 +486,46 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article">
 <div id="header">
-<h1>Git設定</h1>
-<div id="toc" class="toc">
-<div id="toctitle"></div>
-<ul class="sectlevel2">
-<li><a href="#_インストール">インストール</a></li>
-<li><a href="#_https設定">HTTPS設定</a></li>
-<li><a href="#_sshキー生成">SSHキー生成</a></li>
-<li><a href="#_いったん権限を変える">いったん権限を変える</a></li>
-<li><a href="#_sshagent起動">SSHAgent起動</a></li>
-<li><a href="#_sshkキーを登録">SSHkキーを登録</a></li>
-<li><a href="#_所有者のみ読込_書込出来るようにする">所有者のみ読込、書込出来るようにする</a></li>
-<li><a href="#_公開鍵の内容をクリップボードにコピー">公開鍵の内容をクリップボードにコピー</a></li>
-<li><a href="#_settingの画面を開く">Settingの画面を開く</a></li>
-<li><a href="#__new_ssh_key_ボタンを押下">[New SSH Key]ボタンを押下</a></li>
-<li><a href="#_title_鍵を渡す">Title : 鍵を渡す</a></li>
-<li><a href="#_key_コピペした内容">Key : コピペした内容</a></li>
-</ul>
-</div>
+<h1>gitコマンド</h1>
 </div>
 <div id="content">
-<div class="sect2">
-<h3 id="_インストール">インストール</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># インストール</span>
-sudo dnf install -y git
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># ブランチ名</span>
+<span class="tok-nv">branch_name</span><span class="tok-o">=</span><span class="tok-s2">&quot;refact&quot;</span>
 
-<span class="tok-c"># 設定情報を読込む</span>
-<span class="tok-nb">source</span> <span class="tok-nv">$MY_CONF</span>
+<span class="tok-c"># ブランチの一覧表示</span>
+git branch
 
-git config --global user.name <span class="tok-k">${</span><span class="tok-nv">GIT</span><span class="tok-p">[</span><span class="tok-s1">&#39;user.name&#39;</span><span class="tok-p">]</span><span class="tok-k">}</span>
-git config --global user.email <span class="tok-k">${</span><span class="tok-nv">GIT</span><span class="tok-p">[</span><span class="tok-s1">&#39;user.email&#39;</span><span class="tok-p">]</span><span class="tok-k">}</span>
-git config --global core.editor <span class="tok-s2">&quot;/usr/bin/vim&quot;</span>
-git config --global color.ui <span class="tok-nb">true</span>
+<span class="tok-c"># ブランチ作成</span>
+git branch <span class="tok-k">${</span><span class="tok-nv">branch_name</span><span class="tok-k">}</span>
 
-<span class="tok-c"># 自動改行変換 無効化</span>
-git config --global core.autoCRLF <span class="tok-nb">false</span>
+<span class="tok-c"># ブランチが作成されていることを確認</span>
+git branch
 
-<span class="tok-c"># 設定情報確認</span>
-git config --list
+<span class="tok-c"># ブランチ切り替え</span>
+git checkout <span class="tok-k">${</span><span class="tok-nv">branch_name</span><span class="tok-k">}</span>
 
-<span class="tok-c"># 設定を削除</span>
-<span class="tok-c"># git config --global --unset color.ui</span>
-<span class="tok-c"># 特定のリポジトリへのみ設定</span>
-<span class="tok-c"># git config -l -f .git/config color.ui true</span></code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_https設定">HTTPS設定</h3>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code data-lang="sh">git config --global credential.helper <span class="tok-s1">&#39;cache --timeout=3600&#39;</span>
----
+<span class="tok-c"># ブランチが切り替わっていることを確認</span>
+git branch
 
-<span class="tok-o">===</span> ↓HTTPSのほうが楽だからもうやらん
+<span class="tok-c"># ブランチの変更状態を確認</span>
+git status
 
-<span class="tok-o">===</span> SSH設定
-<span class="tok-o">[</span><span class="tok-nb">source</span>,sh<span class="tok-o">]</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>cd $HOME/.ssh</p>
-</div>
-</div>
-<h1 id="_sshキー生成" class="sect0">SSHキー生成</h1>
-<div class="paragraph">
-<p>sudo ssh-keygen -t rsa -f "korora_git_rsa"</p>
-</div>
-<h1 id="_いったん権限を変える" class="sect0">いったん権限を変える</h1>
-<div class="paragraph">
-<p>sudo chmod 777 "korora_git_rsa"</p>
-</div>
-<h1 id="_sshagent起動" class="sect0">SSHAgent起動</h1>
-<div class="paragraph">
-<p>eval "$(ssh-agent)"</p>
-</div>
-<h1 id="_sshkキーを登録" class="sect0">SSHkキーを登録</h1>
-<div class="paragraph">
-<p>ssh-add "korora_git_rsa"</p>
-</div>
-<h1 id="_所有者のみ読込_書込出来るようにする" class="sect0">所有者のみ読込、書込出来るようにする</h1>
-<div class="paragraph">
-<p>sudo chmod 600 "korora_git_rsa"</p>
-</div>
-<h1 id="_公開鍵の内容をクリップボードにコピー" class="sect0">公開鍵の内容をクリップボードにコピー</h1>
-<div class="paragraph">
-<p>sudo cat "korora_git_rsa.pub" | xsel --clipboard --input</p>
-</div>
-<h1 id="_settingの画面を開く" class="sect0">Settingの画面を開く</h1>
+<span class="tok-c"># ブランチの修正内容をmasterへマージする</span>
+git merge <span class="tok-k">${</span><span class="tok-nv">branch_name</span><span class="tok-k">}</span>
 
-<h1 id="__new_ssh_key_ボタンを押下" class="sect0">[New SSH Key]ボタンを押下</h1>
+<span class="tok-c"># ブランチを削除</span>
+git branch -d <span class="tok-k">${</span><span class="tok-nv">branch_name</span><span class="tok-k">}</span>
 
-<h1 id="_title_鍵を渡す" class="sect0">Title : 鍵を渡す</h1>
-
-<h1 id="_key_コピペした内容" class="sect0">Key : コピペした内容</h1>
-<div class="paragraph">
-<p>google-chrome-stable --new-window <a href="https://github.com/settings/ssh" class="bare">https://github.com/settings/ssh</a></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre></pre>
+<span class="tok-c"># ブランチが削除されていることを確認</span>
+git branch</code></pre>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-10 23:13:27 JST
+Last updated 2016-12-11 08:36:23 JST
 </div>
 </div>
 </body>

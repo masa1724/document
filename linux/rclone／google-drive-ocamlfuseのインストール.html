@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>JDK設定</title>
+<title>google-drive-ocamlfuseのインストール</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -486,49 +486,86 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article">
 <div id="header">
-<h1>JDK設定</h1>
+<h1>google-drive-ocamlfuseのインストール</h1>
 <div id="toc" class="toc">
 <div id="toctitle"></div>
 <ul class="sectlevel2">
-<li><a href="#_インストール">インストール</a></li>
+<li><a href="#_google_drive_ocamlfuse">1. google-drive-ocamlfuse</a></li>
+<li><a href="#_rclone">2. rclone</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect2">
-<h3 id="_インストール">インストール</h3>
+<h3 id="_google_drive_ocamlfuse">1. google-drive-ocamlfuse</h3>
+<div class="paragraph">
+<p>windowsのGoogleDriveクライアントと同じ感じで
+常にファイル更新を監視し、クラウドと同期してくれる。
+ただ、監視続けているため、コンソール上での操作が遅くなる
+(主に同期先フォルダと同じフォルダ内)</p>
+</div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># Java(Korora はデフォルトでOpenJDK 1.8.0_91 が入ってる)</span>
-<span class="tok-nv">$ JDK_URL</span><span class="tok-o">=</span><span class="tok-s2">&quot;http://download.oracle.com/otn-pub/java/jdk/8u91-b14/jdk-8u91-linux-x64.rpm&quot;</span>
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># リポジトリ有効化</span>
+sudo dnf copr <span class="tok-nb">enable </span>sergiomb/google-drive-ocamlfuse
+<span class="tok-c"># GoogleDriveインストール</span>
+sudo dnf install google-drive-ocamlfuse
+<span class="tok-c"># GoogleDrive用のディレクトリ作成</span>
+mkdir ~/GoogleDrive
+<span class="tok-c"># GoogleDrive起動(.bashrc等に書く)</span>
+google-drive-ocamlfuse ~/GoogleDrive
 
-<span class="tok-c"># 同意情報をヘッダに付加し、ダウンロード</span>
-<span class="tok-nv">$ </span>sudo wget --no-cookies --no-check-certificate --header <span class="tok-s2">&quot;Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie&quot;</span> <span class="tok-s2">&quot;${JDK_URL}&quot;</span>
+ps -aux <span class="tok-s2">&quot;*google*&quot;</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rclone">2. rclone</h3>
+<div class="paragraph">
+<p>google-drive-ocamlfuseと異なり、監視はしない。
+好きなタイミングで同期等が行えるがコマンド打つのが多少めんどくさい。
+syncオプションを使えば変更したファイルのみ同期できるのが便利。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh">http://rclone.org/install/
 
-<span class="tok-c"># インストール</span>
-<span class="tok-nv">$ </span>sudo dnf --nogpgcheck install jdk-8u91-linux-x64.rpm
+<span class="tok-c">#ダウンロード</span>
+curl -O http://downloads.rclone.org/rclone-current-linux-amd64.zip
+unzip rclone-current-linux-amd64.zip
+<span class="tok-nb">cd </span>rclone-*-linux-amd64
 
-<span class="tok-c"># javaの切替</span>
-<span class="tok-c"># ここではインストールしたjavaのバージョン:2を選択</span>
-<span class="tok-nv">$ </span>sudo alternatives --config java
-<span class="tok-m">2</span> プログラムがあり <span class="tok-s1">&#39;java&#39;</span> を提供します。
+sudo cp rclone /usr/sbin/
+sudo chown root:root /usr/sbin/rclone
+sudo chmod <span class="tok-m">755</span> /usr/sbin/rclone
 
-  選択       コマンド
------------------------------------------------
-*  <span class="tok-m">1</span>           java-1.8.0-openjdk.x86_64 <span class="tok-o">(</span>/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.111-3.b16.fc24.x86_64/jre/bin/java<span class="tok-o">)</span>
- + <span class="tok-m">2</span>           /usr/java/jdk1.8.0_91/jre/bin/java
+rclone config
+http://rclone.org/docs/
 
-Enter を押して現在の選択 <span class="tok-o">[</span>+<span class="tok-o">]</span> を保持するか、選択番号を入力します:2
+<span class="tok-c"># rcloneの設定</span>
+e/n/d/s/q&gt; n
+name&gt; GoogleDrive
+6
+Enterを入力
 
-<span class="tok-c"># javaが切替わっていることを確認</span>
-<span class="tok-nv">$ </span>java -version</code></pre>
+<span class="tok-c"># クラウド上に対するls</span>
+rclone ls GoogleDrive:
+
+<span class="tok-c"># 全ファイルのダウンロード</span>
+rclone sync GoogleDrive: ~/GoogleDrive
+
+<span class="tok-c"># アップロード</span>
+rclone copy foobar.txt GoogleDrive:example_dir
+
+<span class="tok-c"># 同期</span>
+rclone sync ~/GoogleDrive GoogleDrive:</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-10 23:13:27 JST
+Last updated 2016-12-11 08:31:12 JST
 </div>
 </div>
 </body>
