@@ -34,8 +34,8 @@
 
 /*** 2.1.1 コンテンツ ***/
 .content{
-  min-width:300px;
-  max-width:1000px;
+  min-width:60%;
+  max-width:1200px;
   background-color: #FCFCFC;
   border:1px solid #EBEBEB;
   float: left;
