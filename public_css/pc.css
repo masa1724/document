@@ -86,12 +86,12 @@
 }
 
 .link-list a:hover {
-    padding: 3px 4px 1px 6px;
+    padding: 4px 4px 2px 6px;
 }
 
 .link-list a {
   display: block;
-  padding: 2px 5px 2px 5px;
+  padding: 4px 5px 4px 5px;
 }
 
 
