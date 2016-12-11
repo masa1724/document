@@ -66,11 +66,18 @@
   margin-bottom: 5px;
   list-style-type:none;
   box-shadow: 1px 2px 3px #ccc;
+
+  border-radius: 5px;        /* CSS3草案 */
+  -webkit-border-radius: 5px;    /* Safari,Google Chrome用 */
+  -moz-border-radius: 5px;   /* Firefox用 */
 }
 
 .link-list li {
     background-color: #FBFAF5;
     border-bottom:1px solid #84b2e0;
+    border-radius: 5px;        /* CSS3草案 */
+    -webkit-border-radius: 5px;    /* Safari,Google Chrome用 */
+    -moz-border-radius: 5px;   /* Firefox用 */
 }
 
 .link-list li:hover {

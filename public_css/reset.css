@@ -95,9 +95,11 @@ a:visited {
 }
 
  a:hover {
+   color:red;
   text-decoration:underline;
 }
 
  a:active {
+  color:red;
   text-decoration:underline;
 }
