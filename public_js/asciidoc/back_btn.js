@@ -1,4 +1,4 @@
-window.onload = function() {
+function createBackButton() {
   var btnElem = document.createElement('button');
   btnElem.type="button";
   btnElem.innerHTML="戻る";
@@ -14,4 +14,8 @@ window.onload = function() {
   btnElem.onclick = func;
 
   document.body.div.appendChild(btnElem);
-};
+}
+
+window.onload = function() {
+  createBackButton();
+}
