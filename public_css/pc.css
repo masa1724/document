@@ -117,9 +117,8 @@
 
 .link-list li {
     background-color: #FBFAF5;
-    padding:5px 10px;
     border-bottom:1px solid #84b2e0;
-    box-shadow: 1px 2px 3px #ccc;
+    box-shadow: 3px 4px 5px #ccc;
 }
 
 .link-list li:hover {
@@ -130,8 +129,9 @@
   display: block;
 }
 
-.link-list  a {
+.link-list a {
   text-decoration: none;
+  padding:5px 10px;
 }
 
 .link-list a:link {
