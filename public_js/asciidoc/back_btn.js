@@ -13,5 +13,5 @@ window.onload = function() {
   var func = new Function("location.href='" + toUrl + "';");
   btnElem.onclick = func;
 
-  document.body.appendChild(btnElem);
+  document.body.div.appendChild(btnElem);
 };
