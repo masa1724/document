@@ -13,7 +13,7 @@ function createBackButton() {
   var func = new Function("location.href='" + toUrl + "';");
   btnElem.onclick = func;
 
-  document.html.appendChild(btnElem);
+  document.body.insertBefore(btnElem, document.body.firstChild);
 }
 
 window.onload = function() {
