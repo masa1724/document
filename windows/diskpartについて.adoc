@@ -11,43 +11,7 @@
 :pygments-linenums-mode: inline
 :lang: ja
 
-[source,txt]
+[source, txt]
 ----
-// %include_area
-: diskpart起動
-diskpart
-
-: ディスク一覧表示
-list disk
-
-: 操作するディスクを選択
-select disk 0
-
-: 選択されているディスクのパーティション表示
-list partition
-
-: ディスクのボリューム一覧を表示(全ディスク分)
-list volume
-
-: 操作するボリュームを選択
-select volume 0
-
-: 選択されているボリュームを削除
-delete volume
-
-
-: 例) Volume0を削除する
-list disk
-select disk 0
-list volume
-select volume 0
-list volume  ←選択されたボリューム名の左に "*" がついていることを確認する
-delete volume
-list volume
-
-
-: システムパーティションを消す
-select disk x
-select partition x
-delete partition override
+include::/home/sgym2835/document-src/windows//diskpartについて.txt[lines=4..5]
 ----

@@ -11,9 +11,7 @@
 :pygments-linenums-mode: inline
 :lang: ja
 
-[source,txt]
+[source, txt]
 ----
-// %include_area
-bash のディレクトリ
-%USERPROFILE%\AppData\Local\lxss\home\%USERNAME%
+include::/home/sgym2835/document-src/windows//win_bash.txt[lines=4..5]
 ----

@@ -11,13 +11,7 @@
 :pygments-linenums-mode: inline
 :lang: ja
 
-[source,bat]
+[source, bat]
 ----
-// %include_area
-@echo off
-
-cd "%USERPROFILE%\\vagrantbox\\centos7.0"
-vagrant up
-
-pause
-exit----
+include::/home/sgym2835/document-src/vagrant//vagrant_init.bat[lines=4..5]
+----

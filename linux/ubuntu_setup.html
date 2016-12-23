@@ -491,34 +491,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="content">
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="sh">// %include_area
-<span class="tok-c">#!/bin/bash</span>
-
-sudo apt-get update
-sudo apt-get upgrade
-
-env <span class="tok-nv">LANGUAGE</span><span class="tok-o">=</span>C <span class="tok-nv">LC_MESSAGES</span><span class="tok-o">=</span>C xdg-user-dirs-gtk-update
-
-
-<span class="tok-c"># install packages</span>
-sudo apt-get install -y ibus mozc
-sudo add-apt-repository ppa:git-core/ppa
-wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub <span class="tok-p">|</span> sudo apt-key add -
-sudo sh -c <span class="tok-s1">&#39;echo &quot;deb http://dl.google.com/linux/chrome/deb/ stable main&quot; &gt;&gt; /etc/apt/sources.list.d/google.list&#39;</span>
-sudo add-apt-repository ppa:webupd8team/sublime-text-3
-
-sudo apt-get install -y git google-chrome-stable vim sublime-text-installer
-
-<span class="tok-c"># delete packages</span>
-sudo rm -R /usr/bin/firefox
-
-sudo apt-get update</code></pre>
+<pre class="pygments highlight"><code data-lang="sh">sudo apt-get upgrade</code></pre>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-23 12:01:23 JST
+Last updated 2016-12-23 12:37:44 JST
 </div>
 </div>
 <script src='https://masa1724.github.io/document/public_js/asciidoc/back_btn.js'></script></body>

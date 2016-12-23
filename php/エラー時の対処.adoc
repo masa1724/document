@@ -11,8 +11,7 @@
 :pygments-linenums-mode: inline
 :lang: ja
 
-[source,txt]
+[source, txt]
 ----
-// %include_area
-Visual C++ 2015 ランタイムのインストール
-http://www.microsoft.com/ja-jp/download/details.aspx?id=48145----
+include::/home/sgym2835/document-src/php//繧ｨ繝ｩ繝ｼ譎ゅ�ｮ蟇ｾ蜃ｦ.txt[lines=4..5]
+----

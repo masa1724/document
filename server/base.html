@@ -491,66 +491,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="content">
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="vimrc">// %include_area
-set encoding=utf8
-set fileencodings=utf-8,euc-jp,iso-2022-jp,ucs-2le,ucs-2,euc-jp,cp932
-set fileformats=unix,dos,mac
-
-set noswapfile
-set nowritebackup
-set nobackup
-
-set number
-set ruler
-set title
-set nostartofline
-set matchpairs&amp; matchpairs+=&lt;:&gt;
-set showmatch
-set matchtime=3
-set nowrap
-set textwidth=0
-set autoindent
-set tabstop=2
-set listchars=trail:-,extends:?
-set shiftround
-set showcmd
-set laststatus=2
-set cursorline
-set statusline+=[%F]
-set statusline+=[%{&amp;fileformat}]
-set statusline+=[%{has(&#39;multi_byte&#39;)&amp;&amp;\&amp;fileencoding!=&#39;&#39;?&amp;fileencoding:&amp;encoding}]
-set statusline+=%y
-
-set infercase
-set ignorecase
-set smartcase
-set incsearch
-set hlsearch
-set history=100
-set wrapscan
-
-inoremap jk &lt;Esc&gt;
-nnoremap j gj
-nnoremap k gk
-vnoremap h $v
-nnoremap gs :&lt;C-u&gt;%s///g&lt;Left&gt;&lt;Left&gt;&lt;Left&gt;
-
-
-alias la=&quot;ls -a&quot;
-alias ll=&quot;ls -l&quot;
-alias ltr=&quot;ls -ltr&quot;
-alias v=&quot;vim&quot;
-alias cdmaria=&quot;cd /etc/my.cnf.d&quot;
-alias cdhttpd=&quot;cd /etc/httpd/conf/httpd.conf&quot;
-alias cdphp=&quot;cd /etc/php.d&quot;
-alias vihttpd=&quot;sudo vim /etc/httpd/con&quot;
-alias viphp=&quot;sudo vim /etc/php.ini&quot;</code></pre>
+<pre class="pygments highlight"><code data-lang="vimrc">set noswapfile</code></pre>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-23 12:01:18 JST
+Last updated 2016-12-23 12:37:39 JST
 </div>
 </div>
 <script src='https://masa1724.github.io/document/public_js/asciidoc/back_btn.js'></script></body>

@@ -491,49 +491,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="content">
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="txt"><span class="tok-err">//</span> <span class="tok-err">%include_area</span>
-<span class="tok-err">:</span> <span class="tok-err">diskpart起動</span>
-<span class="tok-err">diskpart</span>
-
-<span class="tok-err">:</span> <span class="tok-err">ディスク一覧表示</span>
-<span class="tok-err">list</span> <span class="tok-err">disk</span>
-
-<span class="tok-err">:</span> <span class="tok-err">操作するディスクを選択</span>
-<span class="tok-err">select</span> <span class="tok-err">disk</span> <span class="tok-err">0</span>
-
-<span class="tok-err">:</span> <span class="tok-err">選択されているディスクのパーティション表示</span>
-<span class="tok-err">list</span> <span class="tok-err">partition</span>
-
-<span class="tok-err">:</span> <span class="tok-err">ディスクのボリューム一覧を表示(全ディスク分)</span>
-<span class="tok-err">list</span> <span class="tok-err">volume</span>
-
-<span class="tok-err">:</span> <span class="tok-err">操作するボリュームを選択</span>
-<span class="tok-err">select</span> <span class="tok-err">volume</span> <span class="tok-err">0</span>
-
-<span class="tok-err">:</span> <span class="tok-err">選択されているボリュームを削除</span>
-<span class="tok-err">delete</span> <span class="tok-err">volume</span>
-
-
-<span class="tok-err">:</span> <span class="tok-err">例)</span> <span class="tok-err">Volume0を削除する</span>
-<span class="tok-err">list</span> <span class="tok-err">disk</span>
-<span class="tok-err">select</span> <span class="tok-err">disk</span> <span class="tok-err">0</span>
-<span class="tok-err">list</span> <span class="tok-err">volume</span>
-<span class="tok-err">select</span> <span class="tok-err">volume</span> <span class="tok-err">0</span>
-<span class="tok-err">list</span> <span class="tok-err">volume</span>  <span class="tok-err">←選択されたボリューム名の左に</span> <span class="tok-err">&quot;*&quot;</span> <span class="tok-err">がついていることを確認する</span>
-<span class="tok-err">delete</span> <span class="tok-err">volume</span>
-<span class="tok-err">list</span> <span class="tok-err">volume</span>
-
-
-<span class="tok-err">:</span> <span class="tok-err">システムパーティションを消す</span>
-<span class="tok-err">select</span> <span class="tok-err">disk</span> <span class="tok-err">x</span>
-<span class="tok-err">select</span> <span class="tok-err">partition</span> <span class="tok-err">x</span>
-<span class="tok-err">delete</span> <span class="tok-err">partition</span> <span class="tok-err">override</span></code></pre>
+<pre class="pygments highlight"><code data-lang="txt"><span class="tok-err">:</span> <span class="tok-err">ディスク一覧表示</span>
+<span class="tok-err">list</span> <span class="tok-err">disk</span></code></pre>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-23 12:01:14 JST
+Last updated 2016-12-23 12:37:35 JST
 </div>
 </div>
 <script src='https://masa1724.github.io/document/public_js/asciidoc/back_btn.js'></script></body>
