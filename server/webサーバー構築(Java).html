@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>msys2.txt</title>
+<title>webサーバー構築(Java)</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -484,64 +484,267 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 .listingblock .pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 </style>
 </head>
-<body style="font-size:14px;" class="article">
+<body class="article">
 <div id="header">
-<h1>msys2.txt</h1>
+<h1>webサーバー構築(Java)</h1>
+<div id="toc" class="toc">
+<div id="toctitle"></div>
+<ul class="sectlevel1">
+<li><a href="#_httpd">1. httpd</a>
+<ul class="sectlevel2">
+<li><a href="#_インストール">1.1. インストール</a></li>
+<li><a href="#_基本設定">1.2. 基本設定</a></li>
+</ul>
+</li>
+<li><a href="#_jdk">2. JDK</a></li>
+<li><a href="#_mysql_mariadb">3. MySQL(MariaDB)</a></li>
+<li><a href="#_tomcat">4. Tomcat</a>
+<ul class="sectlevel2">
+<li><a href="#_インストール_2">4.1. インストール</a></li>
+<li><a href="#_service起動ファイル作成">4.2. service起動ファイル作成</a></li>
+<li><a href="#_tomcat専用ユーザ作成">4.3. tomcat専用ユーザ作成</a></li>
+</ul>
+</li>
+<li><a href="#_ファイアーウォール設定">5. ファイアーウォール設定</a></li>
+<li><a href="#_httpd_tomcatの連携">6. httpd &lt;&#8658; tomcatの連携</a>
+<ul class="sectlevel2">
+<li><a href="#_tomcatへ直接のリクエスト禁止">6.1. tomcatへ直接のリクエスト禁止</a></li>
+<li><a href="#_httpd_websocket連携に必要なモジュールがあるか確認">6.2. httpd,WebSocket連携に必要なモジュールがあるか確認</a></li>
+<li><a href="#_モジュールがコメントアウトされてないか">6.3. モジュールがコメントアウトされてないか</a></li>
+<li><a href="#_httpdへのリクエストをtomcatに投げる">6.4. httpdへのリクエストをtomcatに投げる</a></li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 <div id="content">
+<div class="sect1">
+<h2 id="_httpd">1. httpd</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_インストール">1.1. インストール</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># msys2 (i686:32bit, x86_64:64bit)</span>
-https://sourceforge.net/projects/msys2/?source<span class="tok-o">=</span>typ_redirect
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># バージョン確認</span>
+sudo dnf search httpd
 
-<span class="tok-c"># アップデート</span>
-<span class="tok-c"># -yを更に付加するとY/nの選択肢は全てYを選択させる</span>
-pacman -Sy
+<span class="tok-c"># インストール</span>
+sudo dnf -y install httpd</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_基本設定">1.2. 基本設定</h3>
+<div class="listingblock">
+<div class="title">/etc/httpd/conf/httpd.conf</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh">cp -p /etc/httpd/conf/httpd.conf<span class="tok-o">{</span>,.bk<span class="tok-o">}</span>
+sudo vim /etc/httpd/conf/httpd.conf
 
-<span class="tok-c"># アップグレード</span>
-pacman -Su
+<span class="tok-c"># .htaccessの許可</span>
+&lt;Directory <span class="tok-s2">&quot;/var/www/html&quot;</span>&gt;
+    AllowOverride All
+&lt;/Directory&gt;
 
-<span class="tok-c"># ソフトウェア検索</span>
-pacman -Ss <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
+<span class="tok-c"># apache側での文字コード設定を無効(html側に書くから。)</span>
+AddDefaultCharset none</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">/etc/httpd/conf.d/autoindex.conf</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh">cp -p /etc/httpd/conf.d/autoindex.conf<span class="tok-o">{</span>,.bk<span class="tok-o">}</span>
+sudo vim /etc/httpd/conf.d/autoindex.conf
 
-<span class="tok-c"># インストール済のソフトウェア検索</span>
-<span class="tok-c"># ↓にいくにつれて詳細情報表示</span>
-pacman -Qs <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
-pacman -Qi <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
-pacman -Qii <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
+<span class="tok-c"># iconsディレクトリのファイル一覧を非表示</span>
+&lt;Directory <span class="tok-s2">&quot;/usr/share/httpd/icons&quot;</span>&gt;
+    Options MultiViews
+&lt;/Directory&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_jdk">2. JDK</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://github.com/masa1724/document/blob/master/java/JDK-settings.adoc" class="bare">https://github.com/masa1724/document/blob/master/java/JDK-settings.adoc</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_mysql_mariadb">3. MySQL(MariaDB)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://github.com/masa1724/document/blob/master/MySQL/MySQL-settings.ado" class="bare">https://github.com/masa1724/document/blob/master/MySQL/MySQL-settings.ado</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tomcat">4. Tomcat</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_インストール_2">4.1. インストール</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-nv">TOMCAT_VERSION</span><span class="tok-o">=</span><span class="tok-s2">&quot;8.5.8&quot;</span>
+<span class="tok-nv">TOMCAT_URL</span><span class="tok-o">=</span><span class="tok-s2">&quot;http://ftp.riken.jp/net/apache/tomcat/tomcat-$(echo ${TOMCAT_VERSION} | cut -c 1)/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz&quot;</span>
+<span class="tok-nb">echo</span> <span class="tok-k">${</span><span class="tok-nv">TOMCAT_URL</span><span class="tok-k">}</span>
+sudo wget <span class="tok-k">${</span><span class="tok-nv">TOMCAT_URL</span><span class="tok-k">}</span>
+sudo tar -xzvf ./apache-tomcat-<span class="tok-k">${</span><span class="tok-nv">TOMCAT_VERSION</span><span class="tok-k">}</span>.tar.gz
+sudo mv ./apache-tomcat-<span class="tok-k">${</span><span class="tok-nv">TOMCAT_VERSION</span><span class="tok-k">}</span> /opt/tomcat
+sudo mv ./apache-tomcat-<span class="tok-k">${</span><span class="tok-nv">TOMCAT_VERSION</span><span class="tok-k">}</span>.tar.gz /usr/local/src/</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_service起動ファイル作成">4.2. service起動ファイル作成</h3>
+<div class="listingblock">
+<div class="title">/usr/lib/systemd/system/tomcat.service</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh">sudo vim /usr/lib/systemd/system/tomcat.service
 
+<span class="tok-o">[</span>Unit<span class="tok-o">]</span>
+<span class="tok-nv">Description</span><span class="tok-o">=</span>Apache Tomcat 8
+<span class="tok-nv">After</span><span class="tok-o">=</span>network.target
 
-<span class="tok-c">### パッケージ ###</span>
+<span class="tok-o">[</span>Service<span class="tok-o">]</span>
+<span class="tok-nv">Type</span><span class="tok-o">=</span>oneshot
+<span class="tok-nv">ExecStart</span><span class="tok-o">=</span>/opt/tomcat/bin/startup.sh
+<span class="tok-nv">ExecStop</span><span class="tok-o">=</span>/opt/tomcat/bin/shutdown.sh
+<span class="tok-nv">ExecReload</span><span class="tok-o">=</span>/opt/tomcat/bin/shutdown.sh <span class="tok-p">;</span> /opt/tomcat/bin/startup.sh
+<span class="tok-nv">RemainAfterExit</span><span class="tok-o">=</span>yes:
 
-<span class="tok-c"># レポジトリからインストール</span>
-pacman -S <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
-<span class="tok-c"># ローカルへダウンロード</span>
-pacman -Sw <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
-<span class="tok-c"># パッケージファイルからインストール(rpm -i みたいな感じ)</span>
-pacman -U <span class="tok-k">${</span><span class="tok-nv">package_path</span><span class="tok-k">}</span>
+<span class="tok-o">[</span>Install<span class="tok-o">]</span>
+<span class="tok-nv">WantedBy</span><span class="tok-o">=</span>multi-user.target</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_tomcat専用ユーザ作成">4.3. tomcat専用ユーザ作成</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># tomcat用ユーザ作成</span>
+sudo useradd -s /sbin/nologin tomcat
 
-<span class="tok-c"># 削除</span>
-pacman -R <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
-<span class="tok-c"># 依存するパッケージも同時に削除</span>
-pacman -Rs <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
-<span class="tok-c"># バックアップファイルも削除</span>
-pacman -Rns <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
+<span class="tok-c"># ユーザ一覧確認</span>
+cat /etc/passwd <span class="tok-p">|</span> grep tomcat
 
+<span class="tok-c"># tomcatユーザに権限付加</span>
+sudo chown -R tomcat:tomcat /opt/tomcat</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ファイアーウォール設定">5. ファイアーウォール設定</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># ファイアーウォールを動かした状態でtomcat のアクセスを可能にする(permanentは鯖再起動後も有効にする)</span>
+firewall-cmd --list-all
+firewall-cmd --permanent --add-service<span class="tok-o">=</span>http
+<span class="tok-c">#firewall-cmd --permanent --remove-service=http</span>
+cat /etc/firewalld/zones/public.xml
+systemctl restart firewalld
+firewall-cmd --list-all</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_httpd_tomcatの連携">6. httpd &lt;&#8658; tomcatの連携</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_tomcatへ直接のリクエスト禁止">6.1. tomcatへ直接のリクエスト禁止</h3>
+<div class="listingblock">
+<div class="title">/opt/tomcat/conf/server.xml</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># 下記記述があるか確認</span>
+&lt;Connector <span class="tok-nv">port</span><span class="tok-o">=</span><span class="tok-s2">&quot;8009&quot;</span> <span class="tok-nv">protocol</span><span class="tok-o">=</span><span class="tok-s2">&quot;AJP/1.3&quot;</span> <span class="tok-nv">redirectPort</span><span class="tok-o">=</span><span class="tok-s2">&quot;8443&quot;</span> /&gt;
 
-<span class="tok-c"># パッケージのキャッシュを削除</span>
-pacman -Sc
-<span class="tok-c"># 完全に削除</span>
-pacman -Scc
+<span class="tok-c"># httpd =&gt; tomcatのアクセス経由にするため、8080番ポートを閉じる</span>
+<span class="tok-c"># (Tomcatへ直接リクエストできないようにする)</span>
+&lt;!--
+  &lt;Connector <span class="tok-nv">port</span><span class="tok-o">=</span><span class="tok-s2">&quot;8080&quot;</span> <span class="tok-nv">protocol</span><span class="tok-o">=</span><span class="tok-s2">&quot;HTTP/1.1&quot;</span>
+  <span class="tok-nv">connectionTimeout</span><span class="tok-o">=</span><span class="tok-s2">&quot;20000&quot;</span>
+  <span class="tok-nv">redirectPort</span><span class="tok-o">=</span><span class="tok-s2">&quot;8443&quot;</span> /&gt;
+--&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_httpd_websocket連携に必要なモジュールがあるか確認">6.2. httpd,WebSocket連携に必要なモジュールがあるか確認</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh">rpm -ql httpd <span class="tok-p">|</span> grep mod_proxy.
 
+<span class="tok-c"># 下記3モジュール</span>
+<span class="tok-c"># mod_proxy.so</span>
+<span class="tok-c"># mod_proxy_wstunnel.so</span>
+<span class="tok-c"># mod_proxy_ajp.so</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_モジュールがコメントアウトされてないか">6.3. モジュールがコメントアウトされてないか</h3>
+<div class="listingblock">
+<div class="title">/etc/httpd/conf.modules.d/00-proxy.conf</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># コメントアウトされてたら外す</span>
+LoadModule proxy_module modules/mod_proxy.so
+LoadModule proxy_ajp_module modules/mod_proxy_ajp.so
+LoadModule proxy_wstunnel_module modules/mod_proxy_wstunnel.so</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_httpdへのリクエストをtomcatに投げる">6.4. httpdへのリクエストをtomcatに投げる</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh">sudo mkdir /etc/httpd/conf/extra
 
-<span class="tok-c"># 基本パッケージインストール</span>
-pacman -S vim gcc git gcc-libs openssh</code></pre>
+<span class="tok-c"># http://133.130.106.123/で呼び出されたときは、ajp://133.130.106.123:8009/に移しますという意味</span>
+cat <span class="tok-s">&lt;&lt; EOS &gt; /etc/httpd/conf/extra/httpd-proxy.conf</span>
+<span class="tok-s">&lt;Location / &gt;</span>
+<span class="tok-s">  ProxyPass ajp://192.168.33.10:8009/</span>
+<span class="tok-s">&lt;/Location&gt;</span>
+<span class="tok-s">EOS</span>
+cat /etc/httpd/conf/extra/httpd-proxy.conf
+
+<span class="tok-c"># httpd.conf に httpd-proxy.confを読み込ませる</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;Include /etc/httpd/conf/extra/httpd-proxy.conf&quot;</span> &gt;&gt; /etc/httpd/conf/httpd.conf
+
+<span class="tok-c">#権限を渡す</span>
+chown apache:apache /etc/httpd/conf/extra/httpd-proxy.conf
+
+<span class="tok-c"># tomcat,httpd再起動</span>
+sudo systemctl restart tomcat
+sudo systemctl restart httpd
+
+<span class="tok-c"># WebSocketに関する記述追加</span>
+sed -e <span class="tok-s2">&quot;1i &lt;Location /examples/websocket/ &gt;&quot;</span> -i /etc/httpd/conf/extra/httpd-proxy.conf
+sed -e <span class="tok-s2">&quot;2i ProxyPass ws://192.168.33.10:8080/examples/websocket/&quot;</span> -i /etc/httpd/conf/extra/httpd-proxy.conf
+sed -e <span class="tok-s2">&quot;3i ProxyPassReverse ws://192.168.33.10:8080/examples/websocket/&quot;</span> -i /etc/httpd/conf/extra/httpd-proxy.conf
+sed -e <span class="tok-s2">&quot;4i &lt;/Location&gt;&quot;</span> -i /etc/httpd/conf/extra/httpd-proxy.conf
+cat /etc/httpd/conf/extra/httpd-proxy.conf</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">/etc/httpd/conf.modules.d/*.conf</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh">まだなし</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-23 13:22:38 JST
+Last updated 2016-12-11 09:21:35 JST
 </div>
 </div>
 <script src='https://masa1724.github.io/document/public_js/asciidoc/back_btn.js'></script></body>

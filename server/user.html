@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>msys2.txt</title>
+<title>user.txt</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -486,62 +486,30 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body style="font-size:14px;" class="article">
 <div id="header">
-<h1>msys2.txt</h1>
+<h1>user.txt</h1>
 </div>
 <div id="content">
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># msys2 (i686:32bit, x86_64:64bit)</span>
-https://sourceforge.net/projects/msys2/?source<span class="tok-o">=</span>typ_redirect
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-o">[</span>Linux User<span class="tok-o">]</span>
+loginshell:default
+user:studyuser
+pass:study
 
-<span class="tok-c"># アップデート</span>
-<span class="tok-c"># -yを更に付加するとY/nの選択肢は全てYを選択させる</span>
-pacman -Sy
+<span class="tok-o">[</span>tomcat<span class="tok-o">]</span>
+loginshell:/sbin/nologin
+user:tomcat
 
-<span class="tok-c"># アップグレード</span>
-pacman -Su
-
-<span class="tok-c"># ソフトウェア検索</span>
-pacman -Ss <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
-
-<span class="tok-c"># インストール済のソフトウェア検索</span>
-<span class="tok-c"># ↓にいくにつれて詳細情報表示</span>
-pacman -Qs <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
-pacman -Qi <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
-pacman -Qii <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
-
-
-<span class="tok-c">### パッケージ ###</span>
-
-<span class="tok-c"># レポジトリからインストール</span>
-pacman -S <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
-<span class="tok-c"># ローカルへダウンロード</span>
-pacman -Sw <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
-<span class="tok-c"># パッケージファイルからインストール(rpm -i みたいな感じ)</span>
-pacman -U <span class="tok-k">${</span><span class="tok-nv">package_path</span><span class="tok-k">}</span>
-
-<span class="tok-c"># 削除</span>
-pacman -R <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
-<span class="tok-c"># 依存するパッケージも同時に削除</span>
-pacman -Rs <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
-<span class="tok-c"># バックアップファイルも削除</span>
-pacman -Rns <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
-
-
-<span class="tok-c"># パッケージのキャッシュを削除</span>
-pacman -Sc
-<span class="tok-c"># 完全に削除</span>
-pacman -Scc
-
-
-<span class="tok-c"># 基本パッケージインストール</span>
-pacman -S vim gcc git gcc-libs openssh</code></pre>
+<span class="tok-o">[</span>mariadb<span class="tok-o">]</span>
+user:db01owner
+pass:kk
+grant all on app01DB.* to db01owner@localhost<span class="tok-p">;</span></code></pre>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-23 13:22:38 JST
+Last updated 2016-12-23 13:22:43 JST
 </div>
 </div>
 <script src='https://masa1724.github.io/document/public_js/asciidoc/back_btn.js'></script></body>

@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>msys2.txt</title>
+<title>ls コマンド</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -484,64 +484,62 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 .listingblock .pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 </style>
 </head>
-<body style="font-size:14px;" class="article">
+<body class="article">
 <div id="header">
-<h1>msys2.txt</h1>
+<h1>ls コマンド</h1>
 </div>
 <div id="content">
+<hr>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># msys2 (i686:32bit, x86_64:64bit)</span>
-https://sourceforge.net/projects/msys2/?source<span class="tok-o">=</span>typ_redirect
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># フルパスでファイルを表示(1オプションで1行ずつ)</span>
+<span class="tok-c"># -1 ファイルのみ名表示(1ファイルずつ改行して表示させる)</span>
+<span class="tok-c"># -d ディレクトリパスも表示する</span>
+<span class="tok-nv">$ </span>ls -1d <span class="tok-nv">$GOOGLE_DRIVE</span>/*
+/home/user_name/GoogleDrive/account.xlsx
+/home/user_name/GoogleDrive/bin
+/home/user_name/GoogleDrive/doc
+/home/user_name/GoogleDrive/dotfiles
+/home/user_name/GoogleDrive/etc
+/home/user_name/GoogleDrive/src
+/home/user_name/GoogleDrive/work
+/home/user_name/GoogleDrive/www.zip</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>サンプルシェル</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c">#!/bin/bash</span>
+<span class="tok-nv">dir_path</span><span class="tok-o">=</span><span class="tok-s2">&quot;$1&quot;</span>
 
-<span class="tok-c"># アップデート</span>
-<span class="tok-c"># -yを更に付加するとY/nの選択肢は全てYを選択させる</span>
-pacman -Sy
+<span class="tok-nv">file_list</span><span class="tok-o">=</span><span class="tok-k">$(</span>ls -1d <span class="tok-k">${</span><span class="tok-nv">dir_path</span><span class="tok-k">})</span>
 
-<span class="tok-c"># アップグレード</span>
-pacman -Su
+<span class="tok-c"># フォルダが見つからない場合</span>
+<span class="tok-k">if</span> <span class="tok-o">[</span> <span class="tok-nv">$?</span> !<span class="tok-o">=</span> <span class="tok-m">0</span> <span class="tok-o">]</span><span class="tok-p">;</span> <span class="tok-k">then</span>
+  <span class="tok-nb">exit </span>1
+<span class="tok-k">fi</span>
 
-<span class="tok-c"># ソフトウェア検索</span>
-pacman -Ss <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
+<span class="tok-nv">SAVE_IFS</span><span class="tok-o">=</span><span class="tok-k">${</span><span class="tok-nv">IFS</span><span class="tok-k">}</span>
 
-<span class="tok-c"># インストール済のソフトウェア検索</span>
-<span class="tok-c"># ↓にいくにつれて詳細情報表示</span>
-pacman -Qs <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
-pacman -Qi <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
-pacman -Qii <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
+<span class="tok-c"># ファイル名にスペースが入っていても改行されないようにする</span>
+<span class="tok-nv">IFS</span><span class="tok-o">=</span><span class="tok-s1">$&#39;\n&#39;</span>
 
+<span class="tok-k">for</span> file_path in <span class="tok-k">${</span><span class="tok-nv">file_list</span><span class="tok-p">[@]</span><span class="tok-k">}</span><span class="tok-p">;</span>
+<span class="tok-k">do</span>
+  hoge_command <span class="tok-s2">&quot;${file_path}&quot;</span>
+<span class="tok-k">done</span>
 
-<span class="tok-c">### パッケージ ###</span>
+<span class="tok-nv">IFS</span><span class="tok-o">=</span><span class="tok-k">${</span><span class="tok-nv">SAVE_IFS</span><span class="tok-k">}</span>
 
-<span class="tok-c"># レポジトリからインストール</span>
-pacman -S <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
-<span class="tok-c"># ローカルへダウンロード</span>
-pacman -Sw <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
-<span class="tok-c"># パッケージファイルからインストール(rpm -i みたいな感じ)</span>
-pacman -U <span class="tok-k">${</span><span class="tok-nv">package_path</span><span class="tok-k">}</span>
-
-<span class="tok-c"># 削除</span>
-pacman -R <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
-<span class="tok-c"># 依存するパッケージも同時に削除</span>
-pacman -Rs <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
-<span class="tok-c"># バックアップファイルも削除</span>
-pacman -Rns <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
-
-
-<span class="tok-c"># パッケージのキャッシュを削除</span>
-pacman -Sc
-<span class="tok-c"># 完全に削除</span>
-pacman -Scc
-
-
-<span class="tok-c"># 基本パッケージインストール</span>
-pacman -S vim gcc git gcc-libs openssh</code></pre>
+<span class="tok-nb">exit </span>0</code></pre>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-23 13:22:38 JST
+Last updated 2016-12-10 23:13:27 JST
 </div>
 </div>
 <script src='https://masa1724.github.io/document/public_js/asciidoc/back_btn.js'></script></body>
