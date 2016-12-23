@@ -491,57 +491,57 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="content">
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="txt"><span class="tok-c"># msys2 (i686:32bit, x86_64:64bit)</span>
-<span class="tok-err">https://sourceforge.net/projects/msys2/?source=typ_redirect</span>
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># msys2 (i686:32bit, x86_64:64bit)</span>
+https://sourceforge.net/projects/msys2/?source<span class="tok-o">=</span>typ_redirect
 
 <span class="tok-c"># アップデート</span>
 <span class="tok-c"># -yを更に付加するとY/nの選択肢は全てYを選択させる</span>
-<span class="tok-err">pacman</span> <span class="tok-err">-Sy</span>
+pacman -Sy
 
 <span class="tok-c"># アップグレード</span>
-<span class="tok-err">pacman</span> <span class="tok-err">-Su</span>
+pacman -Su
 
 <span class="tok-c"># ソフトウェア検索</span>
-<span class="tok-err">pacman</span> <span class="tok-err">-Ss</span> <span class="tok-err">${package_name}</span>
+pacman -Ss <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
 
 <span class="tok-c"># インストール済のソフトウェア検索</span>
 <span class="tok-c"># ↓にいくにつれて詳細情報表示</span>
-<span class="tok-err">pacman</span> <span class="tok-err">-Qs</span> <span class="tok-err">${package_name}</span>
-<span class="tok-err">pacman</span> <span class="tok-err">-Qi</span> <span class="tok-err">${package_name}</span>
-<span class="tok-err">pacman</span> <span class="tok-err">-Qii</span> <span class="tok-err">${package_name}</span>
+pacman -Qs <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
+pacman -Qi <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
+pacman -Qii <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
 
 
 <span class="tok-c">### パッケージ ###</span>
 
 <span class="tok-c"># レポジトリからインストール</span>
-<span class="tok-err">pacman</span> <span class="tok-err">-S</span> <span class="tok-err">${package_name}</span>
+pacman -S <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
 <span class="tok-c"># ローカルへダウンロード</span>
-<span class="tok-err">pacman</span> <span class="tok-err">-Sw</span> <span class="tok-err">${package_name}</span>
+pacman -Sw <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
 <span class="tok-c"># パッケージファイルからインストール(rpm -i みたいな感じ)</span>
-<span class="tok-err">pacman</span> <span class="tok-err">-U</span> <span class="tok-err">${package_path}</span>
+pacman -U <span class="tok-k">${</span><span class="tok-nv">package_path</span><span class="tok-k">}</span>
 
 <span class="tok-c"># 削除</span>
-<span class="tok-err">pacman</span> <span class="tok-err">-R</span> <span class="tok-err">${package_name}</span>
+pacman -R <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
 <span class="tok-c"># 依存するパッケージも同時に削除</span>
-<span class="tok-err">pacman</span> <span class="tok-err">-Rs</span> <span class="tok-err">${package_name}</span>
+pacman -Rs <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
 <span class="tok-c"># バックアップファイルも削除</span>
-<span class="tok-err">pacman</span> <span class="tok-err">-Rns</span> <span class="tok-err">${package_name}</span>
+pacman -Rns <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
 
 
 <span class="tok-c"># パッケージのキャッシュを削除</span>
-<span class="tok-err">pacman</span> <span class="tok-err">-Sc</span>
+pacman -Sc
 <span class="tok-c"># 完全に削除</span>
-<span class="tok-err">pacman</span> <span class="tok-err">-Scc</span>
+pacman -Scc
 
 
 <span class="tok-c"># 基本パッケージインストール</span>
-<span class="tok-err">pacman</span> <span class="tok-err">-S</span> <span class="tok-err">vim</span> <span class="tok-err">gcc</span> <span class="tok-err">git</span> <span class="tok-err">gcc-libs</span> <span class="tok-err">openssh</span></code></pre>
+pacman -S vim gcc git gcc-libs openssh</code></pre>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-23 12:44:04 JST
+Last updated 2016-12-23 12:48:20 JST
 </div>
 </div>
 <script src='https://masa1724.github.io/document/public_js/asciidoc/back_btn.js'></script></body>

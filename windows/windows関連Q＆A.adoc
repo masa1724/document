@@ -11,7 +11,7 @@
 :pygments-linenums-mode: inline
 :lang: ja
 
-[source, txt]
+[source, sh]
 ----
 include::/home/sgym2835/document-src/windows/windows関連Q＆A.txt[]
 ----
