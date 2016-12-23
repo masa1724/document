@@ -491,13 +491,69 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="content">
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="txt"><span class="tok-err">include::/home/sgym2835/document-src/css/新規</span> <span class="tok-err">テキスト</span> <span class="tok-err">ドキュメント.txt</span></code></pre>
+<pre class="pygments highlight"><code data-lang="txt"><span class="tok-err">【CSS3対応表】</span>
+<span class="tok-err">http://fmbip.com/litmus/</span>
+
+<span class="tok-err">【デバイスサイズ表】</span>
+<span class="tok-err">http://screensiz.es/phone</span>
+
+
+<span class="tok-err">@charset</span> <span class="tok-err">&quot;utf-8&quot;;</span>
+
+
+<span class="tok-err">【CSSセレクタ指定】</span>
+<span class="tok-c">#selector</span>
+<span class="tok-err">.selector</span>
+
+<span class="tok-err">・要素で指定された属性を持つもの</span>
+<span class="tok-err">a[alt]</span>   <span class="tok-err">//</span> <span class="tok-err">aタグのalt属性を持つもの</span>
+
+<span class="tok-err">・要素の属性と値が一致するもの</span>
+<span class="tok-err">input[type=&#39;passoword&#39;]</span>   <span class="tok-err">//</span> <span class="tok-err">input要素のパスワード</span>
+<span class="tok-err">button[name=&quot;next&quot;]　</span>     <span class="tok-err">//</span> <span class="tok-err">ボタン要素のname属性にnextが設定れされているもの</span>
+
+<span class="tok-err">・一つ後</span>
+<span class="tok-err">element</span> <span class="tok-err">+</span> <span class="tok-err">p</span>
+<span class="tok-err">・以降</span>
+<span class="tok-err">element</span> <span class="tok-err">~</span> <span class="tok-err">p</span>
+
+<span class="tok-err">・子要素</span>
+<span class="tok-err">ul</span> <span class="tok-err">&gt;</span> <span class="tok-err">li</span>
+<span class="tok-err">・最初の子要素</span>
+<span class="tok-err">li:first-child</span>
+<span class="tok-err">・最後の子要素</span>
+<span class="tok-err">li:last-child</span>
+<span class="tok-err">・前からn番目の子要素</span>
+<span class="tok-err">li:nth-of-</span><span class="tok-nb">type</span><span class="tok-p">(</span><span class="tok-s">n</span><span class="tok-p">)</span>
+<span class="tok-err">・後ろからn番目の子要素</span>
+<span class="tok-err">li:nth-last-of-</span><span class="tok-nb">type</span><span class="tok-p">(</span><span class="tok-s">n</span><span class="tok-p">)</span>
+
+<span class="tok-err">・オンマウス時(IE6未対応)</span>
+<span class="tok-err">element:hover</span>
+
+<span class="tok-err">element:after</span>
+
+<span class="tok-err">・チェックされているもの</span>
+<span class="tok-err">element:checked</span>
+
+<span class="tok-err">//</span> <span class="tok-err">ウィンドウの幅</span>
+<span class="tok-err">@</span><span class="tok-nb">media</span> <span class="tok-p">(</span><span class="tok-s">min-width:481px</span><span class="tok-p">)</span> <span class="tok-err">{}</span>
+<span class="tok-err">@</span><span class="tok-nb">media</span> <span class="tok-p">(</span><span class="tok-s">max-width:480px</span><span class="tok-p">)</span> <span class="tok-err">{}</span>
+
+<span class="tok-err">//</span> <span class="tok-err">デバイスの幅</span>
+<span class="tok-err">@</span><span class="tok-nb">media</span> <span class="tok-p">(</span><span class="tok-s">min-device-width:481px</span><span class="tok-p">)</span> <span class="tok-err">{}</span>
+<span class="tok-err">@</span><span class="tok-nb">media</span> <span class="tok-p">(</span><span class="tok-s">max-device-width:480px</span><span class="tok-p">)</span> <span class="tok-err">{}</span>
+
+<span class="tok-err">※↑2つ何が違うの？</span>
+<span class="tok-err">ウィンドウ幅の場合、PCでもブラウザのウィンドウ幅を縮めればスマホ用のCSSが適用される</span>
+<span class="tok-err">逆にデバイスの幅だとウィンドウ幅を縮めても、元々のモニターサイズがdevice-widthになるので</span>
+<span class="tok-err">読み込むCSSは変わらない</span></code></pre>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-23 12:42:26 JST
+Last updated 2016-12-23 12:44:16 JST
 </div>
 </div>
 <script src='https://masa1724.github.io/document/public_js/asciidoc/back_btn.js'></script></body>
