@@ -1,0 +1,18 @@
+= 繧ｨ繝ｩ繝ｼ譎ゅ�ｮ蟇ｾ蜃ｦ.txt
+:toc:
+:toc-title:
+:pagenums:
+:sectnums:
+:imagesdir: img_MySQL/
+:icons: font
+:source-highlighter: pygments
+:pygments-style: default
+// $(dirname $(gem which pygments.rb))/../vendor/pygments-main/pygmentize -L styles
+:pygments-linenums-mode: inline
+:lang: ja
+
+[source,txt]
+----
+// %include_area
+Visual C++ 2015 ランタイムのインストール
+http://www.microsoft.com/ja-jp/download/details.aspx?id=48145----
