@@ -491,13 +491,69 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="content">
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="sh">Unresolved directive in 新規_テキスト_ドキュメント.adoc - include::/home/sgym2835/document-src/css/新規 テキスト ドキュメント.txt<span class="tok-o">[]</span></code></pre>
+<pre class="pygments highlight"><code data-lang="sh">【CSS3対応表】
+http://fmbip.com/litmus/
+
+【デバイスサイズ表】
+http://screensiz.es/phone
+
+
+@charset <span class="tok-s2">&quot;utf-8&quot;</span><span class="tok-p">;</span>
+
+
+【CSSセレクタ指定】
+<span class="tok-c">#selector</span>
+.selector
+
+・要素で指定された属性を持つもの
+a<span class="tok-o">[</span>alt<span class="tok-o">]</span>   // aタグのalt属性を持つもの
+
+・要素の属性と値が一致するもの
+input<span class="tok-o">[</span><span class="tok-nb">type</span><span class="tok-o">=</span><span class="tok-s1">&#39;passoword&#39;</span><span class="tok-o">]</span>   // input要素のパスワード
+button<span class="tok-o">[</span><span class="tok-nv">name</span><span class="tok-o">=</span><span class="tok-s2">&quot;next&quot;</span><span class="tok-o">]</span>　     // ボタン要素のname属性にnextが設定れされているもの
+
+・一つ後
+element + p
+・以降
+element ~ p
+
+・子要素
+ul &gt; li
+・最初の子要素
+li:first-child
+・最後の子要素
+li:last-child
+・前からn番目の子要素
+li:nth-of-type<span class="tok-o">(</span>n<span class="tok-o">)</span>
+・後ろからn番目の子要素
+li:nth-last-of-type<span class="tok-o">(</span>n<span class="tok-o">)</span>
+
+・オンマウス時<span class="tok-o">(</span>IE6未対応<span class="tok-o">)</span>
+element:hover
+
+element:after
+
+・チェックされているもの
+element:checked
+
+// ウィンドウの幅
+@media <span class="tok-o">(</span>min-width:481px<span class="tok-o">)</span> <span class="tok-o">{}</span>
+@media <span class="tok-o">(</span>max-width:480px<span class="tok-o">)</span> <span class="tok-o">{}</span>
+
+// デバイスの幅
+@media <span class="tok-o">(</span>min-device-width:481px<span class="tok-o">)</span> <span class="tok-o">{}</span>
+@media <span class="tok-o">(</span>max-device-width:480px<span class="tok-o">)</span> <span class="tok-o">{}</span>
+
+※↑2つ何が違うの？
+ウィンドウ幅の場合、PCでもブラウザのウィンドウ幅を縮めればスマホ用のCSSが適用される
+逆にデバイスの幅だとウィンドウ幅を縮めても、元々のモニターサイズがdevice-widthになるので
+読み込むCSSは変わらない</code></pre>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-25 01:21:34 JST
+Last updated 2016-12-25 01:21:57 JST
 </div>
 </div>
 <script src='https://masa1724.github.io/document/public_js/asciidoc/back_btn.js'></script></body>
