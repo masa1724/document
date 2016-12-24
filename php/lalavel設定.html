@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>Maven_インストール時やること.md</title>
+<title>lalavel設定.md</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -486,22 +486,99 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body style="font-size:14px;" class="article">
 <div id="header">
-<h1>Maven_インストール時やること.md</h1>
+<h1>lalavel設定.md</h1>
 </div>
 <div id="content">
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="md"><span class="tok-err">・</span><span class="tok-n">Maven</span> <span class="tok-err">インストール時やること</span>
-<span class="tok-mf">1</span><span class="tok-p">.</span> <span class="tok-err">プロジェクト右</span><span class="tok-n">Click</span> <span class="tok-err">→</span> <span class="tok-err">実行</span> <span class="tok-err">→</span> <span class="tok-n">Maven</span> <span class="tok-n">install</span>
-<span class="tok-mf">2</span><span class="tok-p">.</span> <span class="tok-err">プロジェクト右</span><span class="tok-n">Click</span> <span class="tok-err">→</span> <span class="tok-n">Maven</span> <span class="tok-err">→</span> <span class="tok-err">プロジェクトの更新</span>
-<span class="tok-mf">3</span><span class="tok-p">.</span> <span class="tok-err">プロジェクト右</span><span class="tok-n">Click</span> <span class="tok-err">→</span> <span class="tok-n">Spring</span><span class="tok-err">ツール</span> <span class="tok-err">→</span> <span class="tok-n">Remove</span> <span class="tok-k">as</span> <span class="tok-n">Bean</span> <span class="tok-n">Configuration</span>   <span class="tok-err">※なんか見つからないからやってない</span>
-<span class="tok-mf">4</span><span class="tok-p">.</span> <span class="tok-err">サーバー右</span><span class="tok-n">Click</span> <span class="tok-err">→</span> <span class="tok-err">追加および削除</span> <span class="tok-err">→</span> <span class="tok-err">プロジェクトにチェックを入れて完了</span></code></pre>
+<pre class="pygments highlight"><code data-lang="md"><span class="tok-p">##</span> <span class="tok-err">☆☆</span><span class="tok-n">Composer</span> <span class="tok-err">インストール☆☆</span>
+<span class="tok-err">```</span>
+<span class="tok-p">#</span> <span class="tok-n">composer</span><span class="tok-err">のインストーラーを取得し、</span><span class="tok-n">php</span> <span class="tok-err">で実行</span>
+<span class="tok-n">sudo</span> <span class="tok-n">curl</span> <span class="tok-p">-</span><span class="tok-n">sS</span> <span class="tok-n">https</span><span class="tok-p">:</span><span class="tok-c1">//getcomposer.org/installer | php</span>
+
+<span class="tok-p">#</span> <span class="tok-n">composer</span><span class="tok-err">コマンドを通す</span>
+<span class="tok-n">sudo</span> <span class="tok-n">mv</span> <span class="tok-n">composer</span><span class="tok-p">.</span><span class="tok-n">phar</span> <span class="tok-p">/</span><span class="tok-n">usr</span><span class="tok-p">/</span><span class="tok-k">local</span><span class="tok-p">/</span><span class="tok-n">bin</span><span class="tok-p">/</span><span class="tok-n">composer</span>
+
+<span class="tok-p">#</span> <span class="tok-n">composer</span><span class="tok-err">コマンドが通っていることを確認</span>
+<span class="tok-n">which</span> <span class="tok-n">composer</span>
+
+<span class="tok-p">#</span> <span class="tok-n">update</span>
+<span class="tok-p">#</span><span class="tok-n">composer</span> <span class="tok-n">update</span>
+<span class="tok-p">#</span><span class="tok-n">composer</span> <span class="tok-n">self</span><span class="tok-p">-</span><span class="tok-n">update</span>
+<span class="tok-err">```</span>
+
+<span class="tok-p">.</span>
+<span class="tok-p">##</span> <span class="tok-err">☆☆</span><span class="tok-n">Laravel</span> <span class="tok-err">インストール☆☆</span>
+<span class="tok-err">```</span>
+<span class="tok-p">#</span> <span class="tok-n">laravel</span><span class="tok-err">のインストーラー取得</span>
+<span class="tok-n">composer</span> <span class="tok-k">global</span> <span class="tok-n">require</span> <span class="tok-s">&quot;laravel/installer&quot;</span>
+
+<span class="tok-p">#</span> <span class="tok-n">laravel</span><span class="tok-err">のパスを通す</span>
+<span class="tok-n">sudo</span> <span class="tok-n">vim</span> <span class="tok-p">/</span><span class="tok-n">etc</span><span class="tok-p">/</span><span class="tok-n">profile</span>
+<span class="tok-err">‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐</span>
+<span class="tok-n">export</span> <span class="tok-n">PATH</span><span class="tok-p">=$</span><span class="tok-n">PATH</span><span class="tok-p">:$</span><span class="tok-n">HOME</span><span class="tok-p">/.</span><span class="tok-n">composer</span><span class="tok-p">/</span><span class="tok-n">vendor</span><span class="tok-p">/</span><span class="tok-n">bin</span>
+<span class="tok-err">‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐</span>
+<span class="tok-p">.</span> <span class="tok-p">/</span><span class="tok-n">etc</span><span class="tok-p">/</span><span class="tok-n">profile</span>
+
+<span class="tok-p">#</span> <span class="tok-n">pear</span> <span class="tok-err">及び</span> <span class="tok-n">pear</span><span class="tok-err">依存モジュール</span>
+<span class="tok-n">sudo</span> <span class="tok-n">yum</span> <span class="tok-n">install</span> <span class="tok-p">--</span><span class="tok-n">enablerepo</span><span class="tok-p">=</span><span class="tok-n">remi</span><span class="tok-p">,</span><span class="tok-n">remi</span><span class="tok-p">-</span><span class="tok-n">php70</span> <span class="tok-n">php</span><span class="tok-p">-</span><span class="tok-n">pear</span> <span class="tok-n">php</span><span class="tok-p">-</span><span class="tok-n">devel</span>
+
+<span class="tok-p">#</span> <span class="tok-n">pear</span><span class="tok-err">のバージョン確認</span><span class="tok-p">(</span><span class="tok-mf">1.10</span><span class="tok-p">.</span><span class="tok-mi">0</span><span class="tok-err">以降であること</span><span class="tok-p">)</span>
+<span class="tok-n">pear</span> <span class="tok-p">-</span><span class="tok-n">V</span>
+
+<span class="tok-p">#</span> <span class="tok-n">pecl</span><span class="tok-err">依存モジュール</span>
+<span class="tok-n">sudo</span> <span class="tok-n">yum</span> <span class="tok-p">-</span><span class="tok-n">y</span> <span class="tok-n">install</span> <span class="tok-n">zlib</span><span class="tok-p">-</span><span class="tok-n">devel</span> <span class="tok-n">gcc</span>
+
+<span class="tok-p">#</span> <span class="tok-n">zip</span><span class="tok-err">拡張インストール</span>
+<span class="tok-n">sudo</span> <span class="tok-n">pecl</span> <span class="tok-n">install</span> <span class="tok-n">zip</span>
+
+<span class="tok-p">#</span> <span class="tok-n">zip</span><span class="tok-err">関数を使用できるようにする</span>
+<span class="tok-n">sudo</span> <span class="tok-n">vim</span> <span class="tok-p">/</span><span class="tok-n">etc</span><span class="tok-p">/</span><span class="tok-n">php</span><span class="tok-p">.</span><span class="tok-n">ini</span>
+<span class="tok-err">‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐</span>
+<span class="tok-n">extension</span><span class="tok-p">=</span><span class="tok-n">zip</span><span class="tok-p">.</span><span class="tok-n">so</span>
+<span class="tok-err">‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐</span>
+
+<span class="tok-p">#</span> <span class="tok-err">インストール先ディレクトリ作成し、移動</span>
+<span class="tok-n">cd</span> <span class="tok-p">/</span><span class="tok-n">var</span><span class="tok-p">/</span><span class="tok-n">www</span><span class="tok-p">/</span><span class="tok-n">html</span><span class="tok-p">/</span>
+
+<span class="tok-n">laravel</span> <span class="tok-n">new</span> <span class="tok-n">app01root</span>
+
+<span class="tok-p">#</span> <span class="tok-n">project</span> <span class="tok-n">blog</span> <span class="tok-err">を作成</span>
+<span class="tok-n">sudo</span> <span class="tok-n">chmod</span> <span class="tok-mi">777</span> <span class="tok-p">/</span><span class="tok-n">var</span><span class="tok-p">/</span><span class="tok-n">www</span><span class="tok-p">/</span><span class="tok-n">html</span>
+<span class="tok-n">composer</span> <span class="tok-n">create</span><span class="tok-p">-</span><span class="tok-n">project</span> <span class="tok-n">laravel</span><span class="tok-p">/</span><span class="tok-n">laravel</span> <span class="tok-n">app01root</span> <span class="tok-p">--</span><span class="tok-n">prefer</span><span class="tok-p">-</span><span class="tok-n">dist</span>
+<span class="tok-err">```</span>
+
+<span class="tok-p">##</span> <span class="tok-err">☆☆基本設定☆☆</span>
+<span class="tok-err">```</span>
+<span class="tok-n">vim</span> <span class="tok-n">config</span><span class="tok-p">/</span><span class="tok-n">app</span><span class="tok-p">.</span><span class="tok-n">php</span>
+<span class="tok-err">‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐</span>
+<span class="tok-err">&#39;</span><span class="tok-n">timezone</span><span class="tok-err">&#39;</span> <span class="tok-p">=&gt;</span> <span class="tok-err">&#39;</span><span class="tok-n">Asia</span><span class="tok-p">/</span><span class="tok-n">Tokyo</span><span class="tok-err">&#39;</span><span class="tok-p">,</span>
+<span class="tok-err">&#39;</span><span class="tok-n">locale</span><span class="tok-err">&#39;</span> <span class="tok-p">=&gt;</span> <span class="tok-err">&#39;</span><span class="tok-n">ja</span><span class="tok-err">&#39;</span><span class="tok-p">,</span>
+<span class="tok-err">‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐</span>
+<span class="tok-err">```</span>
+
+
+<span class="tok-p">##</span> <span class="tok-err">☆☆基本知識☆☆</span>
+<span class="tok-p">**</span><span class="tok-err">前提</span><span class="tok-p">**</span>
+<span class="tok-err">カレントディレクトリ：</span> <span class="tok-p">/</span><span class="tok-n">var</span><span class="tok-p">/</span><span class="tok-n">www</span><span class="tok-p">/</span><span class="tok-n">html</span><span class="tok-p">/</span><span class="tok-n">appRoot</span>
+
+<span class="tok-err">・</span><span class="tok-n">Model</span><span class="tok-err">関連</span>
+<span class="tok-n">app</span><span class="tok-p">/</span>
+
+<span class="tok-err">・</span><span class="tok-n">View</span><span class="tok-err">関連</span>
+<span class="tok-n">resource</span><span class="tok-p">/</span><span class="tok-n">views</span>
+
+<span class="tok-err">・</span><span class="tok-n">Controller</span><span class="tok-err">関連</span>
+<span class="tok-n">app</span><span class="tok-p">/</span><span class="tok-n">Http</span><span class="tok-p">/</span><span class="tok-n">Controllers</span>
+
+<span class="tok-err">・</span><span class="tok-n">Database</span><span class="tok-err">関連</span>
+<span class="tok-n">database</span><span class="tok-p">/</span></code></pre>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-25 01:27:41 JST
+Last updated 2016-12-25 01:27:44 JST
 </div>
 </div>
 <script src='https://masa1724.github.io/document/public_js/asciidoc/back_btn.js'></script></body>
