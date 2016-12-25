@@ -46,17 +46,11 @@
   float: left;
 }
 
+
 .current-path{
   width:80%;
-  margin-bottom: 20px;
-  border:2px solid #F1F1F1;
-  box-shadow: inset 4px 4px 4px #999;
 }
 
-.current-path-text {
-  font-size: 30px;
-  padding: 15px 0;
-}
 
 /*** .link-list **************************************************************/
 .link-list{
@@ -137,25 +131,14 @@ pre {
   font: 20px;
 }
 
+
 ul.path-link {
-  width: 600px;
-  border:1px solid red;
-  padding:0;
-  font-size:0px;
+  font-size: 0;
 }
 
-ul.path-link li {
-  width:118px;
-  border:1px solid black;
+li.path-link {
+  background-color: #222222;
   display: inline-block;
-  text-align: center;
-  font-size:16px;
-}
-
-ul.path-link li:first-child {
-  height:60px;
-}
-
-ul.path-link li a {
-  display: block;
+  font-size: 12px;
+  width: 25%;
 }
