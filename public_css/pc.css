@@ -156,6 +156,6 @@ ul.path-link li:first-child {
   height:60px;
 }
 
-ul.foo li a {
+ul.path-link li a {
   display: block;
 }
