@@ -138,7 +138,8 @@ pre {
 }
 
 .path-link {
-  display: inline-block;
-  padding: 20 20;
-  background-color: red;
+  display:block;
+  padding:10px 5px;
+  background-color: green;
+  border: medium solid #ff00ff;
 }
