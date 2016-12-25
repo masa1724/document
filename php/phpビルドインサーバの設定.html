@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>新規_テキスト_ドキュメント.txt</title>
+<title>phpビルドインサーバの設定</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -484,20 +484,87 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 .listingblock .pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 </style>
 </head>
-<body style="font-size:14px;" class="article">
+<body style="font-size:14px;" class="article toc2 toc-left">
 <div id="header">
-<h1>新規_テキスト_ドキュメント.txt</h1>
+<h1>phpビルドインサーバの設定</h1>
+<div id="toc" class="toc2">
+<div id="toctitle"></div>
+<ul class="sectlevel2">
+<li><a href="#_ビルドインサーバとは">1. ビルドインサーバとは</a></li>
+<li><a href="#_ビルドインサーバー起動用スクリプト作成">2. ビルドインサーバー起動用スクリプト作成</a></li>
+<li><a href="#_ルーティング用のphpファイル作成">3. ルーティング用のphpファイル作成</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
-<div class="listingblock">
+<div class="sect2">
+<h3 id="_ビルドインサーバとは">1. ビルドインサーバとは</h3>
+<div class="sidebarblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="sh">Unresolved directive in 新規_テキスト_ドキュメント.adoc - include::/home/sgym2835/document-src/c/<span class="tok-o">[]</span></code></pre>
+<div class="paragraph">
+<p>&lt;pre&gt;
+phpに組み込まれている簡易サーバーみたいなやつ。
+.htaccessは使えない = ファイル拡張子をつけないとアクセスできない
+なので、URL補正をするため、php側でルーティングを行う必要がある。
+&lt;/pre&gt;</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ビルドインサーバー起動用スクリプト作成">2. ビルドインサーバー起動用スクリプト作成</h3>
+<div class="listingblock">
+<div class="title">server_init.sh</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># WEBサイトのドキュメントルート</span>
+<span class="tok-nv">documentRoot</span><span class="tok-o">=</span><span class="tok-s2">&quot;/var/www/jsd&quot;</span>
+
+<span class="tok-c"># サーバーへのリクエストをルーティングするphpファイル</span>
+<span class="tok-nv">router</span><span class="tok-o">=</span><span class="tok-s2">&quot;C:\\var\\www\\router.php&quot;</span>
+
+<span class="tok-nb">cd</span> <span class="tok-s2">&quot;%documentRoot%&quot;</span>
+
+<span class="tok-c"># ビルドインサーバー起動</span>
+php -S localhost:8000 <span class="tok-s2">&quot;%router%&quot;</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ルーティング用のphpファイル作成">3. ルーティング用のphpファイル作成</h3>
+<div class="listingblock">
+<div class="title">router.php</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="sh">&lt;?php
+// ブラウザに入力されたドメイン以降のURL取得
+// 例<span class="tok-o">)</span> localhost:8000/page_company
+//     → /page_company
+<span class="tok-nv">$path</span> <span class="tok-o">=</span> <span class="tok-nv">$_SERVER</span><span class="tok-o">[</span><span class="tok-s2">&quot;REQUEST_URI&quot;</span><span class="tok-o">]</span><span class="tok-p">;</span>
+
+// cssやjavascript等のリクエストもこの処理を介すので
+// 関係ない拡張子の場合は無視する
+<span class="tok-k">if</span> <span class="tok-o">(</span>preg_match<span class="tok-o">(</span><span class="tok-s1">&#39;/\.(?:png|jpg|jpeg|gif|css|js|html)/&#39;</span>, <span class="tok-nv">$path</span><span class="tok-o">))</span> <span class="tok-o">{</span>
+  <span class="tok-k">return</span> <span class="tok-nb">false</span><span class="tok-p">;</span>
+<span class="tok-o">}</span>
+
+// ルートへのアクセスの場合は、そのまま返す<span class="tok-o">(</span>デフォルトでindex.phpを返してくれる。<span class="tok-o">)</span>
+<span class="tok-k">if</span> <span class="tok-o">(</span>preg_match<span class="tok-o">(</span><span class="tok-s1">&#39;/\/$/&#39;</span>, <span class="tok-nv">$path</span><span class="tok-o">))</span> <span class="tok-o">{</span>
+  <span class="tok-k">return</span> <span class="tok-nb">false</span><span class="tok-p">;</span>
+<span class="tok-o">}</span>
+
+// 拡張子「.php」がついていなければ付加する
+<span class="tok-k">if</span><span class="tok-o">(</span>!preg_match<span class="tok-o">(</span><span class="tok-s2">&quot;/\.php$/&quot;</span>, <span class="tok-nv">$path</span><span class="tok-o">)){</span>
+  <span class="tok-k">return</span> require<span class="tok-o">(</span><span class="tok-nv">$path</span> . <span class="tok-s2">&quot;.php&quot;</span><span class="tok-o">)</span><span class="tok-p">;</span>
+<span class="tok-o">}</span>
+
+<span class="tok-k">return</span> <span class="tok-nb">false</span><span class="tok-p">;</span>
+?&gt;</code></pre>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-26 01:03:38 JST
+Last updated 2016-12-25 09:29:26 JST
 </div>
 </div>
 <script src='https://masa1724.github.io/document/public_js/asciidoc/back_btn.js'></script></body>
