@@ -484,34 +484,34 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 .listingblock .pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 </style>
 </head>
-<body style="font-size:14px;" class="article">
+<body style="font-size:14px;" class="article toc2 toc-left">
 <div id="header">
 <h1>webサーバー構築(Java)</h1>
-<div id="toc" class="toc">
+<div id="toc" class="toc2">
 <div id="toctitle"></div>
 <ul class="sectlevel1">
-<li><a href="#_httpd">1. httpd</a>
+<li><a href="#">httpd</a>
 <ul class="sectlevel2">
-<li><a href="#_インストール">1.1. インストール</a></li>
-<li><a href="#_基本設定">1.2. 基本設定</a></li>
+<li><a href="#">インストール</a></li>
+<li><a href="#">基本設定</a></li>
 </ul>
 </li>
-<li><a href="#_jdk">2. JDK</a></li>
-<li><a href="#_mysql_mariadb">3. MySQL(MariaDB)</a></li>
-<li><a href="#_tomcat">4. Tomcat</a>
+<li><a href="#">JDK</a></li>
+<li><a href="#">MySQL(MariaDB)</a></li>
+<li><a href="#">Tomcat</a>
 <ul class="sectlevel2">
-<li><a href="#_インストール_2">4.1. インストール</a></li>
-<li><a href="#_service起動ファイル作成">4.2. service起動ファイル作成</a></li>
-<li><a href="#_tomcat専用ユーザ作成">4.3. tomcat専用ユーザ作成</a></li>
+<li><a href="#">インストール</a></li>
+<li><a href="#">service起動ファイル作成</a></li>
+<li><a href="#">tomcat専用ユーザ作成</a></li>
 </ul>
 </li>
-<li><a href="#_ファイアーウォール設定">5. ファイアーウォール設定</a></li>
-<li><a href="#_httpd_tomcatの連携">6. httpd &lt;&#8658; tomcatの連携</a>
+<li><a href="#">ファイアーウォール設定</a></li>
+<li><a href="#">httpd &lt;&#8658; tomcatの連携</a>
 <ul class="sectlevel2">
-<li><a href="#_tomcatへ直接のリクエスト禁止">6.1. tomcatへ直接のリクエスト禁止</a></li>
-<li><a href="#_httpd_websocket連携に必要なモジュールがあるか確認">6.2. httpd,WebSocket連携に必要なモジュールがあるか確認</a></li>
-<li><a href="#_モジュールがコメントアウトされてないか">6.3. モジュールがコメントアウトされてないか</a></li>
-<li><a href="#_httpdへのリクエストをtomcatに投げる">6.4. httpdへのリクエストをtomcatに投げる</a></li>
+<li><a href="#">tomcatへ直接のリクエスト禁止</a></li>
+<li><a href="#">httpd,WebSocket連携に必要なモジュールがあるか確認</a></li>
+<li><a href="#">モジュールがコメントアウトされてないか</a></li>
+<li><a href="#">httpdへのリクエストをtomcatに投げる</a></li>
 </ul>
 </li>
 </ul>
@@ -519,10 +519,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_httpd">1. httpd</h2>
+<h2>httpd</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_インストール">1.1. インストール</h3>
+<h3>インストール</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># バージョン確認</span>
@@ -534,7 +534,7 @@ sudo dnf -y install httpd</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_基本設定">1.2. 基本設定</h3>
+<h3>基本設定</h3>
 <div class="listingblock">
 <div class="title">/etc/httpd/conf/httpd.conf</div>
 <div class="content">
@@ -566,7 +566,7 @@ sudo vim /etc/httpd/conf.d/autoindex.conf
 </div>
 </div>
 <div class="sect1">
-<h2 id="_jdk">2. JDK</h2>
+<h2>JDK</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><a href="https://github.com/masa1724/document/blob/master/java/JDK-settings.adoc" class="bare">https://github.com/masa1724/document/blob/master/java/JDK-settings.adoc</a></p>
@@ -574,7 +574,7 @@ sudo vim /etc/httpd/conf.d/autoindex.conf
 </div>
 </div>
 <div class="sect1">
-<h2 id="_mysql_mariadb">3. MySQL(MariaDB)</h2>
+<h2>MySQL(MariaDB)</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><a href="https://github.com/masa1724/document/blob/master/MySQL/MySQL-settings.ado" class="bare">https://github.com/masa1724/document/blob/master/MySQL/MySQL-settings.ado</a></p>
@@ -582,10 +582,10 @@ sudo vim /etc/httpd/conf.d/autoindex.conf
 </div>
 </div>
 <div class="sect1">
-<h2 id="_tomcat">4. Tomcat</h2>
+<h2>Tomcat</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_インストール_2">4.1. インストール</h3>
+<h3>インストール</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="sh"><span class="tok-nv">TOMCAT_VERSION</span><span class="tok-o">=</span><span class="tok-s2">&quot;8.5.8&quot;</span>
@@ -599,7 +599,7 @@ sudo mv ./apache-tomcat-<span class="tok-k">${</span><span class="tok-nv">TOMCAT
 </div>
 </div>
 <div class="sect2">
-<h3 id="_service起動ファイル作成">4.2. service起動ファイル作成</h3>
+<h3>service起動ファイル作成</h3>
 <div class="listingblock">
 <div class="title">/usr/lib/systemd/system/tomcat.service</div>
 <div class="content">
@@ -622,7 +622,7 @@ sudo mv ./apache-tomcat-<span class="tok-k">${</span><span class="tok-nv">TOMCAT
 </div>
 </div>
 <div class="sect2">
-<h3 id="_tomcat専用ユーザ作成">4.3. tomcat専用ユーザ作成</h3>
+<h3>tomcat専用ユーザ作成</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># tomcat用ユーザ作成</span>
@@ -639,7 +639,7 @@ sudo chown -R tomcat:tomcat /opt/tomcat</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ファイアーウォール設定">5. ファイアーウォール設定</h2>
+<h2>ファイアーウォール設定</h2>
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
@@ -655,10 +655,10 @@ firewall-cmd --list-all</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_httpd_tomcatの連携">6. httpd &lt;&#8658; tomcatの連携</h2>
+<h2>httpd &lt;&#8658; tomcatの連携</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_tomcatへ直接のリクエスト禁止">6.1. tomcatへ直接のリクエスト禁止</h3>
+<h3>tomcatへ直接のリクエスト禁止</h3>
 <div class="listingblock">
 <div class="title">/opt/tomcat/conf/server.xml</div>
 <div class="content">
@@ -676,7 +676,7 @@ firewall-cmd --list-all</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_httpd_websocket連携に必要なモジュールがあるか確認">6.2. httpd,WebSocket連携に必要なモジュールがあるか確認</h3>
+<h3>httpd,WebSocket連携に必要なモジュールがあるか確認</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="sh">rpm -ql httpd <span class="tok-p">|</span> grep mod_proxy.
@@ -689,7 +689,7 @@ firewall-cmd --list-all</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_モジュールがコメントアウトされてないか">6.3. モジュールがコメントアウトされてないか</h3>
+<h3>モジュールがコメントアウトされてないか</h3>
 <div class="listingblock">
 <div class="title">/etc/httpd/conf.modules.d/00-proxy.conf</div>
 <div class="content">
@@ -701,7 +701,7 @@ LoadModule proxy_wstunnel_module modules/mod_proxy_wstunnel.so</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_httpdへのリクエストをtomcatに投げる">6.4. httpdへのリクエストをtomcatに投げる</h3>
+<h3>httpdへのリクエストをtomcatに投げる</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="sh">sudo mkdir /etc/httpd/conf/extra
@@ -744,7 +744,7 @@ cat /etc/httpd/conf/extra/httpd-proxy.conf</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-11 09:21:35 JST
+Last updated 2016-12-25 09:23:17 JST
 </div>
 </div>
 <script src='https://masa1724.github.io/document/public_js/asciidoc/back_btn.js'></script></body>
