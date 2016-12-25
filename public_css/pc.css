@@ -136,3 +136,8 @@ pre {
   width:140px; height:50px;
   font: 20px;
 }
+
+.path-link {
+  display:inlineblock;
+  padding 10 10;
+}
