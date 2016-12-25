@@ -13,5 +13,5 @@
 
 [source, xml]
 ----
-include::/home/sgym2835/document-src/conemu/[]
+include::/home/sgym2835/document-src/conemu/ConEmu.xml[]
 ----

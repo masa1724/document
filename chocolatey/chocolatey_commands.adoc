@@ -13,5 +13,5 @@
 
 [source, sh]
 ----
-include::/home/sgym2835/document-src/chocolatey/[]
+include::/home/sgym2835/document-src/chocolatey/chocolatey_commands.txt[]
 ----

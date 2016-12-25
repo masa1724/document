@@ -13,5 +13,5 @@
 
 [source, sh]
 ----
-include::/home/sgym2835/document-src/c/[]
+include::/home/sgym2835/document-src/c/新規_テキスト_ドキュメント.txt[]
 ----

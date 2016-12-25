@@ -491,13 +491,82 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="content">
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="sh">Unresolved directive in atom_setup.adoc - include::/home/sgym2835/document-src/atom/<span class="tok-o">[]</span></code></pre>
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c">#!/bin/bash</span>
+
+<span class="tok-c">#http://qiita.com/nimusukeroku/items/21860ebd6b4cb075181a</span>
+
+<span class="tok-c"># Atom</span>
+https://atom.io/
+sudo rpm -ivh atom.x86_64.rpm
+
+sudo rm -rf <span class="tok-nv">$HOME</span>/.atom
+sudo ln -s <span class="tok-nv">$HOME</span>/dotfiles/.atom <span class="tok-nv">$HOME</span>/.atom
+
+<span class="tok-c"># manager</span>
+sudo apm install project-manager
+sudo apm install open-recent
+sudo apm install Save-Session
+
+<span class="tok-c"># editing support</span>
+sudo apm install highlight-line
+sudo apm install highlight-column
+sudo apm install highlight-selected
+sudo apm install autocomplete-plus
+sudo apm install autocomplete-paths
+sudo apm install autocomplete-snippets
+sudo apm install tabs-to-spaces
+sudo apm install trailing-spaces
+sudo apm install atom-beautify
+sudo apm install editorconfig
+
+<span class="tok-c"># linter</span>
+sudo apm install linter
+sudo apm install linter-php
+sudo apm install linter-phpcs
+sudo apm install linter-shellcheck
+
+<span class="tok-c"># extension view</span>
+sudo apm install minimap
+sudo apm install minimap-autohide
+
+<span class="tok-c"># terminal</span>
+sudo apm install git-plus
+sudo apm install term3
+sudo apm install Script
+
+<span class="tok-c"># html</span>
+sudo apm install emmet
+sudo apm install color-picker
+sudo apm install pigments
+
+<span class="tok-c"># etc</span>
+sudo apm install file-icons
+sudo apm install auto-encoding
+
+<span class="tok-c"># Asciidoc</span>
+sudo apm install language-asciidoc
+sudo apm install asciidoc-preview
+
+<span class="tok-c">#php</span>
+sudo apm install language-apache
+
+
+<span class="tok-c"># dependent softwares</span>
+<span class="tok-c"># linter-phpcs</span>
+sudo apt-get install -y php-pear
+pear install PHP_CodeSniffer
+
+<span class="tok-c"># linter-shellcheck</span>
+sudo apt-get install -y shellcheck
+
+sudo apm update
+apm list</code></pre>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-26 01:31:12 JST
+Last updated 2016-12-26 01:34:05 JST
 </div>
 </div>
 <script src='https://masa1724.github.io/document/public_js/asciidoc/back_btn.js'></script></body>

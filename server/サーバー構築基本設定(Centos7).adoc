@@ -13,5 +13,5 @@
 
 [source, md]
 ----
-include::/home/sgym2835/document-src/server/[]
+include::/home/sgym2835/document-src/server/サーバー構築基本設定(Centos7).md[]
 ----

@@ -13,5 +13,5 @@
 
 [source, sh]
 ----
-include::/home/sgym2835/document-src/windows/[]
+include::/home/sgym2835/document-src/windows/msys2.txt[]
 ----

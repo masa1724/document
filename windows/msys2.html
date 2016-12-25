@@ -491,13 +491,57 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="content">
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="sh">Unresolved directive in msys2.adoc - include::/home/sgym2835/document-src/windows/<span class="tok-o">[]</span></code></pre>
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-c"># msys2 (i686:32bit, x86_64:64bit)</span>
+https://sourceforge.net/projects/msys2/?source<span class="tok-o">=</span>typ_redirect
+
+<span class="tok-c"># アップデート</span>
+<span class="tok-c"># -yを更に付加するとY/nの選択肢は全てYを選択させる</span>
+pacman -Sy
+
+<span class="tok-c"># アップグレード</span>
+pacman -Su
+
+<span class="tok-c"># ソフトウェア検索</span>
+pacman -Ss <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
+
+<span class="tok-c"># インストール済のソフトウェア検索</span>
+<span class="tok-c"># ↓にいくにつれて詳細情報表示</span>
+pacman -Qs <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
+pacman -Qi <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
+pacman -Qii <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
+
+
+<span class="tok-c">### パッケージ ###</span>
+
+<span class="tok-c"># レポジトリからインストール</span>
+pacman -S <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
+<span class="tok-c"># ローカルへダウンロード</span>
+pacman -Sw <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
+<span class="tok-c"># パッケージファイルからインストール(rpm -i みたいな感じ)</span>
+pacman -U <span class="tok-k">${</span><span class="tok-nv">package_path</span><span class="tok-k">}</span>
+
+<span class="tok-c"># 削除</span>
+pacman -R <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
+<span class="tok-c"># 依存するパッケージも同時に削除</span>
+pacman -Rs <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
+<span class="tok-c"># バックアップファイルも削除</span>
+pacman -Rns <span class="tok-k">${</span><span class="tok-nv">package_name</span><span class="tok-k">}</span>
+
+
+<span class="tok-c"># パッケージのキャッシュを削除</span>
+pacman -Sc
+<span class="tok-c"># 完全に削除</span>
+pacman -Scc
+
+
+<span class="tok-c"># 基本パッケージインストール</span>
+pacman -S vim gcc git gcc-libs openssh</code></pre>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-26 01:31:27 JST
+Last updated 2016-12-26 01:34:20 JST
 </div>
 </div>
 <script src='https://masa1724.github.io/document/public_js/asciidoc/back_btn.js'></script></body>

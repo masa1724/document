@@ -13,5 +13,5 @@
 
 [source, config]
 ----
-include::/home/sgym2835/document-src/chocolatey/[]
+include::/home/sgym2835/document-src/chocolatey/packages.config[]
 ----

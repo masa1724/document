@@ -13,5 +13,5 @@
 
 [source, md]
 ----
-include::/home/sgym2835/document-src/php/[]
+include::/home/sgym2835/document-src/php/lalavel設定.md[]
 ----

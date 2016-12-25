@@ -491,13 +491,48 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="content">
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="sh">Unresolved directive in diskpartについて.adoc - include::/home/sgym2835/document-src/windows/<span class="tok-o">[]</span></code></pre>
+<pre class="pygments highlight"><code data-lang="sh">: diskpart起動
+diskpart
+
+: ディスク一覧表示
+list disk
+
+: 操作するディスクを選択
+<span class="tok-k">select</span> disk 0
+
+: 選択されているディスクのパーティション表示
+list partition
+
+: ディスクのボリューム一覧を表示<span class="tok-o">(</span>全ディスク分<span class="tok-o">)</span>
+list volume
+
+: 操作するボリュームを選択
+<span class="tok-k">select</span> volume 0
+
+: 選択されているボリュームを削除
+delete volume
+
+
+: 例<span class="tok-o">)</span> Volume0を削除する
+list disk
+<span class="tok-k">select</span> disk 0
+list volume
+<span class="tok-k">select</span> volume 0
+list volume  ←選択されたボリューム名の左に <span class="tok-s2">&quot;*&quot;</span> がついていることを確認する
+delete volume
+list volume
+
+
+: システムパーティションを消す
+<span class="tok-k">select</span> disk x
+<span class="tok-k">select</span> partition x
+delete partition override</code></pre>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-26 01:31:27 JST
+Last updated 2016-12-26 01:34:20 JST
 </div>
 </div>
 <script src='https://masa1724.github.io/document/public_js/asciidoc/back_btn.js'></script></body>

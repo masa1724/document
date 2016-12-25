@@ -13,5 +13,5 @@
 
 [source, dll]
 ----
-include::/home/sgym2835/document-src/excel/VBA/[]
+include::/home/sgym2835/document-src/excel/VBA/VB6IDEAddLineNumbersAddin.dll[]
 ----

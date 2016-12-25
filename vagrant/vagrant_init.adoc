@@ -13,5 +13,5 @@
 
 [source, bat]
 ----
-include::/home/sgym2835/document-src/vagrant/[]
+include::/home/sgym2835/document-src/vagrant/vagrant_init.bat[]
 ----

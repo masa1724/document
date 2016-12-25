@@ -13,5 +13,5 @@
 
 [source, vimrc]
 ----
-include::/home/sgym2835/document-src/server/[]
+include::/home/sgym2835/document-src/server/base.vimrc[]
 ----

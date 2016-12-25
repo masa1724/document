@@ -491,13 +491,103 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="content">
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="sh">Unresolved directive in a.adoc - include::/home/sgym2835/document-src/excel/VBA/<span class="tok-o">[]</span></code></pre>
+<pre class="pygments highlight"><code data-lang="sh"><span class="tok-s1">&#39; 最終行・最終列取得</span>
+<span class="tok-s1">MaxRow = Cells(Rows.Count, 1).End(xlUp).Row</span>
+<span class="tok-s1">MaxCol = Cells(1, Columns.Count).End(xlToLeft).Columns.Count).End</span>
+
+<span class="tok-s1">&#39;</span> ファイル書込
+Private Sub ReadFile<span class="tok-o">(</span>ByVal filePath As String<span class="tok-o">)</span>
+    Dim fileNo As Integer
+    Dim line As String
+
+    <span class="tok-nv">fileNo</span> <span class="tok-o">=</span> FreeFile<span class="tok-o">()</span>
+    Open filePath For Input As <span class="tok-c">#fileNo</span>
+
+    Do Until EOF<span class="tok-o">(</span>fileNo<span class="tok-o">)</span>
+      Line Input <span class="tok-c">#fileNo, line</span>
+      <span class="tok-nv">line</span> <span class="tok-o">=</span> Trim<span class="tok-o">(</span>line<span class="tok-o">)</span>
+
+      <span class="tok-s1">&#39; 対象行じゃない場合、無視</span>
+<span class="tok-s1">      If Not isSkip(line) Then</span>
+<span class="tok-s1">        GoTo Continue</span>
+<span class="tok-s1">      End If</span>
+
+<span class="tok-s1">      Debug.Print line</span>
+<span class="tok-s1">Continue:</span>
+<span class="tok-s1">    Loop</span>
+<span class="tok-s1">End Sub</span>
+
+<span class="tok-s1">&#39;</span> ファイル書込
+Private Sub WriteFile<span class="tok-o">(</span>ByVal filePath As String<span class="tok-o">)</span>
+    Dim fileNo As Integer
+    Dim buffer As String
+
+    <span class="tok-nv">buffer</span> <span class="tok-o">=</span> Now <span class="tok-p">&amp;</span> vbNewLine
+    <span class="tok-nv">fileNo</span> <span class="tok-o">=</span> FreeFile<span class="tok-o">()</span>
+
+    <span class="tok-s1">&#39; 上書き</span>
+<span class="tok-s1">    Open filePath For Output As #fileNo</span>
+
+<span class="tok-s1">    &#39;</span> 追記
+    <span class="tok-s1">&#39; Open filePath For Append As #fileNo</span>
+
+<span class="tok-s1">    Print #fileNo, buffer</span>
+<span class="tok-s1">    Close #fileNo</span>
+<span class="tok-s1">End Sub</span>
+
+
+<span class="tok-s1">&#39;</span> UTF-8 BOM無でファイル出力 新規ファイル・上書き
+Private Sub WriteFileUTF8<span class="tok-o">(</span>ByVal filePath As String<span class="tok-o">)</span>
+    Dim fileNo As Integer
+    Dim buffer As String
+
+    <span class="tok-nv">buffer</span> <span class="tok-o">=</span> Now <span class="tok-p">&amp;</span> vbNewLine
+    With CreateObject<span class="tok-o">(</span><span class="tok-s2">&quot;ADODB.Stream&quot;</span><span class="tok-o">)</span>
+        .Charset <span class="tok-o">=</span> <span class="tok-s2">&quot;UTF-8&quot;</span>
+        .LineSeparator <span class="tok-o">=</span> adCRLF
+        .Open
+        .WriteText buffer
+        .Position <span class="tok-o">=</span> 0
+        .Type <span class="tok-o">=</span> adTypeBinary
+        .Position <span class="tok-o">=</span> 3
+        Dim buf As Variant: <span class="tok-nv">buf</span> <span class="tok-o">=</span> .Read<span class="tok-o">()</span>
+        .Position <span class="tok-o">=</span> 0
+        .Write buf
+        .SetEOS
+        .SaveToFile filePath, adSaveCreateOverWrite
+        .Close
+    End With
+End Sub
+
+<span class="tok-s1">&#39; ファイル書込(UTF8)　追記</span>
+<span class="tok-s1">Private Sub WriteFileUTF8(ByVal filePath As String)</span>
+<span class="tok-s1">    Dim fileNo As Integer</span>
+<span class="tok-s1">    Dim buffer As String</span>
+
+<span class="tok-s1">    buffer = Now &amp; vbNewLine</span>
+<span class="tok-s1">    With CreateObject(&quot;ADODB.Stream&quot;)</span>
+<span class="tok-s1">        .Position = 0</span>
+<span class="tok-s1">        .Type = adTypeBinary</span>
+<span class="tok-s1">        .Position = 3</span>
+<span class="tok-s1">        .Charset = &quot;UTF-8&quot;</span>
+<span class="tok-s1">        .LineSeparator = adCRLF</span>
+<span class="tok-s1">        .Open</span>
+
+<span class="tok-s1">        &#39;</span>ファイルの内容を全て読込、ポジションをファイル末尾に移動させる
+        .LoadFromFile filePath
+        .Position <span class="tok-o">=</span> .Size
+
+        .WriteText buffer
+        .SaveToFile filePath, adSaveCreateOverWrite
+        .Close
+    End With
+End Sub</code></pre>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-12-26 01:31:15 JST
+Last updated 2016-12-26 01:34:08 JST
 </div>
 </div>
 <script src='https://masa1724.github.io/document/public_js/asciidoc/back_btn.js'></script></body>

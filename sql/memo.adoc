@@ -13,5 +13,5 @@
 
 [source, sql]
 ----
-include::/home/sgym2835/document-src/sql/[]
+include::/home/sgym2835/document-src/sql/memo.sql[]
 ----
